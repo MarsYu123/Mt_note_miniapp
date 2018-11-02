@@ -1,0 +1,14 @@
+<!--pages/user/user.wxml-->
+<view class="user">
+
+    <view class="login">
+        <block wx:if="{{is_getuser}}">
+            <view>用户信息</view>
+        </block>
+        <block wx:else>
+            <button class="login" open-type="getUserInfo" bindgetuserinfo="getUserInfo_user" id="user">
+                登录/注册
+            </button>
+        </block>
+    </view>
+</view>

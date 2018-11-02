@@ -1,0 +1,3 @@
+<!--pages/web_open/web_open.wxml-->
+<text>pages/web_open/web_open.wxml</text>
+<web-view src="https://mp.weixin.qq.com/s/LvB7J1pkAeJJjfaEwF-iOw" />

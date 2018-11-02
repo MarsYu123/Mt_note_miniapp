@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<view class="index">
+  <view class="nav">
+    <text id="{{index}}" class="nav_item {{nav_index == index ? 'active':''}}" wx:for="{{nav}}" bindtap="nav_click">{{item}}</text>
+  </view>
+  <block wx:if="{{nav_index == 0}}">
+    <view class="download_history">
+      <scroll-view class="down_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_download"
+        enable-back-to-top="true">
+        1
+      </scroll-view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="photo">
+      <view class="history_img" style="display:none">
+        <image wx:for="{{new_img}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" bindload="img_load"
+        data-index="{{item.index}}" />
+      </view>
+      <scroll-view class="photo_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_photo"
+        enable-back-to-top="true">
+        <view class="photo_cont">
+          <view class="left">
+            <image wx:for="{{img.left}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" data-index="{{item.index}}" lazy-load="{{true}}" />
+          </view>
+          <view class="right">
+            <image wx:for="{{img.right}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" data-index="{{item.index}}" lazy-load="{{true}}" />
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </block>
+</view>
