@@ -1,0 +1,228 @@
+/* pages/store/store.wxss */
+.store {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-right: 10rpx;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #f7f7fa;
+}
+
+.store_kv {
+    display: block;
+    width: 100%;
+    margin-bottom: 20rpx;
+    position: relative;
+}
+
+.store_kv image {
+    width: 100%;
+}
+
+.user_num {
+    position: absolute;
+    top: 60rpx;
+    left: 76rpx;
+}
+
+.user_num .h1 {
+    font-size: 48rpx;
+    color: #FFFFFF;
+    text-shadow: 0 3px 3px #003185;
+    display: inline-block
+}
+
+.user_num .h3 {
+    font-size: 28rpx;
+    color: #FFFFFF;
+    text-shadow: 0 3px 3px #003185;
+    display: inline-block
+}
+.user_num::before{
+    content: '';
+    display: block;
+    width: 38rpx;
+    height: 40rpx;
+    display: inline-block;
+    vertical-align: middle;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/money_icon.png');
+    background-size: 100% 100%;
+    
+}
+
+.store_nav {
+    width: 100%;
+    height: 96rpx;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 2px 4px 0 #D9DFED;
+    margin-bottom: 30rpx
+}
+
+.nav_item {
+    width: 200rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    text-align: center;
+    position: relative;
+    font-size: 16px;
+    color: #A7B0C2;
+}
+
+.nav_item.active {
+    color: #39CCE1;
+}
+
+.nav_item.active::after {
+    background: #39CCE1;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 6rpx;
+    border-radius: 5rpx;
+    bottom: 0;
+    left: 0;
+    position: absolute
+}
+
+.store_list {
+    margin: 32rpx 20rpx;
+
+}
+
+.store_item {
+    width: 100%;
+    height: 200rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20rpx
+}
+
+.store_left {
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg1.png');
+    background-size: 100% 100%;
+    position: relative;
+    width: 530rpx;
+    height: 200rpx;
+}
+
+.store_title {
+    position: absolute;
+    top: 24rpx;
+    left: 40rpx;
+}
+
+.store_title .h1 {
+    font-size: 48rpx;
+    color: #E62112;
+}
+
+.store_title .h3 {
+    font-size: 28rpx;
+    color: #495E8B;
+}
+
+.store_tips {
+    position: absolute;
+    top: 130rpx;
+    left: 40rpx;
+    font-size: 24rpx;
+    color: #495E8B;
+}
+
+.store_ent {
+    background: #39CCE1;
+    width: 150rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    border-radius: 3px;
+    font-size: 32rpx;
+    color: #FFFFFF;
+    margin-bottom: 10rpx;
+    text-align: center
+}
+
+.store_num {
+    font-size: 20rpx;
+    color: #3489FF;
+    text-align: center;
+}
+
+.store_num::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/money_icon.png');
+    background-size: 100% 100%;
+    width: 18rpx;
+    height: 20rpx;
+    margin-right: 3rpx
+}
+
+.integral {
+    width: 690rpx;
+    height: 102rpx;
+    line-height: 102rpx;
+    background: #ffffff;
+    box-shadow: 0 2px 7px 0 #D9DFED;
+    text-align: center;
+    font-size: 36rpx;
+    color: #39CCE1;
+    margin: auto;
+    margin-bottom: 60rpx;
+    border-radius: 5px;
+    position: relative;
+}
+
+.integral::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent transparent transparent #39CCE1;
+    border-style: solid;
+    border-width: 18rpx;
+    position: absolute;
+    right: 10rpx;
+    top: 35rpx;
+    transition: all .5s;
+    transform-origin: 50% 25%;
+}
+
+.record_list {
+    margin: 30rpx;
+}
+
+.record_item {
+    margin-bottom: 30rpx;
+    background: #ffffff;
+    height: 138rpx;
+    line-height: 138rpx;
+    width: 690rpx;
+    box-shadow: 0 2px 7px 0 #D9DFED;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50rpx;
+    box-sizing: border-box
+}
+
+.record_left .h1 {
+    font-size: 48rpx;
+    color: #495E8B;
+    margin-right: 5rpx
+}
+
+.record_left .h3 {
+    font-size: 28rpx;
+    color: #495E8B;
+}
+
+.record_right {
+    font-size: 28rpx;
+    color: #495E8B;
+}

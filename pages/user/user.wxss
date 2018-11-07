@@ -1,1 +1,137 @@
 /* pages/user/user.wxss */
+.user {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: #f7f7fa;
+    position: relative;
+}
+
+.user_info {
+    width: 588rpx;
+    margin: auto;
+    text-align: center
+}
+
+.user_info_top image {
+    margin-top: 25rpx;
+    height: 110rpx;
+    width: 110rpx;
+    border-radius: 50%;
+}
+
+.info_msg {
+    position: relative;
+    margin: auto
+}
+
+.name {
+    font-size: 36rpx;
+    color: #495E8B;
+}
+
+.site {
+    font-size: 28rpx;
+    color: #495E8B;
+}
+
+.user_edit {
+    padding: 6rpx 24rpx;
+    border-radius: 10px;
+    background: #A7B0C2;
+    color: #ffffff;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 20rpx;
+}
+
+.user_info_bottom {
+    margin: 30rpx auto;
+    width: 100%;
+    height: 116rpx;
+    border-radius: 8px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 7px 0 #D9DFED;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 7px 0 #D9DFED;
+}
+
+.info_item {
+    width: 50%;
+    border-right: 1px solid #D8E7ED;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 18rpx 0;
+}
+
+.info_item .title {
+    font-size: 36rpx;
+    color: #39CCE1;
+    display: block
+}
+
+.info_item .cont {
+    font-size: 24rpx;
+    color: #495E8B;
+    display: block
+}
+
+.info_item:last-child {
+    border: none
+}
+
+
+/* 个人中心页面列表 */
+.user_list {
+    width: 100%;
+    padding: 0 36rpx;
+    box-shadow: 0 2px 7px 0 #D9DFED;
+    background: #FFFFFF;
+    margin-bottom: 20rpx
+}
+
+.user_item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: #D8E7ED solid 1px;
+    box-sizing: border-box;
+    height: 100rpx;
+    padding: 0 10rpx
+}
+
+.user_item:last-child {
+    border: none
+}
+
+.user_item image {
+    width: 46rpx;
+    margin-right: 24rpx
+}
+
+.user_item .title {
+    font-size: 28rpx;
+    color: #495E8B;
+}
+
+.logo_bottom {
+    width: 286rpx;
+    margin: auto;
+    display: block;
+    margin-top: 40rpx
+}
+
+button.name {
+    border: none;
+    background: transparent;
+    font-size: 36rpx;
+    color: #495E8B;
+    padding: 0;
+    line-height: 60rpx
+}
+button::after{
+    border: none
+}

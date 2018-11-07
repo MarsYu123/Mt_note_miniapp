@@ -24,6 +24,7 @@ function wx_login(that) {
                 success: res => {
                   // 可以将 res 发送给后台解码出 unionId
                   app.globalData.userInfo = res
+                  app.profile = res.userInfo.avatarUrl
                   getsession(that)
                 }
               })
@@ -70,9 +71,15 @@ function getsession(page) {
 // 获取授权后操作
 function get_user_info(that, e) {
     var app = getApp();
+    var get_info = function () {}
+    if(that.get_info){
+      get_info = that.get_info
+    }
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.globalData = e.detail
+      app.profile = e.detail.userInfo.userInfo.avatarUrl
       userlogin(that);
+      get_info()
     } else {
       console.log("用户不同意")
     }
@@ -93,6 +100,10 @@ function userlogin(e) {
 
 function getencode(that) {
     var app = getApp()
+    var get_info = function () {}
+    if(that.get_info){
+      get_info = that.get_info
+    }
     wx.getSetting({
         success: res => {
           if (res.authSetting['scope.userInfo']) {
@@ -105,7 +116,9 @@ function getencode(that) {
               success: res => {
                 // 可以将 res 发送给后台解码出 unionId
                 app.globalData.userInfo = res
+                app.profile = res.userInfo.avatarUrl
                 getsession(that)
+                get_info()
               }
             })
           }else{
@@ -154,7 +167,6 @@ function unlock(e) {
         } else {
           // 获取数据成功
           app.open_user = e.data.data;
-
           // 是否暂停使用
           if (false) {
             wx.showLoading({
@@ -164,7 +176,7 @@ function unlock(e) {
           }
 
           // 执行调用登陆js的填充数据函数
-          if (data.xcx_openid != undefined) {
+          if (data.note_openid != undefined) {
 
             app.bind_user = true;
             console.log("已注册会员")

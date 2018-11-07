@@ -1,14 +1,86 @@
 <!--pages/user/user.wxml-->
 <view class="user">
+    <!-- 用户个人信息卡片 -->
+    <view class="user_info">
 
-    <view class="login">
-        <block wx:if="{{is_getuser}}">
-            <view>用户信息</view>
-        </block>
-        <block wx:else>
-            <button class="login" open-type="getUserInfo" bindgetuserinfo="getUserInfo_user" id="user">
-                登录/注册
-            </button>
-        </block>
+        <view class="user_info_top">
+            <image src="{{profile}}" mode="widthFix" />
+            <block wx:if="{{is_getuser}}">
+                <view class="info_msg">
+                    <view class="name">{{user_info.nickname}}</view>
+                    <view class="site">{{site}}</view>
+                    <view class="user_edit" bindtap="nav_edit">编辑资料</view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="info_msg">
+                    <button class="name" open-type="getUserInfo" bindgetuserinfo="getUserInfo_user" id="user">
+                        登录/注册
+                    </button>
+                </view>
+            </block>
+        </view>
+        <view class="user_info_bottom">
+            <block wx:if="{{is_getuser}}">
+                <view class="info_item">
+                    <text class="title">VIP</text>
+                    <text class="cont">您还不是VIP</text>
+                </view>
+                <view class="info_item" bindtap="integral_nav">
+                    <text class="title">积分</text>
+                    <text class="cont">0</text>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="info_item">
+                    <text class="title">VIP</text>
+                    <text class="cont">-</text>
+                </view>
+                <view class="info_item">
+                    <text class="title">积分</text>
+                    <text class="cont">-</text>
+                </view>
+            </block>
+        </view>
+
     </view>
+
+    <view class="user_list">
+        <!-- 我的笔记 -->
+        <view class="user_item">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/bj.png" mode="widthFix" />
+            <text class="title">我的笔记</text>
+        </view>
+        <!-- 我的vip -->
+        <view class="user_item">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/vip.png" mode="widthFix" />
+            <text class="title">我的vip</text>
+        </view>
+        <!-- 我的卡券 -->
+        <view class="user_item">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/kq.png" mode="widthFix" />
+            <text class="title">我的卡券</text>
+        </view>
+    </view>
+
+
+    <view class="user_list">
+        <!-- 积分商城 -->
+        <view class="user_item">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/jf.png" mode="widthFix" />
+            <text class="title">积分商城</text>
+        </view>
+        <!-- 下载教程 -->
+        <view class="user_item">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/xz.png" mode="widthFix" />
+            <text class="title">下载教程</text>
+        </view>
+        <!-- 联系客服 -->
+        <view class="user_item">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/kf.png" mode="widthFix" />
+            <text class="title">联系客服</text>
+        </view>
+    </view>
+
+    <image class="logo_bottom" src="https://www.mati.hk/Public/MiniProgram-note/user/bottom.png" mode="widthFix" />
 </view>

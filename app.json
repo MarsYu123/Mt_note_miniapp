@@ -3,12 +3,18 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/user/user",
-    "pages/web_open/web_open"
+    "pages/web_open/web_open",
+    "pages/download/download",
+    "pages/user_edit/user_edit",
+    "pages/integral/integral",
+    "pages/store/store",
+    "pages/coupon/coupon"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "debug": true
 }

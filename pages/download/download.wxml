@@ -1,0 +1,4 @@
+<!--pages/download/download.wxml-->
+
+<button open-type='openSetting' wx:if="{{opensetting}}">授权保存</button>
+<view bindtap='save_image'>保存</view>

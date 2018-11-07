@@ -7,17 +7,48 @@ Page({
    * 页面的初始数据
    */
   data: {
-    is_getuser: false,
+    is_getuser: false, //是否获取权限
     user_info: {},
-    load:false
+    load: false,
+    profile: 'https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png',
+    site: ''
   },
 
   // 登陆后获取信息
   login_success: function () {
     this.data.load = true
+    var site = ''
+    if (app.open_user.profession == '') {
+      if (app.open_user.city == '') {
+        if (app.open_user.province == '') {
+          site = ''
+        } else {
+          site = app.open_user.province
+        }
+      } else {
+        site = app.open_user.city
+      }
+    } else {
+      if (app.open_user.city == '') {
+        if (app.open_user.province == '') {
+          site = app.open_user.profession
+        } else {
+          site = app.open_user.profession + '-' + app.open_user.province
+        }
+      } else {
+        site = site = app.open_user.profession + '-' + app.open_user.city
+      }
+    }
+    this.setData({
+      user_info: app.open_user,
+      site: site
+    })
+  },
+  // 获取授权后提示
+  get_info: function () {
     this.setData({
       is_getuser: true,
-      user_info: app.open_user
+      profile: app.profile
     })
   },
   /**
@@ -36,8 +67,19 @@ Page({
   },
 
   //未授权提示用户授权，获取用户信息
-  getUserInfo_user: e => {
+  getUserInfo_user: function (e) {
     module_login.get_user_info(this, e)
+  },
+  // 跳转到积分任务
+  integral_nav:function () {
+    wx.navigateTo({
+      url: '../integral/integral'
+    });
+  },
+  nav_edit: function () {
+    wx.navigateTo({
+      url: '../user_edit/user_edit'
+    });
   },
 
   /**
@@ -52,7 +94,7 @@ Page({
    */
   onShow: function () {
     // 更新用户信息
-    if(this.data.load){
+    if (this.data.load) {
       module_login.userlogin(this);
     }
   },

@@ -136,7 +136,7 @@ Page({
   },
   onLoad: function () {
     // 若已授权，则自动登录
-    // module_login.userlogin(this);
+    module_login.userlogin(this);
 
     var that = this;
     wx.request({
@@ -167,6 +167,13 @@ Page({
 
   getUserInfo: function (e) {
     module_login.get_user_info(this, e);
+  },
+
+  // 个人中心
+  nav_user:function () {
+    wx.navigateTo({
+      url: "../user/user"
+    });
   },
 
   onShow: function () {

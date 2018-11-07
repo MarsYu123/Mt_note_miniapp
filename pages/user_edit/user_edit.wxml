@@ -1,0 +1,75 @@
+<!-- pages/user_edit/user_edit.wxml -->
+<view class="user_msg">
+    <!-- 头像 -->
+    <view class="user_head">
+        <text class="text_title">头像</text>
+        <image class="head_img" src="{{profile}}" />
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <!-- 用户名 -->
+    <view class="user">
+        <text class="text_title">昵称</text>
+        <view class="text_input">
+            <input bindinput="name" placeholder="请输入昵称" placeholder-class="input_pla" value="{{name}}" />
+        </view>
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <!-- 真实姓名 -->
+    <view class="user">
+        <text class="text_title">真实姓名</text>
+        <view class="text_input">
+            <input bindinput="name_true" placeholder="请输入真实姓名" placeholder-class="input_pla" value="{{name_true}}" />
+        </view>
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <!-- 性别 -->
+    <view class="user">
+        <text class="text_title">性别</text>
+        <view class="text_input">
+            <picker class="" placeholder="请选择性别" placeholder-class="input_pla" mode="selector" value="{{sex_index}}" range="{{sex}}"
+                bindchange="bindPickerChange">
+                <view>{{sex[sex_index]}}</view>
+            </picker>
+        </view>
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <!-- 公司 -->
+    <view class="user">
+        <text class="text_title">公司</text>
+        <view class="text_input">
+            <input bindinput="company" placeholder="请输入公司名称" placeholder-class="input_pla" value="{{company}}" />
+        </view>
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <!-- 职业 -->
+    <view class="user">
+        <text class="text_title">职业</text>
+        <view class="text_input">
+            <input bindinput="job" placeholder="请输入职业" placeholder-class="input_pla" value="{{job}}" />
+        </view>
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <!-- 省市 -->
+    <view class="user">
+        <text class="text_title">地区</text>
+        <view class="text_input">
+            <picker class="city" mode="region" value="{{region}}" bindchange="bindRegionChange">
+                <view>{{region[0]}}/{{region[1]}}</view>
+            </picker>
+        </view>
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <!-- 个人简介 -->
+    <view class="user_textarea">
+        <text class="text_title">个人简介</text>
+        <view class="text_input">
+            <textarea bindinput="signature" placeholder="请输入个人简介" placeholder-class="input_pla" value="{{signature}}"></textarea>
+        </view>
+        <!-- <text class="text_arrow"></text> -->
+    </view>
+    <import src='../mould/call/call.wxml'></import>
+    <!-- <template is='call_btn'></template> -->
+</view>
+<view class="button" bindtap="updata">
+    确定
+</view>
