@@ -11,6 +11,7 @@
     -webkit-overflow-scrolling: touch;
     background: #f7f7fa;
 }
+
 .nav {
     width: 100%;
     height: 96rpx;
@@ -46,10 +47,35 @@
     left: 0;
     position: absolute
 }
-.store_item{
+
+.store_item {
     width: 600rpx;
     margin: auto
 }
-.store_left{
+
+.store_left {
     width: 100%;
+}
+
+.store_list.active .h3 {
+    color: #A7B0C2;
+}
+
+.store_list.active .h1 {
+    color: #A7B0C2;
+}
+
+.store_list.active .store_tips {
+    color: #A7B0C2;
+}
+.store_list.active .store_item::after{
+    position: absolute;
+    content: '';
+    display: block;
+    width: 142rpx;
+    height: 104rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_active.png');
+    background-size: 100% 100%;
+    right: 80rpx;
+    top: 40rpx
 }

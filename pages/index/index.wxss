@@ -1,32 +1,56 @@
 /**index.wxss**/
+
+
 .index {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: #f7f7fa;
 }
+
+.kv {
+  width: 100%;
+  display: block
+}
+
+
 
 .nav {
   width: 100%;
-  height: 40rpx;
+  height: 96rpx;
+  background: #ffffff;
   display: flex;
+  justify-content: space-around;
+  box-shadow: 0 0 7px 0 #EBEBEB;
+  margin-bottom: 30rpx
 }
 
 .nav_item {
-  padding: 0 30rpx;
-  line-height: 40rpx;
-  flex-grow: 1;
+  width: 200rpx;
+  height: 96rpx;
+  line-height: 96rpx;
   text-align: center;
-  border-right: 1px #eee solid;
-  box-sizing: border-box
+  position: relative;
+  font-size: 16px;
+  color: #A7B0C2;
 }
 
 .nav_item.active {
-  background: red
+  color: #495E8B;
 }
 
-.nav_item:last-child {
-  border: none
+.nav_item.active::after {
+  background: #495E8B;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 6rpx;
+  border-radius: 5rpx;
+  bottom: 0;
+  left: 0;
+  position: absolute
 }
+
 
 .download_history,
 .photo {
@@ -37,38 +61,310 @@
 .down_box {
   width: 100%;
   height: 100%;
-  background: #eee
+  margin: 20rpx auto
 }
 
-.photo{
-  background: #eee;
+.history_item {
+  width: 700rpx;
+  margin: auto;
+  background: #FFFFFF;
+  box-shadow: 0 0 4px 0 #D9DFED;
+  padding: 10rpx 20rpx;
+  box-sizing: border-box;
+  color: #495E8B;
+  margin-bottom: 30rpx
+}
+
+.history_item.active {
+  color: #A7B0C2;
+}
+
+.history_item .title {
+  display: flex;
+  justify-content: space-between;
+  height: 50rpx
+}
+
+.title_cont {
+  font-size: 28rpx;
+}
+
+.title_state {
+  font-size: 20rpx;
+}
+
+.img_box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.img_box image {
+  width: 216rpx;
+  height: 158rpx;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.bottom .info text {
+  margin-right: 20rpx;
+  font-size: 20rpx
+}
+
+.like_box text {
+  font-size: 20rpx;
+  margin-right: 20rpx;
+}
+
+.msg {
+  margin: 0 !important
+}
+
+.like::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 26rpx;
+  height: 22rpx;
+  background: url('https://www.mati.hk/Public/MiniProgram-note/index/like.png');
+  background-size: 100% 100%;
+  margin-right: 8rpx
+}
+
+.msg::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 26rpx;
+  height: 22rpx;
+  background: url('https://www.mati.hk/Public/MiniProgram-note/index/msg.png');
+  background-size: 100% 100%;
+  margin-right: 8rpx
+}
+
+
+
+
+.photo {
   width: 100%;
   height: 100%;
+  padding-bottom: 120rpx;
+  box-sizing: border-box
 }
-.photo_box{
+
+.photo_box {
   height: 100%;
 }
-.photo_cont{
+
+.photo_cont {
   display: flex;
   justify-content: space-around;
   flex-direction: row
 }
-.photo_cont .left,.photo_cont .right{
+
+.photo_cont .left,
+.photo_cont .right {
   width: 50%;
-  padding: 10rpx 5rpx;
-  box-sizing: border-box
+  box-sizing: border-box;
+  font-size: 0
 }
-.photo_cont image{
+
+.photo_cont .left {
+  padding-left: 20rpx;
+  padding-right: 10rpx
+}
+
+.photo_cont .right {
+  padding-right: 20rpx;
+  padding-left: 10rpx
+}
+
+.photo_cont .img {
+  position: relative;
+}
+
+.photo_cont .img.active::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 10rpx;
+  top: 10rpx;
+  background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_kv.png');
+  background-size: 100% 100%;
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.photo_cont image {
   width: 100%;
-  background: #ffffff
+  background: #ffffff;
+  margin-bottom: 20rpx;
+  border-radius: 5px
 }
 
-
-.user{
-  width: 150rpx;
-  height: 150rpx;
+.photo_bottom {
   position: fixed;
-  right: 0;
-  bottom: 100rpx;
-  background: #ffffff
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-around;
+  background: #FFFFFF;
+  box-shadow: 0 -2px 2px 0 rgba(87, 90, 102, 0.30);
+}
+
+.photo_bottom view {
+  width: 50%;
+  text-align: center;
+  line-height: 100rpx;
+  height: 100%;
+  font-size: 36rpx;
+  color: #39CCE1;
+}
+
+.user {
+  position: fixed;
+  right: 20rpx;
+  bottom: 30rpx;
+}
+
+.user view {
+  width: 96rpx;
+  height: 96rpx;
+  margin-top: 20rpx;
+  background: #eee;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 8px 0 #A7B0C2;
+}
+
+.user image {
+  width: 100%;
+}
+
+.login {
+  width: 100%;
+  height: 100%;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0
+}
+
+.label_box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #ffffff;
+  z-index: 10;
+  transform: translateY(100%)
+}
+
+.box_cont {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 100rpx;
+}
+
+.cont_item {
+  padding: 40rpx 0;
+  margin: 0 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d5d5d5
+}
+
+.cont_item:nth-child(1) {
+  color: #4A90E2;
+}
+
+.cont_item:nth-child(2) {
+  color: #F6AC62;
+}
+
+.cont_item:nth-child(3) {
+  color: #D986FD;
+}
+
+.cont_item:nth-child(4) {
+  color: #FD6262;
+}
+
+.cont_item:nth-child(5) {
+  color: #4C4C4C;
+  border: none
+}
+
+.item_left {
+  flex-shrink: 0;
+  margin-right: 30rpx
+}
+
+.item_left view {
+  font-size: 24rpx;
+  text-align: center
+}
+
+.item_left image {
+  width: 65rpx;
+  height: 65rpx;
+  display: block;
+  margin: auto
+}
+
+.item_right {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap
+}
+
+.item_right .label {
+  font-size: 32rpx;
+  border: 1px solid #4A90E2;
+  margin: 0 10rpx;
+  padding: 6rpx 30rpx;
+  margin-bottom: 34rpx;
+  border-radius: 30px;
+}
+
+.box_btn {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.box_btn view {
+  width: 50%;
+  height: 100%;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 36rpx;
+  box-shadow: 0 -2px 2px 0 rgba(87, 90, 102, 0.30);
+}
+
+.clear {
+  background: #ffffff;
+  color: #39CCE1;
+}
+
+.enter {
+  background: #39CCE1;
+  color: #ffffff;
 }

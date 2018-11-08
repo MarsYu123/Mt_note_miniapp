@@ -1,0 +1,264 @@
+/* pages/vip/vip.wxss */
+
+.vip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-right: 10rpx;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #f7f7fa;
+}
+
+.kv {
+    width: 100%;
+    height: 220rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/vip_kv.png');
+    background-size: 100% 100%;
+    display: flex;
+    padding: 10rpx 104rpx;
+    margin-bottom: 40rpx
+}
+
+.tx {
+    width: 135rpx;
+    height: 135rpx;
+    display: block;
+    border-radius: 50%
+}
+
+.user_info .name {
+    font-size: 36rpx;
+    color: #FFFFFF;
+}
+
+.user_info .info {
+    font-size: 24rpx;
+    color: #FFFFFF;
+}
+
+.user_info .info::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/vip_icon.png');
+    width: 52rpx;
+    height: 18rpx;
+    margin-right: 30rpx;
+    background-size: 100% 100%;
+
+}
+
+
+.store_nav {
+    width: 100%;
+    height: 96rpx;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 2px 4px 0 #D9DFED;
+    margin-bottom: 30rpx
+}
+
+.nav_item {
+    padding: 0 40rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    text-align: center;
+    position: relative;
+    font-size: 16px;
+    color: #A7B0C2;
+}
+
+.nav_item.active {
+    color: #39CCE1;
+}
+
+.nav_item.active::after {
+    background: #39CCE1;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 6rpx;
+    border-radius: 5rpx;
+    bottom: 0;
+    left: 0;
+    position: absolute
+}
+
+.money_check {
+    margin: 40rpx auto;
+    background: #ffffff;
+    margin-bottom: 20rpx;
+    overflow: hidden;
+}
+
+.money_item {
+    margin: auto;
+    width: 620rpx;
+    height: 108rpx;
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #A7B0C2;
+    margin-bottom: 20rpx;
+    padding-left: 50rpx;
+    border-radius: 3px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.money_item .h3 {
+    font-size: 28rpx;
+    color: #495E8B;
+    margin-right: 70rpx;
+}
+
+.money_item .h4 {
+    color: #A7B0C2;
+    font-size: 24rpx;
+}
+
+.money_item .h1 {
+    font-size: 64rpx;
+    color: #E62112;
+    width: 180rpx;
+    text-align: left
+}
+
+.money_item .h1 text {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.money_item.active {
+    border: 1px solid #E62112;
+}
+
+.money_item.active::after {
+    display: block;
+    content: '';
+    width: 64rpx;
+    height: 56rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/check.png');
+    background-size: 100% 100%;
+    position: absolute;
+    right: 0;
+    bottom: 0
+}
+
+.end_time {
+    text-align: right;
+    width: 100%;
+    padding: 0 40rpx;
+    font-size: 20rpx;
+    color: #A7B0C2;
+    box-sizing: border-box;
+    margin-bottom: 15rpx
+}
+
+.ticket_check {
+    width: 100%;
+    height: 86rpx;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40rpx;
+    background: #ffffff;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 20rpx
+}
+
+.ticket_check .title {
+    font-size: 32rpx;
+    color: #495E8B;
+
+}
+
+.ticket_check .right {
+    display: flex;
+    align-items: center
+}
+
+.ticket_check .right::after {
+    display: block;
+    content: '';
+    border-right: 1.5px #39CCE1 solid;
+    border-bottom: 1.5px #39CCE1 solid;
+    width: 18rpx;
+    height: 18rpx;
+    transform: rotate(-45deg);
+    margin-left: 24rpx
+}
+
+.ticket_check .num {
+    padding-left: 14rpx;
+    padding-right: 8rpx;
+    height: 40rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/ticket_bg.png');
+    background-size: 100% 100%;
+    font-size: 22rpx;
+    color: #ffffff;
+    display: flex;
+    align-items: center
+}
+
+.ticket_check .num::before {
+    content: '';
+    display: block;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/ticket_icon.png');
+    background-size: 100% 100%;
+    width: 28rpx;
+    height: 20rpx;
+    margin-right: 8rpx
+}
+
+.vip_msg {
+    width: 100%;
+}
+
+
+.order_list {
+    width: 670rpx;
+    margin: 40rpx auto;
+}
+
+.order_item {
+    width: 100%;
+    box-shadow: 0 2px 7px 0 #D9DFED;
+    background: #ffffff
+}
+
+.order_item .title {
+    display: flex;
+    padding: 0 40rpx;
+    height: 120rpx;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #A7B0C2
+}
+
+.order_no {
+    font-size: 30rpx;
+    color: #495E8B;
+}
+
+.order_state {
+    font-size: 30rpx;
+    color: #E62112;
+}
+
+.order_info {
+    padding: 30rpx 40rpx
+}
+
+.info_item {
+    font-size: 30rpx;
+    color: #495E8B;
+    margin-bottom: 14rpx
+}
+
+.info_item:last-child {
+    margin: 0
+}

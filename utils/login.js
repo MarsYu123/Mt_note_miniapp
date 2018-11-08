@@ -77,7 +77,8 @@ function get_user_info(that, e) {
     }
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.globalData = e.detail
-      app.profile = e.detail.userInfo.userInfo.avatarUrl
+      console.log(e.detail.userInfo)
+      app.profile = e.detail.userInfo.avatarUrl
       userlogin(that);
       get_info()
     } else {

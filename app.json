@@ -8,7 +8,9 @@
     "pages/user_edit/user_edit",
     "pages/integral/integral",
     "pages/store/store",
-    "pages/coupon/coupon"
+    "pages/coupon/coupon",
+    "pages/vip/vip",
+    "pages/ticket/ticket"
   ],
   "window": {
     "backgroundTextStyle": "light",

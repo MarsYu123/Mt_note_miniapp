@@ -1,0 +1,66 @@
+/* pages/ticket/ticket.wxss */
+@import '../store/store.wxss';
+.ticket{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-right: 10rpx;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #f7f7fa;
+}
+.store_list {
+    margin: 32rpx 64rpx;
+    padding-bottom: 130rpx
+}
+
+.store_left {
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg2.png');
+    background-size: 100% 100%;
+    position: relative;
+    width: 542rpx;
+    height: 208rpx;
+}
+
+.store_title {
+    top: 8rpx;
+    left: 50rpx;
+}
+
+.store_tips {
+    top: 98rpx;
+    left: 50rpx;
+}
+
+.store_tips view {
+    margin-bottom: 10rpx
+}
+
+.store_right {
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: 50%;
+    border: #39cce1 1px solid;
+    box-sizing: border-box
+}
+
+.active .store_right {
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/checked.png');
+    background-size: 100% 100%;
+    border: none
+}
+
+.submit {
+    width: 100%;
+    position: fixed;
+    height: 100rpx;
+    line-height: 100rpx;
+    background: #39CCE1;
+    box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.07);
+    color: #ffffff;
+    font-size: 36rpx;
+    bottom: 0;
+    left: 0;
+    text-align: center
+}

@@ -99,7 +99,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20rpx
+    margin-bottom: 20rpx;
+    position: relative;
 }
 
 .store_left {

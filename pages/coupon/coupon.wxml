@@ -6,7 +6,8 @@
         </view>
     </view>
 
-      <view class="store_list">
+    <block wx:if="{{class == 0}}">
+        <view class="store_list">
             <view class="store_item">
                 <view class="store_left">
                     <view class="store_title">
@@ -20,4 +21,22 @@
                 </view>
             </view>
         </view>
+    </block>
+
+    <block wx:if="{{class == 1}}">
+         <view class="store_list active">
+            <view class="store_item">
+                <view class="store_left">
+                    <view class="store_title">
+                        <text class="h3">￥</text>
+                        <text class="h1">11</text>
+                        <text class="h3">代金券</text>
+                    </view>
+                    <view class="store_tips">
+                        仅限于购买月VIP会员时使用
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
 </view>

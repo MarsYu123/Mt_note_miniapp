@@ -26,7 +26,7 @@ App({
     login: 'Notelogin/login',    //获取登陆解锁信息
     pictureHome: 'Notepic/pictureHome', //图库数据
     labelPicMore: 'Notepic/labelPicMore',  //图库瀑布流加载更多
-    downTest: 'Notepic/downTest', // 下载
+    downTest: 'Notearticle/tt', // 下载
     getUserData: 'Noteuser/getUserData', //用户资料中心
     saveData: 'Noteuser/saveData' //提交资料
   },
