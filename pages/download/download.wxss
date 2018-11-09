@@ -1,1 +1,142 @@
 /* pages/download/download.wxss */
+@import '../article/article.wxss';
+
+.img:last-child::after {
+    content: '' !important;
+    height: 138rpx;
+    line-height: 138rpx;
+    width: 100%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.80) url('https://www.mati.hk/Public/MiniProgram-note/index/lock.png') no-repeat !important;
+    background-size: 48rpx 56rpx !important;
+    background-position: 80rpx 40rpx !important;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 28rpx;
+    color: #3489FF;
+}
+
+.img.active::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 10rpx;
+    top: 10rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/checked.png');
+    background-size: 100% 100%;
+    width: 30rpx;
+    height: 30rpx;
+}
+
+.tips {
+    font-size: 12px;
+    color: #495E8B;
+    width: 100%;
+    text-align: center
+}
+
+.tips text {
+    color: #F05D5C;
+}
+
+.download_btn {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.download_tips {
+    width: 100%;
+    height: 60rpx;
+    line-height: 60rpx;
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px 0 #D9DFED;
+    text-align: center;
+    font-size: 12px;
+    color: #495E8B;
+}
+
+.download_tips text {
+    color: #F05D5C;
+}
+
+.download_enter {
+    width: 100%;
+    height: 98rpx;
+    line-height: 98rpx;
+    background: #39CCE1;
+    box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.07);
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.download_check {
+    width: 100%;
+    height: 98rpx;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.check {
+    width: 458rpx;
+    height: 100%;
+    line-height: 98rpx;
+    display: flex;
+    background: #FFFFFF;
+    flex-shrink: 0
+}
+
+.all_check {
+    position: relative;
+    font-size: 32rpx;
+    color: #39CCE1;
+    padding-left: 80rpx;
+    margin-right: 40rpx;
+    box-sizing: border-box
+}
+
+.all_check::before {
+    display: block;
+    width: 30rpx;
+    height: 30rpx;
+    border-radius: 50%;
+    border: #39CCE1 solid 1px;
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 30rpx;
+}
+.all_check.active::before{
+    border:none
+}
+.all_check.active::after{
+    display: block;
+    width: 32rpx;
+    height: 32rpx;
+    border-radius: 50%;
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 28rpx;
+    background-image: url("https://www.mati.hk/Public/MiniProgram-note/user/checked.png");
+    background-size: 100% 100%;
+}
+
+.check_num {
+    font-size: 32rpx;
+    color: #39CCE1;
+}
+.download_enter{
+    flex-grow: 1;
+    background: #39CCE1;
+    color: #FFFFFF;
+    font-size: 36rpx;
+}

@@ -127,8 +127,9 @@
   content: '';
   display: inline-block;
   vertical-align: middle;
-  width: 26rpx;
-  height: 22rpx;
+  width: 24rpx;
+  height: 24rpx;
+  padding-bottom: 3rpx;
   background: url('https://www.mati.hk/Public/MiniProgram-note/index/like.png');
   background-size: 100% 100%;
   margin-right: 8rpx
@@ -192,7 +193,7 @@
   position: absolute;
   right: 10rpx;
   top: 10rpx;
-  background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_kv.png');
+  background: url('https://www.mati.hk/Public/MiniProgram-note/user/checked.png');
   background-size: 100% 100%;
   width: 30rpx;
   height: 30rpx;

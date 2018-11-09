@@ -1,0 +1,146 @@
+/* pages/login/login.wxss */
+
+.login{
+    margin-top: 132rpx;
+}
+
+button::after {
+    border: none
+}
+
+.phone,
+.check_code,
+.password_box {
+    margin: 0 40rpx;
+    background: #fff;
+    font-size: 30rpx;
+    color: #000;
+    overflow: hidden;
+    line-height: 95rpx;
+    position: relative;
+}
+
+.phone_box {
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    border-bottom: solid 1px #edebeb;
+    text-align: left;
+}
+
+.phone_text {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.phone_num,
+.password {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 30rpx;
+    line-height: 95rpx;
+    width: 500rpx;
+    height: 95rpx;
+    margin-left: 20rpx;
+}
+
+.check_code .phone_num {
+    width: 300rpx
+}
+
+.get_msg {
+    margin: 20rpx auto;
+    width: 170rpx;
+    height: 50rpx;
+    border: 1px #000 solid;
+    color: #495E8B;
+    font-size: 24rpx;
+    margin: 0;
+    background: transparent;
+    position: absolute;
+    top: 28rpx;
+    right: 16rpx;
+    line-height: 50rpx;
+    padding: 0;
+    z-index: 100;
+}
+.get_msg::after{
+    border: none;
+    background: transparent
+}
+
+.get_msg[disabled]:not([type]) {
+    border: none;
+    border-radius: 2px;
+    background: transparent
+}
+
+.check_code .phone_box {
+    /* border: none */
+}
+
+.password_box .phone_box {
+    /* border-bottom: none; */
+    border-top: solid 1px #edebeb;
+}
+
+button {
+    border-radius: 2px;
+}
+
+.phone_up {
+    width: 298rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    margin: auto;
+    color: #fff;
+    border: none;
+    margin-top: 120rpx;
+    position: relative;
+    background: #39CCE1;
+box-shadow: 0 2px 4px 0 #A7B0C2;
+}
+
+.phone_up[disabled]:not([type]) {
+    border: none;
+    border-radius: 1px;
+    box-shadow: none
+}
+
+.input_msg {
+    font-size: 30rpx;
+    color: #aeadad;
+}
+
+.login_tips {
+    width: 565rpx;
+    height: 112rpx;
+    position: absolute;
+    bottom: 360rpx;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+.login_tips image {
+    width: 100%;
+    height: 100%;
+}
+
+page {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    background: 1px
+}
+
+.logo {
+    width: 335rpx;
+    height: 57rpx;
+    margin: auto;
+    margin-top: 70rpx;
+    margin-bottom: 60rpx;
+}
+
+.logo image {
+    width: 100%;
+    height: 100%;
+}

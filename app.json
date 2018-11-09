@@ -10,7 +10,9 @@
     "pages/store/store",
     "pages/coupon/coupon",
     "pages/vip/vip",
-    "pages/ticket/ticket"
+    "pages/ticket/ticket",
+    "pages/article/article",
+    "pages/login/login"
   ],
   "window": {
     "backgroundTextStyle": "light",

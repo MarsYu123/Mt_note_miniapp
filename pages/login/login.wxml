@@ -1,0 +1,33 @@
+<!--pages/login/login.wxml-->
+<view class="login">
+
+  <view class="phone">
+    <view class="phone_box">
+      <text class="phone_icon"></text>
+      <input class="phone_num" type="text" bindinput="phone_inp" placeholder="请填写手机号" placeholder-class="input_msg"></input>
+      <icon size="25" type="{{button.icons}}" wx:if="{{button.icons}}"></icon>
+    </view>
+  </view>
+  <view class="check_code">
+    <view class="phone_box">
+      <text class="check_icon"></text>
+      <input class="phone_num" type="idcard" bindinput="check_inp" placeholder="填写验证码" placeholder-class="input_msg"></input>
+      <button class="get_msg" bindtap="phone_up" disabled="{{button.check_flag}}">
+        {{button.msg}}
+      </button>
+    </view>
+  </view>
+  <view class="password_box" wx:if="{{button.new_user}}">
+    <view class="phone_box">
+      <text class="password_icon"></text>
+      <input class="password" type="text" password="true" bindinput="password_num" placeholder="输入密码，5-12位英文、数字、符号，区分大小写"
+        placeholder-class="input_msg"></input>
+    </view>
+  </view>
+  <button class="phone_up" bindtap="check_up" disabled="{{!button.up}}">提交</button>
+  <view>
+  </view>
+  <view class="login_tips">
+    <image src="https://home.mati.hk/Public/web_image/login/login_tips.png" />
+  </view>
+</view>

@@ -2,3 +2,55 @@
 
 <button open-type='openSetting' wx:if="{{opensetting}}">授权保存</button>
 <view bindtap='save_image'>保存</view>
+
+<view class="article">
+    <view class="article_cont">
+        <view class="title">
+            <text class="article_title">这是文章标题</text>
+            <text class="download_state">已下载</text>
+        </view>
+        <view class="article_info">
+            <view class="source">
+                <text>@美达(上海)设计有限公司…</text>
+                <text>2018/10/27</text>
+            </view>
+            <view class="like">
+                <text class="like_num">123</text>
+                <text class="msg_num">456</text>
+            </view>
+        </view>
+        <view class="article_img">
+            <view class="img" wx:for="{{9}}">
+                <image src="https://www.mati.hk/Public/Upload/Album/ykArticle/self/MT-brand20181106172606-2884447.jpg"
+                    mode="aspectFill" />
+            </view>
+        </view>
+        <view class="tips">
+            非会员仅显示20张,<text>充值会员</text>查看更多
+        </view>
+    </view>
+
+    <block wx:if="{{false}}">
+        <view class="download_btn">
+            <view class="download_tips">
+                非会员一天能下载20张图片，<text>充值会员</text>下载无上限
+            </view>
+            <view class="download_enter">
+                开始下载
+            </view>
+        </view>
+    </block>
+    <block wx:else>
+        <view class="download_check">
+            <view class="check">
+                <view class="all_check active">
+                    全选
+                </view>
+                <view class="check_num">
+                    50/60
+                </view>
+            </view>
+            <view class="download_enter">开始下载</view>
+        </view>
+    </block>
+</view>

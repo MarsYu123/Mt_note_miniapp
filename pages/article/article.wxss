@@ -1,0 +1,295 @@
+/* pages/article/article.wxss */
+.article {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding-right: 10rpx;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #f7f7fa;
+}
+
+.article_cont {
+    width: 710rpx;
+    margin: auto;
+    margin-top: 12rpx;
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px 0 #D9DFED;
+    padding: 20rpx;
+    box-sizing: border-box
+}
+
+.article_cont.active .title,
+.article_cont.active .article_info {
+    color: #A7B0C2;
+}
+
+.article_cont .title,
+.article_cont .article_info {
+    color: #495E8B;
+    font-size: 32rpx;
+    display: flex;
+    justify-content: space-between
+}
+
+.article_cont .article_title {
+    display: block;
+    width: 280rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.article_cont .download_state {
+    font-size: 28rpx;
+    color: #495E8B;
+}
+
+.article_info {
+    margin-top: 30rpx;
+    font-size: 24rpx !important;
+}
+
+.source {
+    display: flex
+}
+
+.article_info .source text:first-child {
+    display: block;
+    width: 302rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10rpx;
+}
+
+.like {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.like text {
+    margin-right: 10rpx
+}
+
+.like_num::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 24rpx;
+    height: 24rpx;
+    padding-bottom: 3rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/index/like.png');
+    background-size: 100% 100%;
+    margin-right: 8rpx
+}
+
+.msg_num::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 26rpx;
+    height: 22rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/index/msg.png');
+    background-size: 100% 100%;
+    margin-right: 8rpx
+}
+
+.article_img {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20rpx
+}
+
+.article_img .img {
+    position: relative;
+    margin-bottom: 10rpx;
+}
+
+.article_img image {
+    width: 216rpx;
+    height: 138rpx;
+}
+
+.article_img .img:last-child::after {
+    content: '查看下载';
+    height: 138rpx;
+    line-height: 138rpx;
+    width: 100%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.60);
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 28rpx;
+    color: #3489FF;
+}
+
+.download_num {
+    margin: 20rpx 0
+}
+
+.download_num .num_title {
+    font-size: 28rpx;
+    color: #495E8B;
+    padding: 0 40rpx
+}
+
+.download_num .tx_box {
+    margin: 22rpx 60rpx;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.download_num image {
+    width: 66rpx;
+    height: 66rpx;
+    border-radius: 50%;
+    background: #eeeeee;
+    margin: 7rpx
+}
+
+.tx_box .img_tips {
+    width: 66rpx;
+    height: 66rpx;
+    border-radius: 50%;
+    background: #9e9e9e;
+    margin: 7rpx;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 66rpx;
+    font-size: 20rpx
+}
+
+.comment {
+    margin: 20rpx;
+    background: #FFFFFF;
+    padding: 20rpx;
+    box-sizing: border-box
+}
+
+
+.comment .title {
+    font-size: 28rpx;
+    color: #495E8B;
+    margin-bottom: 20rpx
+}
+
+.comment .title text:last-child {
+    color: #3489FF;
+    margin-left: 20rpx
+}
+
+.comment_box {
+    width: 100%;
+    padding: 10rpx 20rpx;
+    font-size: 20rpx;
+    border-radius: 3px;
+    border: 1px solid #D8E7ED;
+}
+
+.comment_btn {
+    width: 120rpx;
+    height: 60rpx;
+    border-radius: 3px;
+    color: #FFFFFF;
+    background: #39CCE1;
+    font-size: 26rpx;
+    line-height: 60rpx;
+    text-align: center;
+    margin-top: 10rpx;
+    float: right;
+}
+
+.comment_list {
+    width: 100%;
+    margin-top: 20rpx
+}
+
+.comment_item {
+    display: flex;
+    border-bottom: 1px solid #D8E7ED;
+    align-items: center
+}
+
+.comment_item:last-child {
+    border: none
+}
+
+.comment_item image {
+    width: 66rpx;
+    height: 66rpx;
+    margin-right: 20rpx;
+    flex-shrink: 0
+}
+
+.item_right {
+    flex-grow: 1;
+}
+
+.right_title {
+    font-size: 26rpx;
+    color: #495E8B;
+    margin-bottom: 20rpx;
+}
+
+.right_bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20rpx;
+    padding-right: 20rpx;
+    box-sizing: border-box
+}
+
+.right_bottom text:first-child {
+    flex-grow: 1;
+    font-size: 24rpx;
+    color: #495E8B;
+}
+
+.right_bottom text:last-child {
+    flex-shrink: 0;
+    padding-left: 30rpx;
+    font-size: 20rpx;
+    color: #A7B0C2;
+}
+
+.float {
+    position: fixed;
+    right: 30rpx;
+    bottom: 60rpx;
+}
+
+.float view {
+    width: 75rpx;
+    height: 75rpx;
+    border-radius: 50%;
+    background-size: 100% 100%;
+    box-shadow: 0 2px 7px 0 #A7B0C2;
+    margin-bottom: 20rpx
+}
+
+.like_btn {
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/like_btn.png');
+    box-shadow: 0 2px 7px 0 #DE84AB !important;
+}
+
+.like_btn.active {
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/like_btn_active.png');
+    box-shadow: 0 2px 7px 0 #A7B0C2 !important;
+}
+
+.share_btn {
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/share.png');
+}
+
+.download_btn {
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/download.png');
+}

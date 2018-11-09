@@ -1,0 +1,69 @@
+<!--pages/article/article.wxml-->
+<view class="article">
+    <view class="article_cont">
+        <view class="title">
+            <text class="article_title">这是文章标题</text>
+            <text class="download_state">已下载</text>
+        </view>
+        <view class="article_info">
+            <view class="source">
+                <text>@美达(上海)设计有限公司…</text>
+                <text>2018/10/27</text>
+            </view>
+            <view class="like">
+                <text class="like_num">123</text>
+                <text class="msg_num">456</text>
+            </view>
+        </view>
+        <view class="article_img">
+            <view class="img" wx:for="{{9}}">
+                <image src="" mode="widthFix" />
+            </view>
+        </view>
+    </view>
+
+
+    <view class="download_num">
+        <view class="num_title">
+            下载用户
+        </view>
+        <view class="tx_box">
+            <image wx:for="{{15}}" src="" mode="widthFix"/>
+            <view class="img_tips">123</view>
+        </view>
+    </view>
+
+<!-- 评论 -->
+    <view class="comment">
+        <view class="title">
+            <text>评论</text>
+            <text>每日评论+5积分</text>
+        </view>
+        <input class="comment_box" placeholder="请输入您的评论" placeholder-style="color: #A7B0C2;" />
+        <view class="comment_btn">提交</view>
+        <view style="content: '';display: block;clear: both"></view>
+        <view class="comment_list">
+            <view class="comment_item">
+                <image src=""  mode="widthFix"/>
+                <view class="item_right">
+                    <view class="right_title">
+                        丽丽
+                    </view>
+                    <view class="right_bottom">
+                        <text>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</text>
+                        <text>2018/11/01</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="float">
+        <view class="like_btn">
+        </view>
+        <view class="share_btn">
+        </view>
+        <view class="download_btn">
+        </view>
+    </view>
+</view>

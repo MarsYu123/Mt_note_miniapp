@@ -18,18 +18,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.request({
-      url: app.url.downTest,
-      method: 'GET',
-      data: {},
-      header: 'application/x-www-form-urlencoded',
-      success: (e) => {
-        console.log(e)
-        var data = e.data.data
-        this.data.img = data
-      },
-      fail: () => {}
-    });
+    // wx.request({
+    //   url: app.url.downTest,
+    //   method: 'GET',
+    //   data: {},
+    //   header: 'application/x-www-form-urlencoded',
+    //   success: (e) => {
+    //     console.log(e)
+    //     var data = e.data.data
+    //     this.data.img = data
+    //   },
+    //   fail: () => {}
+    // });
   },
 
   save_image: function () {

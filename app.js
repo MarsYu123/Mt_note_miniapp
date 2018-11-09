@@ -15,7 +15,7 @@ App({
     });
   },
   // 小程序域名
-  host: 'https://caiji.mati.hk/Mobile/', 
+  host: 'https://www.mati.hk/Mobile/', 
 
   //  图片加速域名
   img_host: 'https://img.mati.hk/Public/',
