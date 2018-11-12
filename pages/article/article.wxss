@@ -35,7 +35,7 @@
 
 .article_cont .article_title {
     display: block;
-    width: 280rpx;
+    width: 540rpx;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -215,7 +215,7 @@
 .comment_item {
     display: flex;
     border-bottom: 1px solid #D8E7ED;
-    align-items: center
+    align-items: flex-start
 }
 
 .comment_item:last-child {
@@ -226,7 +226,10 @@
     width: 66rpx;
     height: 66rpx;
     margin-right: 20rpx;
-    flex-shrink: 0
+    flex-shrink: 0;
+    border-radius: 50%;
+    margin-top:20rpx;
+
 }
 
 .item_right {

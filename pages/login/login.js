@@ -35,11 +35,8 @@ Page({
     })
     console.log(options)
     var type = '';
-    var course_id = '';
     if (options.type) {
       type = options.type;
-    } else if (options.course_id) {
-      course_id = options.course_id;
     }
     // wx.showNavigationBarLoading()
     var that = this;
@@ -297,10 +294,15 @@ Page({
             })
             app.open_user = e.data.data
             app.bind = true
-            console.log(that.data.type)
+            var type = that.data.type
+            // if(type == 'record_article'){
+              
+            // }else{
+              
+            // }
             setTimeout(function () {
-                wx.navigateBack()
-            }, 500)
+              wx.navigateBack()
+          }, 500)
           } else if (e.data.status == '3005') {
             wx.showToast({
               title: "密码格式不正确",

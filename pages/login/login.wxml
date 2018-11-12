@@ -24,7 +24,7 @@
         placeholder-class="input_msg"></input>
     </view>
   </view>
-  <button class="phone_up" bindtap="check_up" disabled="{{!button.up}}">提交</button>
+  <button class="phone_up" bindtap="check_up" disabled="{{!button.up}}">绑定</button>
   <view>
   </view>
   <view class="login_tips">

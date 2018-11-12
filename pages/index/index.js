@@ -25,7 +25,11 @@ Page({
     async: true,
     animate: {},
     is_check: false,
-    download_img: []
+    download_img: [],
+    box_link: true,  //链接box是否显示
+    link_cont: '', //复制的链接内容
+    getuser_type: '', //未授权时点击记录文章或前往下载后自动操作
+    history_cont:{}  //下载历史文章记录
   },
 
   // 登陆后获取信息
@@ -34,6 +38,11 @@ Page({
       is_getuser: true,
       user_info: app.open_user
     })
+    this.download_history()
+    if(this.data.getuser_type != '' ){
+      this.link_add(this.data.getuser_type)
+      this.data.getuser_type = ''
+    }
   },
 
   //导航
@@ -50,6 +59,160 @@ Page({
       url: '../logs/logs'
     })
   },
+
+  // 关闭链接窗口
+  clear_link:function () {
+    this.setData({
+      box_link: false
+    })
+  },
+
+  // 获取链接内容
+  link_change:function (e) {
+    var val = e.detail.value;
+    this.setData({
+      link_cont: val
+    })
+  },
+
+  // 记录文章
+  record_article:function () {    
+    if( JSON.stringify(app.open_user.note_openid) !=''){
+        this.link_add(1)
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '您暂未注册，请注册后使用',
+        showCancel: true,
+        cancelText: '取消',
+        cancelColor: '#000000',
+        confirmText: '确定',
+        confirmColor: '#3CC51F',
+        success: res => {
+          if(res.confirm){
+            wx.navigateTo({
+              url: '../login/login'
+            });
+          }
+        }
+      });
+    }
+  },
+
+  // 前往下载
+  dowload_article:function () {
+    if( JSON.stringify(app.open_user.note_openid) !=''){
+      this.link_add(2)
+  }else{
+    wx.showModal({
+      title: '提示',
+      content: '您暂未注册，请注册后使用',
+      showCancel: true,
+      cancelText: '取消',
+      cancelColor: '#000000',
+      confirmText: '确定',
+      confirmColor: '#3CC51F',
+      success: res => {
+        if(res.confirm){
+          wx.navigateTo({
+            url: '../login/login'
+          });
+        }
+      }
+    });
+  }
+  },
+
+  // 链接采集
+
+  link_add:function (type) {
+    var that = this;
+    var url = that.data.link_cont
+    if(module_login.remove_space(this.data.link_cont) == ''){
+      wx.showToast({
+        title: '请勿输入空字符',
+        icon: 'none',
+        duration: 1500,
+        mask: false,
+      });
+    }else{
+      wx.request({
+        url: app.url.addUrl,
+        method: 'POST',
+        data: {
+          url: url,
+          uid: app.open_user.uid,
+          download_kind: type
+        },
+        header: app.header,
+        success: (e)=>{
+          console.log(e)
+          var status = e.data.status;
+          var content= ''
+          if(status == '444'){
+            content = "非会员一天只能下载一次"
+          }else if(status == '500'||status == '502'||status == '505'){
+            content = "网络故障，请稍后重试"
+          }else if(status == '402'){
+            content = "只接收微信文章链接"
+          }else if(status == '555'){
+            content = "您不是VIP用户"
+          }else if(status == '200'){
+            that.setData({
+              box_link: false,
+              link_cont: ''
+            })
+            if(type == 1){
+
+            }else if(type == 2){
+              wx.navigateTo({
+                url: '../download/download'
+              });
+            } 
+          }
+          if(content != ''){
+            wx.showToast({
+              title: content,
+              icon: 'none',
+              duration: 1500,
+              mask: false,
+            });
+          }
+        },
+        fail: ()=>{}
+      });
+    }
+  },
+
+
+
+  // 下载记录获取
+  download_history:function () {
+    var that = this;
+    wx.request({
+      url: app.url.downloadHistory,
+      method: 'POST',
+      data: {
+        uid: app.open_user.uid
+      },
+      header: app.header,
+      success: (e)=>{
+        that.setData({
+          history_cont: e.data.data
+        })
+      },
+      fail: ()=>{}
+    });
+  },
+
+  // 点击进入详情页
+  nva_article:function (e) {
+    var id = e.currentTarget.dataset.article
+    wx.navigateTo({
+      url: '../article/article?article_id='+id
+    });
+  },
+
 
   // 判断图片尺寸
   img_load: function (e) {
@@ -267,6 +430,9 @@ Page({
     })
   },
   getUserInfo: function (e) {
+    console.log(e.target.dataset.type)
+    var type = e.target.dataset.type;
+    this.data.getuser_type = type
     module_login.get_user_info(this, e);
   },
 

@@ -28,7 +28,12 @@ App({
     labelPicMore: 'Notepic/labelPicMore',  //图库瀑布流加载更多
     downTest: 'Notearticle/tt', // 下载
     getUserData: 'Noteuser/getUserData', //用户资料中心
-    saveData: 'Noteuser/saveData' //提交资料
+    saveData: 'Noteuser/saveData', //提交资料
+    downloadHistory: 'Notearticle/downloadHistory', //下载记录数据
+    addUrl: 'Noteindex/addUrl',  //采集链接
+    articleDetail: 'Notearticle/articleDetail', // 文章详情页内容
+    articleReply: 'Notearticle/articleReply', //提交文章评论
+    getReply: 'Notearticle/getReply' //获取文章评论
   },
 
   //post请求的header头

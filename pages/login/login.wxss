@@ -26,7 +26,30 @@ button::after {
     border-bottom: solid 1px #edebeb;
     text-align: left;
 }
-
+.phone_icon{
+    vertical-align: middle;
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/phone.png');
+    background-size: 100% 100%;
+    width: 42rpx;
+    height: 42rpx;
+    display: inline-block;
+}
+.check_icon{
+    vertical-align: middle;
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/check.png');
+    background-size: 100% 100%;
+    width: 46rpx;
+    height: 32rpx;
+    display: inline-block;
+}
+.password_icon{
+    vertical-align: middle;
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/password.png');
+    background-size: 100% 100%;
+    width: 50rpx;
+    height: 20rpx;
+    display: inline-block;
+}
 .phone_text {
     display: inline-block;
     vertical-align: bottom;
@@ -40,7 +63,7 @@ button::after {
     line-height: 95rpx;
     width: 500rpx;
     height: 95rpx;
-    margin-left: 20rpx;
+    margin-left: 40rpx;
 }
 
 .check_code .phone_num {

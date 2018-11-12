@@ -216,6 +216,7 @@ function unlock(e) {
 }
 
 
+// 科学计数法
 function num_slice(e) {
   var data = e;
   if(typeof data != 'string'){
@@ -224,6 +225,12 @@ function num_slice(e) {
 
   var money = data.replace(/(\d)(?=(\d{3})+$)/g, "$1,");
   return money;
+}
+
+// 清除所有空格
+
+function remove_space(e) {
+  return e.replace(/\s+/g, "");
 }
 
 
@@ -296,5 +303,6 @@ module.exports.unlock = unlock;
 module.exports.wx_login = wx_login;
 module.exports.get_user_info = get_user_info;
 module.exports.getsession = getsession;
-module.exports.num_slice = num_slice
-module.exports.pay = pay
+module.exports.num_slice = num_slice;
+module.exports.pay = pay;
+module.exports.remove_space = remove_space
