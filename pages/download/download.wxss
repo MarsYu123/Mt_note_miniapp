@@ -1,7 +1,7 @@
 /* pages/download/download.wxss */
 @import '../article/article.wxss';
 
-.img:last-child::after {
+.no_check:last-child::after {
     content: '' !important;
     height: 138rpx;
     line-height: 138rpx;

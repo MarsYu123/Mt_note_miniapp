@@ -33,7 +33,10 @@ App({
     addUrl: 'Noteindex/addUrl',  //采集链接
     articleDetail: 'Notearticle/articleDetail', // 文章详情页内容
     articleReply: 'Notearticle/articleReply', //提交文章评论
-    getReply: 'Notearticle/getReply' //获取文章评论
+    getReply: 'Notearticle/getReply', //获取文章评论
+    articleLike: 'Notearticle/articleLike',  //文章点赞
+    getLabels: 'Notepic/getLabels',  //获取标签
+    toArticlePic: 'Notearticle/toArticlePic',  //文章下载页面获取资料
   },
 
   //post请求的header头
@@ -60,5 +63,8 @@ App({
   bind_user: false, 
 
   //用户数据
-  open_user:{}
+  open_user:{},
+
+  // 临时存储文章信息
+  article_msg:{}
 })

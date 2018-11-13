@@ -8,43 +8,52 @@
   </view>
 
   <block wx:if="{{nav_index == 0}}">
-    <view class="download_history">
-      <scroll-view class="down_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_download"
-        enable-back-to-top="true">
-        <block wx:for="{{history_cont}}">
-          <view class="history_item active" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
-            <view class="title">
-              <text class="title_cont">{{item.title}}</text>
-              <text class="title_state">{{item.is_download == '0'?'已下载':'未下载'}}</text>
-            </view>
-            <view class="img_box">
-              <block wx:for="{{item.img}}">
-               <image src="{{item}}" mode="aspectFill" />
-              </block>
-            </view>
-            <view class="bottom">
-              <view class="info">
-                <text>{{item.source}}</text>
-                <text>{{item.create_time}}</text>
+    <block wx:if="{{is_getuser}}">
+      <view class="download_history">
+        <scroll-view class="down_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_download"
+          enable-back-to-top="true">
+          <block wx:for="{{history_cont}}">
+            <view class="history_item active" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
+              <view class="title">
+                <text class="title_cont">{{item.title}}</text>
+                <text class="title_state">{{item.is_download == '0'?'已下载':'未下载'}}</text>
               </view>
-              <view class="like_box">
-                <text class="like">{{item.like_count}}</text>
-                <text class="msg">{{item.reply_count}}</text>
+              <view class="img_box">
+                <block wx:for="{{item.img}}">
+                  <image src="{{item}}" mode="aspectFill" />
+                </block>
+              </view>
+              <view class="bottom">
+                <view class="info">
+                  <text>{{item.source}}</text>
+                  <text>{{item.create_time}}</text>
+                </view>
+                <view class="like_box">
+                  <text class="like">{{item.like_count}}</text>
+                  <text class="msg">{{item.reply_count}}</text>
+                </view>
               </view>
             </view>
-          </view>
 
-        </block>
+          </block>
 
 
-      </scroll-view>
-    </view>
+        </scroll-view>
+      </view>
+    </block>
+    <block wx:else>
+      <button class="login down" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+        登陆/注册
+      </button>
+    </block>
+
   </block>
 
   <block wx:else>
     <view class="photo">
       <view class="history_img" style="display:none">
-        <image wx:for="{{new_img}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" bindload="img_load" data-index="{{item.index}}" />
+        <image wx:for="{{new_img}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" bindload="img_load" data-index="{{item.index}}"
+          id="{{item.picture_id || ''}}" />
       </view>
       <scroll-view class="photo_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_photo"
         enable-back-to-top="true">
@@ -88,34 +97,26 @@
 
   <view class="label_box" animation="{{animate}}">
 
+
     <view class="box_cont">
-      <view class="cont_item">
-        <view class="item_left">
-          <image src="https://www.mati.hk/Public/MiniProgram-note/index/kjcj.png" />
-          <view>空间场景</view>
+      <block wx:for="{{label_nav}}">
+        <view class="cont_item">
+          <view class="item_left">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/index/{{item.key}}.png" />
+            <view>{{item.name}}</view>
+          </view>
+          <view class="item_right">
+            <view class="label {{item.label_id == label_checked? 'active':''}}" wx:for="{{all_label[item.key]}}"
+              data-id="{{item.label_id}}" bindtap="label_checked">{{item.label_name}}</view>
+          </view>
         </view>
-        <view class="item_right">
-          <view class="label">住宅</view>
-          <view class="label">住宅宅</view>
-          <view class="label">住宅</view>
-          <view class="label">住宅宅</view>
-          <view class="label">住宅</view>
-          <view class="label">住宅</view>
-          <view class="label">住宅</view>
-          <view class="label">住宅宅</view>
-          <view class="label">住宅宅</view>
-          <view class="label">住宅</view>
-          <view class="label">住宅</view>
-          <view class="label">住宅</view>
-          <view class="label">住宅</view>
-        </view>
-      </view>
+      </block>
     </view>
     <view class="box_btn">
-      <view class="clear" bindtap="clear_label">
+      <view class="clear" bindtap="clear_label" data-type="clear">
         取消
       </view>
-      <view class="enter">
+      <view class="enter" bindtap="clear_label" data-type="enter">
         确定
       </view>
     </view>
@@ -123,6 +124,8 @@
   </view>
 
   <view class="user">
+
+    <!-- 签到 -->
     <view class="sign_in">
       <image src='https://www.mati.hk/Public/MiniProgram-note/index/sign_in.png' mode="widthFix" bindtap="sign_in" />
 
@@ -130,6 +133,8 @@
         登陆/注册
       </button>
     </view>
+
+    <!-- 个人中心 -->
     <view class="tx">
       <image src='https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png' mode="widthFix" bindtap="nav_user" />
 
@@ -137,6 +142,8 @@
         登陆/注册
       </button>
     </view>
+
+    <!-- 新建下载 -->
     <view class="new_download">
       <image src='https://www.mati.hk/Public/MiniProgram-note/index/more.png' mode="widthFix" bindtap="new_donload" />
 

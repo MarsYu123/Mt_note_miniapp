@@ -10,7 +10,10 @@ Page({
     article_cont: {},  //文章数据
     reply_msg: {}, //获取留言内容
     reply_cont:'', //提交留言内容
-    async: true //同步控制
+    async: true, //同步控制
+    like_arr: {}, // 点赞情况
+    is_like: false,
+    is_vip: false // 是否vip
   },
 
   /**
@@ -19,8 +22,18 @@ Page({
   onLoad: function (options) {
     var id = options.article_id;
     var that = this;
+    var key = 'articleid_'+options.article_id
     that.data.article_id = id;
     console.log(id)
+    var like_arr = {};
+    if(wx.getStorageSync('like') != ""){
+      like_arr = wx.getStorageSync('like');
+    }
+    this.setData({
+      like_arr: like_arr,
+      is_like: like_arr[key] || false,
+      is_vip: app.open_user.is_vip
+    })
     wx.request({
       url: app.url.articleDetail,
       method: 'POST',
@@ -34,6 +47,16 @@ Page({
         that.setData({
           article_cont: e.data.data
         })
+        var article_msg = {
+          title: e.data.data.title,
+          time: e.data.data.create_time,
+          like: e.data.data.like_count,
+          source: e.data.data.source,
+          has_download: e.data.data.hasdownload,
+          reply_count: e.data.data.reply_count,
+          url: e.data.data.wx_url
+        }
+        app.article_msg = article_msg
       },
       fail: ()=>{}
     });
@@ -84,11 +107,25 @@ Page({
         header: app.header,
         success: (e)=>{
           console.log(e)
-          var status = e.data.data.status;
-          this.data.async = true
-          if(status == '200'){
+          var status = e.data.status;
+          this.data.async = true;
+          var reply_count = 'article_cont.reply_count';
+          var reply_num = that.data.article_cont.reply_count;
+          var reply_tips = '留言成功';
+          if(status == '200' || status == '2000'){
+            reply_num++;
+
+            that.setData({
+              [reply_count]: reply_num,
+              reply_cont: ''
+            })
+            that.getReply()
+
+            if(status == '2000'){
+              reply_tips = '留言成功，已完成今日留言任务'
+            }
             wx.showToast({
-              title: '留言成功',
+              title: reply_tips,
               icon: 'none',
               duration: 1500,
               mask: false,
@@ -116,7 +153,65 @@ Page({
     
   },
 
+  // 点赞文章
+  articleLike:function () {
+    var like_arr = this.data.like_arr;
+    console.log(JSON.stringify(wx.getStorageSync('like')))
+    
+    var that = this;
+    var type = 1;
+    var article_id = that.data.article_id;
+    var key = 'articleid_'+article_id;
+    var like_num = that.data.article_cont.like_count
+    if(JSON.stringify(like_arr) != "{}"){
+      if(like_arr[key]){
+        type = 2
+      }
+    }
+    if(that.data.async){
+      that.data.async = false
+      wx.request({
+        url: app.url.articleLike,
+        method: 'POST',
+        data: {
+          article_id: article_id,
+          like_kind: type
+        },
+        header: app.header,
+        success: (e)=>{
+          console.log(e)
+          that.data.async = true;
+          if(e.data.status == 200){
+            if(type == 1){
+              console.log(typeof like_arr)
+              like_arr[key] = true;
+              like_num++;
+            }else{
+              like_arr[key] = false;
+              like_num--
+            }
+            wx.setStorageSync('like', like_arr);
+            var like_count = 'article_cont.like_count'
+            that.setData({
+              like_arr: like_arr,
+              is_like: like_arr[key],
+              [like_count]: like_num
+            })
+          }
+        },
+        fail: ()=>{}
+      });
+    }
+  },
   
+
+  // 下载图片
+  download:function () {
+    wx.navigateTo({
+      url: '../download/download'
+    });
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -16,8 +16,14 @@
             </view>
         </view>
         <view class="article_img">
-            <view class="img" wx:for="{{article_cont.article_img}}">
-                <image src="{{item}}" mode="aspectFill" />
+            <view class="img no_check" wx:for="{{article_cont.article_img}}">
+                <block wx:if="{{index == article_cont.article_img.length-1}}">
+                    <image src="{{item}}" mode="aspectFill" bindtap='download'/>
+                </block>
+                <block wx:else>
+                    <image src="{{item}}" mode="aspectFill" />
+                </block>
+
             </view>
         </view>
     </view>
@@ -45,7 +51,8 @@
             <text>评论</text>
             <text>每日评论+5积分</text>
         </view>
-        <input class="comment_box" placeholder="请输入您的评论" placeholder-style="color: #A7B0C2;" bindinput="input_change"/>
+        <input class="comment_box" placeholder="请输入您的评论" placeholder-style="color: #A7B0C2;" bindinput="input_change"
+            value="{{reply_cont}}" />
         <view class="comment_btn" bindtap="reply_up">提交</view>
         <view style="content: '';display: block;clear: both"></view>
         <view class="comment_list">
@@ -70,11 +77,11 @@
     </view>
 
     <view class="float">
-        <view class="like_btn">
+        <view class="like_btn {{is_like? 'active':''}}" bindtap="articleLike">
         </view>
         <view class="share_btn">
         </view>
-        <view class="download_btn">
+        <view class="download_btn" bindtap="download">
         </view>
     </view>
 </view>
