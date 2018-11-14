@@ -16,9 +16,6 @@ function wx_login(that) {
           success: res => {
             if (res.authSetting['scope.userInfo']) {
               // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-              wx.showLoading({
-                title: "加载中..."
-              })
               wx.getUserInfo({
                 withCredentials: true,
                 success: res => {
@@ -109,16 +106,13 @@ function getencode(that) {
         success: res => {
           if (res.authSetting['scope.userInfo']) {
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-            wx.showLoading({
-              title: "加载中..."
-            })
             wx.getUserInfo({
               withCredentials: true,
               success: res => {
                 // 可以将 res 发送给后台解码出 unionId
                 app.globalData.userInfo = res
                 app.profile = res.userInfo.avatarUrl
-                getsession(that)
+                unlock(that)
                 get_info()
               }
             })
@@ -158,7 +152,6 @@ function unlock(e) {
     success: e => {
       console.log(e)
       var data = e.data.data
-      wx.hideLoading();
       if (e.data.status != "3333") { // 不是冻结用户
 
         // 获取数据失败
@@ -203,7 +196,6 @@ function unlock(e) {
           }
         }
       } else {
-        wx.hideLoading();
         wx.showModal({
           title: "提示",
           content: '您的账号已被冻结！'
@@ -245,11 +237,16 @@ function pay(data,that) {
     paySign: data.paySign,
     success: e => {
       wx.showToast({
-        title: "支付成功",
-        icon: "success",
-        duration:3000,
-        mask:true
+        title: '支付成功',
+        icon: 'success',
+        duration: 2000,
+        mask: true,
       });
+      setTimeout(function () {
+        wx.navigateBack({
+          delta: 1
+        });
+      },2000)
       that.setData({
         asyn: true
       });
@@ -284,7 +281,7 @@ function pay(data,that) {
 function req(state) {
   var app = getApp()
   wx.request({
-    url: app.url.pay_back,
+    url: app.url.orderStatus,
     method: 'POST',
     header: app.header,
     data: {

@@ -5,6 +5,7 @@ const module_login = require('../../utils/login.js');
 
 Page({
   data: {
+    profile:'https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png',
     all_label: [], //所有标签
     is_getuser: false, //是否获取用户权限
     user_info: {}, //用户详细信息
@@ -54,7 +55,8 @@ Page({
   login_success: function () {
     this.setData({
       is_getuser: true,
-      user_info: app.open_user
+      user_info: app.open_user,
+      profile: app.profile
     })
     this.download_history()
     if (this.data.getuser_type ==1 || this.data.getuser_type ==2) {
@@ -175,7 +177,9 @@ Page({
             content = "只接收微信文章链接"
           } else if (status == '555') {
             content = "您不是VIP用户"
-          } else if (status == '200' || status == '2000') {
+          } else if(status == '401'){
+            content = "您已添加过此文章，请关闭窗口"
+          } else if (status == '200') {
             that.setData({
               box_link: false,
               link_cont: ''
@@ -185,7 +189,7 @@ Page({
             } else if (type == 2) {
               app.article_msg.url = url;
               wx.navigateTo({
-                url: '../article/article?article_id='
+                url: '../article/article?article_id='+e.data.data.article_id
               });
             }
           }
@@ -537,6 +541,44 @@ Page({
     wx.navigateTo({
       url: "../user/user"
     });
+  },
+
+  // 签到
+  sign_in:function () {
+    wx.request({
+      url: app.url.dailySign,
+      method: 'POST',
+      data: {
+        uid: 1
+      },
+      header: app.header,
+      success: (e)=>{
+        console.log(e)
+        var tips = ''
+        var status = e.data.status;
+        if(status == '505' || status == '500' || status == '502'){
+          tips = '网络异常，请稍后重试'
+        }else if( status == '400'){
+          tips = '您今日已经签到'
+        }else if( status == '200'){
+          tips = '签到成功'
+        }
+        wx.showToast({
+          title: tips,
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      },
+      fail: ()=>{
+        wx.showToast({
+          title: '网络异常，请稍后重试',
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      }
+    });  
   },
 
   onShow: function () {

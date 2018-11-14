@@ -15,6 +15,30 @@
     padding-bottom: 130rpx
 }
 
+.no_check{
+  opacity: 0.7;
+}
+.no_check .store_right{
+    display: none
+}
+.no_check_tips{
+    color: #E62112;
+}
+.no_check .store_left{
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg2.png?time=123');
+    width: 570rpx;
+    height: 234rpx;
+    background-size: 100%;
+}
+.no_check_tips::before{
+    width: 30rpx;
+    height: 30rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/error.png');
+    display: inline-block;
+    vertical-align: middle;
+    content: '';
+    background-size: 100%;
+}
 .store_left {
     background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg2.png');
     background-size: 100% 100%;

@@ -16,7 +16,7 @@
             <view class="history_item active" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
               <view class="title">
                 <text class="title_cont">{{item.title}}</text>
-                <text class="title_state">{{item.is_download == '0'?'已下载':'未下载'}}</text>
+                <text class="title_state">{{item.is_download == '1'?'已下载':'未下载'}}</text>
               </view>
               <view class="img_box">
                 <block wx:for="{{item.img}}">
@@ -136,7 +136,7 @@
 
     <!-- 个人中心 -->
     <view class="tx">
-      <image src='https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png' mode="widthFix" bindtap="nav_user" />
+      <image src='{{profile}}' mode="widthFix" bindtap="nav_user" />
 
       <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
         登陆/注册

@@ -1,13 +1,16 @@
 <!--pages/vip/vip.wxml-->
 <view class="vip">
     <view class="kv">
-        <image class="tx" src="" mode="widthFix" />
+        <image class="tx" src="{{profile}}" mode="widthFix" />
         <view class="user_info">
             <view class="name">
-                一颗柠檬
+                {{user_msg.nickname}}
             </view>
-            <view class="info">
-                到期时间：2020-12-22
+            <view class="info" wx:if="{{user_msg.is_vip}}">
+                {{user_msg.vipData.remain_date}}
+            </view>
+            <view class="tips" wx:else>
+                您还不是VIP
             </view>
         </view>
     </view>
@@ -20,46 +23,67 @@
 
     <block wx:if="{{class == 0}}">
         <view class="money_check">
-            <view class="money_item {{check_id == 0?'active':''}}" bindtap="check" data-id="0">
+            <view class="money_item {{check_id == 2?'active':''}}" bindtap="check" data-id="2" data-money="{{vip_msg.month_vip_price}}">
                 <view class="h3">
                     1个月
                 </view>
                 <view class="h1">
                     <text style="font-size: 36rpx;">￥</text>
-                    <text>20</text>
+                    <text>{{vip_msg.month_vip_price}}</text>
                 </view>
                 <view class="h4" style="text-decoration:line-through">
                     原价 30元/月
                 </view>
             </view>
-            <view class="money_item {{check_id == 1?'active':''}}" bindtap="check" data-id="1">
+            <view class="money_item {{check_id == 1?'active':''}}" bindtap="check" data-id="1" data-money="{{vip_msg.year_vip_price}}">
                 <view class="h3">
                     12个月
                 </view>
                 <view class="h1">
                     <text style="font-size: 36rpx;">￥</text>
-                    <text>200</text>
+                    <text>{{vip_msg.year_vip_price}}</text>
                 </view>
                 <view class="h4" style="text-decoration:line-through">
                     原价 30元/月
                 </view>
             </view>
             <view class="end_time">
-                优惠价截止 2019-3-31
+                优惠价截止 {{vip_msg.coupon_count_down}}
             </view>
         </view>
 
         <!-- 卡券 -->
         <view class="ticket_check">
             <view class="title">卡券</view>
-            <view class="right">
-                <view class="num">2张可用</view>
-            </view>
+            <block wx:if="{{ticket.user_coupon_id}}">
+                <view class="right" bindtap="ticket">
+                    <view>-￥ {{ticket.eq_price}}</view>
+                </view>
+            </block>
+            <block wx:else>
+                <block wx:if="{{vip_msg.coupon_count > 0}}">
+                    <view class="right" bindtap="ticket">
+                        <view class="num">已有{{vip_msg.coupon_count}}张优惠券</view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="num no_num">暂无优惠券</view>
+                </block>
+            </block>
         </view>
 
         <!-- 会员特权 -->
         <image class="vip_msg" src="https://www.mati.hk/Public/MiniProgram-note/user/vip_msg.jpg" mode="widthFix" />
 
+        <!-- 购买会员 -->
+        <view class="pay">
+            <view class="money">
+                实付 ￥{{money}}
+            </view>
+            <view class="pay_btn" bindtap="pay_submit">
+                确认支付
+            </view>
+        </view>
     </block>
 
     <block wx:if="{{class == 1}}">
@@ -73,13 +97,13 @@
                     <view class="info_item">
                         VIP类型：月付会员
                     </view>
-                     <view class="info_item">
+                    <view class="info_item">
                         交易时间：2018.4.3 13:32:15
                     </view>
-                     <view class="info_item">
+                    <view class="info_item">
                         数量：1
                     </view>
-                     <view class="info_item">
+                    <view class="info_item">
                         实付款：¥99
                     </view>
                 </view>

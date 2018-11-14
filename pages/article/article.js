@@ -54,7 +54,8 @@ Page({
           source: e.data.data.source,
           has_download: e.data.data.hasdownload,
           reply_count: e.data.data.reply_count,
-          url: e.data.data.wx_url
+          url: e.data.data.wx_url,
+          article_id: that.data.article_id
         }
         app.article_msg = article_msg
       },

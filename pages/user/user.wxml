@@ -24,11 +24,16 @@
             <block wx:if="{{is_getuser}}">
                 <view class="info_item">
                     <text class="title">VIP</text>
-                    <text class="cont">您还不是VIP</text>
+                    <block wx:if="{{user_info.is_vip}}">
+                        <text class="cont">{{user_info.vipData.remain_days}}天</text>
+                    </block>
+                    <block wx:else>
+                        <text class="cont">您还不是VIP</text>
+                    </block>
                 </view>
                 <view class="info_item" bindtap="integral_nav">
                     <text class="title">积分</text>
-                    <text class="cont">0</text>
+                    <text class="cont">{{user_info.point}}</text>
                 </view>
             </block>
             <block wx:else>
@@ -47,17 +52,17 @@
 
     <view class="user_list">
         <!-- 我的笔记 -->
-        <view class="user_item">
+        <view class="user_item" bindtap="nav_index">
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/bj.png" mode="widthFix" />
             <text class="title">我的笔记</text>
         </view>
         <!-- 我的vip -->
-        <view class="user_item">
+        <view class="user_item" bindtap="nav_vip">
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/vip.png" mode="widthFix" />
             <text class="title">我的vip</text>
         </view>
         <!-- 我的卡券 -->
-        <view class="user_item">
+        <view class="user_item" bindtap="nav_coupon">
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/kq.png" mode="widthFix" />
             <text class="title">我的卡券</text>
         </view>
@@ -66,9 +71,9 @@
 
     <view class="user_list">
         <!-- 积分商城 -->
-        <view class="user_item">
+        <view class="user_item" bindtap="nav_store">
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/jf.png" mode="widthFix" />
-            <text class="title">积分商城</text>
+            <text class="title" bindtap="store_nav">积分商城</text>
         </view>
         <!-- 下载教程 -->
         <view class="user_item">

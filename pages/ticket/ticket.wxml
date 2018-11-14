@@ -1,38 +1,24 @@
 <!--pages/ticket/ticket.wxml-->
 <view class="ticket">
     <view class="store_list">
-        <view class="store_item {{check_ticket == 0?'active':''}}" bindtap="check_ticket" data-id='0'>
+        <view class="store_item {{check_ticket == item.user_coupon_id?'active':''}}  {{vip_kind != item.coupon_kind?'no_check':''}}" bindtap="{{vip_kind != item.coupon_kind?'no_check':'check_ticket'}}"  wx:for="{{ticket}}" data-id="{{item.user_coupon_id}}" data-money="{{item.eq_price}}" data-kind="{{item.coupon_kind}}">
             <view class="store_left">
                 <view class="store_title">
                     <text class="h3" style="color:#E62112">￥</text>
-                    <text class="h1">11</text>
+                    <text class="h1">{{item.eq_price}}</text>
                     <text class="h3">代金券</text>
                 </view>
                 <view class="store_tips">
+                    <block wx:if="{{vip_kind != item.coupon_kind}}">
+                        <view class="no_check_tips">
+                            当前选择商品与代金券使用条件不符
+                        </view>
+                    </block>
                     <view>
-                        仅限于购买月VIP会员时使用
+                        {{item.coupon_content}}
                     </view>
                     <view>
-                        1000积分兑换
-                    </view>
-                </view>
-            </view>
-            <view class="store_right">
-            </view>
-        </view>
-        <view class="store_item {{check_ticket == 1?'active':''}}" bindtap="check_ticket" data-id='1'>
-            <view class="store_left">
-                <view class="store_title">
-                    <text class="h3" style="color:#E62112">￥</text>
-                    <text class="h1">11</text>
-                    <text class="h3">代金券</text>
-                </view>
-                <view class="store_tips">
-                    <view>
-                        仅限于购买月VIP会员时使用
-                    </view>
-                    <view>
-                        1000积分兑换
+                        {{item.need_point}}积分兑换
                     </view>
                 </view>
             </view>
@@ -40,5 +26,5 @@
             </view>
         </view>
     </view>
-    <view class="submit">使用该卡券</view>
+    <view class="submit" bindtap="submit">使用该卡券</view>
 </view>

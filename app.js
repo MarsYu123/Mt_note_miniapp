@@ -29,7 +29,7 @@ App({
     downTest: 'Notearticle/tt', // 下载
     getUserData: 'Noteuser/getUserData', //用户资料中心
     saveData: 'Noteuser/saveData', //提交资料
-    downloadHistory: 'Notearticle/downloadHistory', //下载记录数据
+    downloadHistory: 'Noteindex/downloadHistory', //下载记录数据
     addUrl: 'Noteindex/addUrl',  //采集链接
     articleDetail: 'Notearticle/articleDetail', // 文章详情页内容
     articleReply: 'Notearticle/articleReply', //提交文章评论
@@ -37,6 +37,16 @@ App({
     articleLike: 'Notearticle/articleLike',  //文章点赞
     getLabels: 'Notepic/getLabels',  //获取标签
     toArticlePic: 'Notearticle/toArticlePic',  //文章下载页面获取资料
+    pointExchangeRecord: 'Noteuser/pointExchangeRecord', //积分兑换记录
+    pointTask: 'Noteuser/pointTask', //任务记录
+    dailySign: 'Noteindex/dailySign',  //每日签到
+    payHome: 'Notepay/payHome',  //购买会员
+    selectCoupon: 'Notepay/selectCoupon',  //选择优惠券
+    pointMall: 'Noteuser/pointMall',  //积分商城商品
+    pointExchange: 'Noteuser/pointExchange',  //积分兑换
+    notePay: 'Notepay/notePay', // 兑换vip支付接口
+    orderStatus: 'Notepay/orderStatus', //支付结果返回接口
+    downloadArticlePic: 'Notearticle/downloadArticlePic' //下载文章回调接口
   },
 
   //post请求的header头

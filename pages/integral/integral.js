@@ -1,4 +1,5 @@
 // pages/integral/integral.js
+var app = getApp()
 Page({
 
   /**
@@ -8,14 +9,38 @@ Page({
     nav:['做任务','积分记录'],
     class:0,
     task_more_class:[false,false],
-    more_state:[false,false]
+    more_state:[false,false],
+    user_msg:{},
+    load: false,
+    profile: 'https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png',
+    task: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this;
+    wx.request({
+      url: app.url.pointTask,
+      method: 'POST',
+      data: {
+        uid: app.open_user.uid
+      },
+      header: app.header,
+      success: (e)=>{
+        console.log(e)
+        that.setData({
+          task: e.data.data
+        })
+      },
+      fail: ()=>{}
+    });
 
+    this.setData({
+      user_msg: app.open_user,
+      profile: app.profile
+    })
   },
 
   // 导航切换
@@ -52,14 +77,18 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.data.load = true
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(this.data.load){
+      this.setData({
+        user_msg: app.open_user
+      })
+    }
   },
 
   /**

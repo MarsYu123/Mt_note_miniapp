@@ -17,7 +17,7 @@
     background: url('https://www.mati.hk/Public/MiniProgram-note/user/vip_kv.png');
     background-size: 100% 100%;
     display: flex;
-    padding: 10rpx 104rpx;
+    padding: 30rpx 104rpx;
     margin-bottom: 40rpx
 }
 
@@ -25,7 +25,8 @@
     width: 135rpx;
     height: 135rpx;
     display: block;
-    border-radius: 50%
+    border-radius: 50%;
+    margin-right: 20rpx
 }
 
 .user_info .name {
@@ -144,8 +145,8 @@
     background: url('https://www.mati.hk/Public/MiniProgram-note/user/check.png');
     background-size: 100% 100%;
     position: absolute;
-    right: 0;
-    bottom: 0
+    right: -1px;
+    bottom: -1px
 }
 
 .end_time {
@@ -202,6 +203,12 @@
     color: #ffffff;
     display: flex;
     align-items: center
+}
+
+.ticket_check .no_num {
+    font-size: 32rpx;
+    color: #A7B0C2;
+    background: #ffffff
 }
 
 .ticket_check .num::before {
@@ -261,4 +268,33 @@
 
 .info_item:last-child {
     margin: 0
+}
+
+.pay {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    background: #ffffff;
+    box-shadow: 0 -2px 2px 0 rgba(87, 90, 102, 0.3);
+    bottom: 0;
+    left: 0;
+}
+
+.pay .money {
+    width: 460rpx;
+    height: 100%;
+    padding-left: 70rpx;
+    font-size: 32rpx;
+    color: #E62112;
+    flex-shrink: 0
+}
+
+.pay .pay_btn {
+    font-size: 36rpx;
+    color: #FFFFFF;
+    background: #39CCE1;
+    flex-grow: 1;
+    text-align: center
 }

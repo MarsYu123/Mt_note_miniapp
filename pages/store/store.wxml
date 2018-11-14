@@ -3,7 +3,7 @@
     <view class="store_kv">
         <image src="https://www.mati.hk/Public/MiniProgram-note/user/store_kv.png" mode="widthFix" />
         <view class="user_num">
-            <view class="h1">18000</view>
+            <view class="h1">{{point}}</view>
             <view class="h3">积分</view>
         </view>
     </view>
@@ -16,61 +16,41 @@
 
     <block wx:if="{{class == '0'}}">
         <view class="store_list">
-            <view class="store_item">
+            <view class="store_item" wx:for="{{goods}}">
                 <view class="store_left">
                     <view class="store_title">
                         <text class="h3" style="color:#E62112">￥</text>
-                        <text class="h1">11</text>
+                        <text class="h1">{{item.eq_price}}</text>
                         <text class="h3">代金券</text>
                     </view>
                     <view class="store_tips">
-                        仅限于购买月VIP会员时使用
+                        {{item.coupon_content}}
                     </view>
                 </view>
                 <view class="store_right">
-                    <view class="store_ent">
+                    <view class="store_ent" bindtap="exchange" data-id="{{item.coupon_id}}">
                         兑换
                     </view>
                     <view class="store_num">
-                        10000积分
-                    </view>
-                </view>
-            </view>
-            <view class="store_item">
-                <view class="store_left">
-                    <view class="store_title">
-                        <text class="h3" style="color:#E62112">￥</text>
-                        <text class="h1">11</text>
-                        <text class="h3">代金券</text>
-                    </view>
-                    <view class="store_tips">
-                        仅限于购买月VIP会员时使用
-                    </view>
-                </view>
-                <view class="store_right">
-                    <view class="store_ent">
-                        兑换
-                    </view>
-                    <view class="store_num">
-                        10000积分
+                        {{item.need_point}}积分
                     </view>
                 </view>
             </view>
         </view>
-        <view class="integral">
+        <view class="integral" bindtap="nav_integral">
             积分任务
         </view>
     </block>
     <block wx:if="{{class == '1'}}">
         <view class="record_list">
-            <view class="record_item">
+            <view class="record_item" wx:for="{{exchange}}">
                 <view class="record_left">
                     <text class="h3">￥</text>
-                    <text class="h1">11</text>
+                    <text class="h1">{{item.eq_price}}</text>
                     <text class="h3">代金券</text>
                 </view>
                 <view class="record_right">
-                    兑换日期：2018/08/12
+                    兑换日期：{{item.add_time}}
                 </view>
             </view>
         </view>

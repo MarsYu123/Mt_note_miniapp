@@ -22,21 +22,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.open_user)
+    console.log(app.article_msg)
     var that = this;
     wx.request({
       url: app.url.toArticlePic,
       method: 'POST',
       data: {
         uid: app.open_user.uid,
-        wx_url: app.article_msg.url
+        wx_url: app.article_msg.url,
+        article_id: app.article_msg.article_id
       },
       header: app.header,
       success: (e) => {
         console.log(e)
         var data = [];
         var arr = []
-        if(!app.open_user.is_vip){
+        if (!app.open_user.is_vip) {
           data = e.data.data;
           for (var i in data) {
             arr[i] = {
@@ -45,7 +46,7 @@ Page({
               index: i
             }
           }
-        }else{
+        } else {
           data = e.data.data;
           for (var i in data) {
             arr[i] = {
@@ -114,48 +115,79 @@ Page({
     var photo = 'scope.writePhotosAlbum'
     // 获取授权信息，查看是否已授权保存相册
     if (this.data.img.length > 0) {
-      if (that.data.download_plan != '进行中') {
-        wx.getSetting({
-          success: res => {
-            that.setData({
-              download_plan: '进行中'
-            })
-            // 已授权
-            if (res.authSetting[photo]) {
-              that.getimage()
-            } else {
-              // 未授权
-              if (res.authSetting[photo] === false) {
-                that.setData({
-                  opensetting: true,
-                  download_plan: '未开始'
-                })
-                wx.showToast({
-                  title: "由于您之前拒绝授权访问相册，请重新授权",
-                  icon: 'none',
-                  duration: 1500,
-                  mask: false,
-                });
-              } else {
-                // 初次授权
-                wx.authorize({
-                  scope: 'scope.writePhotosAlbum',
-                  success: res => {
+      wx.request({
+        url: app.url.downloadArticlePic,
+        method: 'POST',
+        data: {
+          uid: app.open_user.uid,
+          wx_url: app.article_msg.url,
+          article_id: app.article_msg.article_id
+        },
+        header: app.header,
+        success: (e) => {
+          console.log()
+          var tips = ''
+          if (e.data.status == '2000') {
+            tips = '下载成功，完成下载任务'
+          } else if (e.data.status == '500') {
+            tips = '网络异常'
+          } else if (e.data.status == '200') {
+            tips = '开始下载'
+
+            if (that.data.download_plan != '进行中') {
+              wx.getSetting({
+                success: res => {
+                  that.setData({
+                    download_plan: '进行中'
+                  })
+                  // 已授权
+                  if (res.authSetting[photo]) {
                     that.getimage()
-                  },
-                });
-              }
+                  } else {
+                    // 未授权
+                    if (res.authSetting[photo] === false) {
+                      that.setData({
+                        opensetting: true,
+                        download_plan: '未开始'
+                      })
+                      wx.showToast({
+                        title: "由于您之前拒绝授权访问相册，请重新授权",
+                        icon: 'none',
+                        duration: 1500,
+                        mask: false,
+                      });
+                    } else {
+                      // 初次授权
+                      wx.authorize({
+                        scope: 'scope.writePhotosAlbum',
+                        success: res => {
+                          that.getimage()
+                        },
+                      });
+                    }
+                  }
+                }
+              })
+            } else {
+              wx.showToast({
+                title: '下载正在进行，请勿重复操作',
+                icon: 'none',
+                duration: 1500,
+                mask: false,
+              });
             }
+
+
           }
-        })
-      } else {
-        wx.showToast({
-          title: '下载正在进行，请勿重复操作',
-          icon: 'none',
-          duration: 1500,
-          mask: false,
-        });
-      }
+          wx.showToast({
+            title: tips,
+            icon: 'none',
+            duration: 1500,
+            mask: false,
+          });
+        },
+        fail: () => {}
+      });
     } else {
       wx.showToast({
         title: '请选择图片',
