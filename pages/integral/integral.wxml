@@ -32,7 +32,7 @@
                     <view class="title">每日签到</view>
                     <view class="msg">每日签到加5积分，VIP会员额外加5积分</view>
                 </view>
-                <block wx:if="{{task.everyday_sign}}">
+                <block wx:if="{{!task.everyday_sign}}">
                     <view class="task_right active">
                         已完成
                     </view>
@@ -48,7 +48,7 @@
                     <view class="title">每日下载</view>
                     <view class="msg">每日下载加5积分，VIP会员额外加5积分</view>
                 </view>
-                <block wx:if="{{task.everyday_download}}">
+                <block wx:if="{{!task.everyday_download}}">
                     <view class="task_right active">
                         已完成
                     </view>
@@ -64,7 +64,7 @@
                     <view class="title">每日评论</view>
                     <view class="msg">每日评论加5积分，VIP会员额外加5积分</view>
                 </view>
-                <block wx:if="{{task.everyday_reply}}">
+                <block wx:if="{{!task.everyday_reply}}">
                     <view class="task_right active">
                         已完成
                     </view>
@@ -86,16 +86,9 @@
                     <view class="title">邀请好友注册</view>
                     <view class="msg">成功邀请一人注册加100积分</view>
                 </view>
-                <block wx:if="{{task.invite_friend > 0}}">
-                    <view class="task_right active">
-                        +{{task.invite_friend*100}}
-                    </view>
-                </block>
-                <block wx:else>
-                    <view class="task_right">
-                        待完成
-                    </view>
-                </block>
+                <view class="task_right">
+                    +100
+                </view>
             </view>
             <view class="task_item">
                 <view class="task_left">
@@ -103,7 +96,7 @@
                     <view class="msg">在线支付每1元加1积分</view>
                 </view>
                 <view class="task_right">
-                    待完成
+                    +1
                 </view>
             </view>
         </view>
@@ -117,7 +110,7 @@
                     <view class="title">绑定手机号码</view>
                     <view class="msg">成功绑定手机号码加500积分</view>
                 </view>
-                <block wx:if="{{task.bind_phone_number}}">
+                <block wx:if="{{!task.bind_phone_number}}">
                     <view class="task_right active">
                         已完成
                     </view>
@@ -133,7 +126,7 @@
                     <view class="title">完善资料</view>
                     <view class="msg">补充所有个人信息加500积分</view>
                 </view>
-                <block wx:if="{{task.complete_info}}">
+                <block wx:if="{{!task.complete_info}}">
                     <view class="task_right active">
                         已完成
                     </view>
@@ -149,7 +142,7 @@
                     <view class="title">实名认证</view>
                     <view class="msg">完成实名认证加1000积分 (仅限电脑端认证）</view>
                 </view>
-                <block wx:if="{{task.real_check}}">
+                <block wx:if="{{!task.real_check}}">
                     <view class="task_right active">
                         已完成
                     </view>
@@ -170,9 +163,9 @@
                         {{task.invite_friend}}/100
                     </view>
                 </block>
-                 <block wx:else>
+                <block wx:else>
                     <view class="task_right active">
-                        已完成
+                        已完成（{{task.invite_friend}}）
                     </view>
                 </block>
             </view>
@@ -184,19 +177,27 @@
 
     <!-- 积分记录 -->
     <view class="day_task" wx:if="{{class == '1'}}">
-        <view class="task_item">
-            <view class="task_left">
-                <view class="title">每日签到</view>
-                <view class="msg">VIP会员额外加5积分</view>
-            </view>
-            <view class="task_right ri">
-                <view class="num">
-                    +10
+        <block wx:if="{{task.point_record.length>0}}">
+            <view class="task_item" wx:for="{{task.point_record}}" data-id="{{item.uid}}">
+                <view class="task_left">
+                    <view class="title">{{item.description}}</view>
+                    <view class="msg">{{item.vip_tips}}</view>
                 </view>
-                <view class="time">
-                    日期：2018/08/12
+                <view class="task_right ri">
+                    <view class="num">
+                        {{item.point}}
+                    </view>
+                    <view class="time">
+                        日期：{{item.add_time}}
+                    </view>
                 </view>
             </view>
-        </view>
+        </block>
+        <block wx:else>
+            <view class="df">
+                <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_dhjl.png' />
+                <view>您还没有兑换记录</view>
+            </view>
+        </block>
     </view>
 </view>

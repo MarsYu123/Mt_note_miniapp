@@ -12,7 +12,8 @@
     "pages/vip/vip",
     "pages/ticket/ticket",
     "pages/article/article",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/help/help"
   ],
   "window": {
     "backgroundTextStyle": "light",

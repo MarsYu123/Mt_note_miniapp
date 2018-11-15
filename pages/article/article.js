@@ -1,5 +1,6 @@
 // pages/article/article.js
 var app = getApp()
+var module_login = require("../../utils/login")
 Page({
 
   /**
@@ -13,7 +14,14 @@ Page({
     async: true, //同步控制
     like_arr: {}, // 点赞情况
     is_like: false,
-    is_vip: false // 是否vip
+    is_vip: false, // 是否vip
+    sign_in_status: false,
+    tips: {
+      title: '签到成功',
+      num: '5'
+    },
+    tips_show: false,
+    tips_animate: {} //提示框动画
   },
 
   /**
@@ -95,6 +103,15 @@ Page({
   // 提交留言
   reply_up:function () {
     var that = this;
+    if(module_login.remove_space(this.data.reply_cont) == ''){
+      wx.showToast({
+        title: '请勿提交空白内容',
+        icon: 'none',
+        duration: 1500,
+        mask: false,
+      });
+      return false
+    }
     if(this.data.async){
       this.data.async = false;
       wx.request({
@@ -123,7 +140,8 @@ Page({
             that.getReply()
 
             if(status == '2000'){
-              reply_tips = '留言成功，已完成今日留言任务'
+              that.tips_animate()
+              return false
             }
             wx.showToast({
               title: reply_tips,
@@ -153,6 +171,50 @@ Page({
     }
     
   },
+
+
+  // 提示框动画
+  tips_animate: function () {
+    this.setData({
+      tips_show: true
+    })
+    var animate = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animate.translate('-50%', '-50%').step();
+    this.setData({
+      tips_animate: animate.export()
+    })
+  },
+
+  // 关闭提示框动画
+  clear_tips_animate: function () {
+    var that = this;
+    this.setData({
+      tips_show: true
+    })
+    var animate = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animate.translate('-50%', '300%').step();
+    this.setData({
+      tips_animate: animate.export()
+    })
+    setTimeout(function () {
+      that.setData({
+        tips_show: false
+      })
+    },200)
+  },
+
+
+
 
   // 点赞文章
   articleLike:function () {
@@ -208,9 +270,18 @@ Page({
 
   // 下载图片
   download:function () {
-    wx.navigateTo({
-      url: '../download/download'
-    });
+    if(this.data.article_cont.code == true){
+      wx.navigateTo({
+        url: '../download/download'
+      });
+    }else{
+      wx.showToast({
+        title: '非会员每天只能下载一次',
+        icon: 'none',
+        duration: 1500,
+        mask: false,
+      });
+    }
   },
 
   /**

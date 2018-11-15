@@ -8,35 +8,51 @@
 
     <block wx:if="{{class == 0}}">
         <view class="store_list">
-            <view class="store_item">
-                <view class="store_left">
-                    <view class="store_title">
-                        <text class="h3" style="color:#E62112">￥</text>
-                        <text class="h1">11</text>
-                        <text class="h3">代金券</text>
-                    </view>
-                    <view class="store_tips">
-                        仅限于购买月VIP会员时使用
+            <block wx:if="{{coupon_msg.length>0}}">
+                <view class="store_item" wx:for="{{coupon_msg}}">
+                    <view class="store_left">
+                        <view class="store_title">
+                            <text class="h3" style="color:#E62112">￥</text>
+                            <text class="h1">{{item.eq_price}}</text>
+                            <text class="h3">代金券</text>
+                        </view>
+                        <view class="store_tips">
+                            {{item.coupon_content}}
+                        </view>
                     </view>
                 </view>
-            </view>
+            </block>
+            <block wx:else>
+            <view class="df">
+                    <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_wdkq.png' />
+                    <view>您还没有卡券</view>
+                </view>
+            </block>
         </view>
     </block>
 
     <block wx:if="{{class == 1}}">
-         <view class="store_list active">
-            <view class="store_item">
-                <view class="store_left">
-                    <view class="store_title">
-                        <text class="h3">￥</text>
-                        <text class="h1">11</text>
-                        <text class="h3">代金券</text>
-                    </view>
-                    <view class="store_tips">
-                        仅限于购买月VIP会员时使用
+        <view class="store_list active">
+            <block wx:if="{{use_list.length>0}}">
+                <view class="store_item" wx:for="{{use_list}}">
+                    <view class="store_left">
+                        <view class="store_title">
+                            <text class="h3">￥</text>
+                            <text class="h1">{{item.eq_price}}</text>
+                            <text class="h3">代金券</text>
+                        </view>
+                        <view class="store_tips">
+                            使用时间：{{item.use_time}}
+                        </view>
                     </view>
                 </view>
-            </view>
+            </block>
+            <block wx:else>
+                <view class="df">
+                    <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_dhjl.png' />
+                    <view>您还没有使用记录</view>
+                </view>
+            </block>
         </view>
     </block>
 </view>

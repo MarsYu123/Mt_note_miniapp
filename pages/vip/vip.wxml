@@ -88,26 +88,31 @@
 
     <block wx:if="{{class == 1}}">
         <view class="order_list">
-            <view class="order_item">
-                <view class="title">
-                    <text class="order_no">订单编号：sdsaeq123123123</text>
-                    <text class="order_state">交易成功</text>
+            <block wx:if="{{order.length>0}}">
+                <view class="order_item" wx:for="{{order}}">
+                    <view class="title">
+                        <text class="order_no">订单编号：{{item.out_trade_no}}</text>
+                        <text class="order_state">{{item.pay_status==1?'交易成功':'交易取消'}}</text>
+                    </view>
+                    <view class="order_info">
+                        <view class="info_item">
+                            VIP类型：月付会员
+                        </view>
+                        <view class="info_item">
+                            交易时间：{{item.order_time}}
+                        </view>
+                        <view class="info_item">
+                            实付款：¥{{item.total_fee}}
+                        </view>
+                    </view>
                 </view>
-                <view class="order_info">
-                    <view class="info_item">
-                        VIP类型：月付会员
-                    </view>
-                    <view class="info_item">
-                        交易时间：2018.4.3 13:32:15
-                    </view>
-                    <view class="info_item">
-                        数量：1
-                    </view>
-                    <view class="info_item">
-                        实付款：¥99
-                    </view>
+            </block>
+            <block wx:else>
+                <view class="df">
+                    <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_wdkq.png' />
+                    <view>您还没有订单记录</view>
                 </view>
-            </view>
+            </block>
         </view>
     </block>
 </view>

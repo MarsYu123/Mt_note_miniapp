@@ -5,7 +5,7 @@ const module_login = require('../../utils/login.js');
 
 Page({
   data: {
-    profile:'https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png',
+    profile: 'https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png',
     all_label: [], //所有标签
     is_getuser: false, //是否获取用户权限
     user_info: {}, //用户详细信息
@@ -44,22 +44,50 @@ Page({
     animate: {}, //动画
     is_check: false, //是否打开筛选
     download_img: [], //下载图片地址
+    download_index: 0, //目前下载下标
+    fail_img: [], //下载失败的下标
+    opensetting: false, //图片保存权限
     box_link: false, //链接box是否显示
     link_cont: '', //复制的链接内容
     getuser_type: '', //未授权时点击记录文章或前往下载后自动操作
     history_cont: {}, //下载历史文章记录
-    label_checked: '101' // 筛选标签id
+    label_checked: '101', // 筛选标签id
+    open_img: {
+      baseWidth: '',
+      baseHeight: '',
+      scaleWidth: '',
+      scaleHeight: '',
+      dis: '',
+      src: '',
+      scale: 1
+    }, // 放大图片url
+    is_open_img: false, //是否放大图片
+    download_plan: '未开始',
+    sign_in_status: false,
+    tips: {
+      title: '签到成功',
+      num: '5'
+    },
+    tips_show: false,
+    tips_animate: {} //提示框动画
   },
 
   // 登陆后获取信息
   login_success: function () {
+    var everyday_sign = false
+    if (app.open_user.everyday_sign == 1) {
+      everyday_sign = true
+    } else {
+      everyday_sign = false
+    }
     this.setData({
       is_getuser: true,
       user_info: app.open_user,
-      profile: app.profile
+      profile: app.profile,
+      sign_in_status: everyday_sign
     })
     this.download_history()
-    if (this.data.getuser_type ==1 || this.data.getuser_type ==2) {
+    if (this.data.getuser_type == 1 || this.data.getuser_type == 2) {
       this.link_add(this.data.getuser_type)
       this.data.getuser_type = ''
     }
@@ -83,7 +111,8 @@ Page({
   // 关闭链接窗口
   clear_link: function () {
     this.setData({
-      box_link: false
+      box_link: false,
+      link_cont:''
     })
   },
 
@@ -177,7 +206,7 @@ Page({
             content = "只接收微信文章链接"
           } else if (status == '555') {
             content = "您不是VIP用户"
-          } else if(status == '401'){
+          } else if (status == '401') {
             content = "您已添加过此文章，请关闭窗口"
           } else if (status == '200') {
             that.setData({
@@ -189,7 +218,7 @@ Page({
             } else if (type == 2) {
               app.article_msg.url = url;
               wx.navigateTo({
-                url: '../article/article?article_id='+e.data.data.article_id
+                url: '../article/article?article_id=' + e.data.data.article_id
               });
             }
           }
@@ -320,6 +349,8 @@ Page({
         },
         header: app.header,
         success: (e) => {
+          console.log(e)
+          console.log(page)
           var data = e.data.data.pictures;
           for (var i in data) {
             data[i].check = false
@@ -370,6 +401,46 @@ Page({
     })
   },
 
+  // 提示框动画
+  tips_animate: function () {
+    this.setData({
+      tips_show: true
+    })
+    var animate = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animate.translate('-50%', '-50%').step();
+    this.setData({
+      tips_animate: animate.export()
+    })
+  },
+
+  // 关闭提示框动画
+  clear_tips_animate: function () {
+    var that = this;
+    this.setData({
+      tips_show: true
+    })
+    var animate = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animate.translate('-50%', '300%').step();
+    this.setData({
+      tips_animate: animate.export()
+    })
+    setTimeout(function () {
+      that.setData({
+        tips_show: false
+      })
+    },200)
+  },
+
   // 选择下载
   download_check: function () {
     this.setData({
@@ -378,11 +449,92 @@ Page({
   },
   // 取消下载
   esc_check: function () {
+    var img = this.data.img;
+    for (var i in img) {
+      for (var j in img[i]) {
+        img[i][j].check = false
+      }
+    }
     this.setData({
-      is_check: false
+      is_check: false,
+      img: img,
+      download_img: []
     })
   },
 
+  // 放大图片
+  open_img: function (e) {
+    console.log(e)
+    var url = this.data.img_host + e.currentTarget.dataset.url;
+    var open_img_url = 'open_img.url'
+    this.setData({
+      is_open_img: true,
+      [open_img_url]: url
+    })
+  },
+
+  // 放大图片的load
+  open_img_load: function (e) {
+    var win_width = app.system.windowWidth;
+    console.log(app.system.windowWidth)
+    console.log(e.detail.width)
+    var open_img = this.data.open_img;
+    open_img.baseWidth = win_width * 0.8;
+    open_img.baseHeight = e.detail.height;
+    open_img.scaleWidth = win_width * 0.8;
+    open_img.scaleHeight = e.detail.heigh;
+    this.setData({
+      open_img: open_img
+    })
+  },
+
+  // 手指触摸
+  touch_start: function (e) {
+    console.log(e.touches)
+    if (e.touches.length > 1) {
+      var x_dis = Math.abs(e.touches[1].clientX - e.touches[0].clientX);
+      var y_dis = Math.abs(e.touches[1].clientY - e.touches[0].clientY);
+      var dis = Math.sqrt(x_dis * x_dis + y_dis * y_dis);
+      this.setData({
+        'open_img.dis': dis
+      })
+    }
+  },
+
+  // 手指移动
+  touch_move: function (e) {
+    var open_img = this.data.open_img
+    var old_dis = open_img.dis
+    if (e.touches.length > 1) {
+      var x_dis = e.touches[1].clientX - e.touches[0].clientX;
+      var y_dis = e.touches[1].clientY - e.touches[0].clientY;
+      var dis = Math.sqrt(x_dis * x_dis + y_dis * y_dis);
+      var dis_differ = dis - old_dis
+      var new_scale = open_img.scale + 0.001 * dis_differ;
+
+      if (new_scale >= 2) {
+        new_scale = 2
+      } else if (new_scale <= 1) {
+        new_scale = 1
+      }
+
+      var new_width = new_scale * open_img.baseWidth;
+      var new_height = new_scale * open_img.baseHeight;
+      open_img.scaleWidth = new_width;
+      open_img.scaleHeight = new_height
+      open_img.scale = new_scale
+      this.setData({
+        open_img: open_img
+      })
+    }
+  },
+
+  // 关闭缩放
+  open_img_claer: function () {
+    this.setData({
+      is_open_img: false
+    })
+  },
   onLoad: function () {
     // 若已授权，则自动登录
     module_login.userlogin(this);
@@ -529,6 +681,167 @@ Page({
       download_img: download_img,
     })
   },
+
+  // 下载图片
+  download_pic: function () {
+    var download_img = this.data.download_img
+    var that = this;
+    var photo = 'scope.writePhotosAlbum'
+    // 获取授权信息，查看是否已授权保存相册
+    if (download_img.length > 0) {
+      var img_url = [],
+        picture_id = [];
+      for (var i in download_img) {
+        img_url.push(that.data.img_host + download_img[i].img_url)
+        picture_id.push(download_img[i].picture_id)
+      }
+
+      wx.getSetting({
+        success: res => {
+          that.setData({
+            download_plan: '进行中'
+          })
+          // 已授权
+          if (res.authSetting[photo]) {
+            that.request_down()
+          } else {
+            // 未授权
+            if (res.authSetting[photo] === false) {
+              that.setData({
+                opensetting: true,
+                download_plan: '未开始'
+              })
+              wx.showToast({
+                title: "由于您之前拒绝授权访问相册，请重新授权",
+                icon: 'none',
+                duration: 1500,
+                mask: false,
+              });
+            } else {
+              // 初次授权
+              wx.authorize({
+                scope: 'scope.writePhotosAlbum',
+                success: res => {
+                  that.request_down()
+                },
+              });
+            }
+          }
+        }
+      })
+
+    } else {
+      wx.showToast({
+        title: '请选择图片',
+        icon: 'none',
+        duration: 1500,
+        mask: false,
+      });
+    }
+  },
+
+
+  // 请求是否可下载
+  request_down: function () {
+    var that = this;
+    wx.request({
+      url: app.url.downloadPics,
+      method: 'POST',
+      data: {
+        uid: app.open_user.uid,
+        label_id: that.data.label_checked,
+        img_url: img_url.join('|'),
+        picture_id: picture_id.join('_'),
+        download_count: download_img.length
+      },
+      header: app.header,
+      success: (e) => {
+
+        var tips = ''
+        if (e.data.status == '500') {
+          tips = '网络异常'
+        } else if (e.data.status == '200') {
+          tips = '开始下载'
+
+          if (that.data.download_plan != '进行中') {
+            that.getimage()
+          } else {
+            wx.showToast({
+              title: '下载正在进行，请勿重复操作',
+              icon: 'none',
+              duration: 1500,
+              mask: false,
+            });
+          }
+        }
+        wx.showToast({
+          title: tips,
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      },
+      fail: () => {}
+    });
+  },
+
+
+
+  // 开始下载图片
+  getimage: function (e) {
+    var that = this;
+    var download_img = that.data.download_img
+    that.esc_check()
+    for (var i in download_img) {
+      wx.getImageInfo({
+        src: that.data.img_host + download_img[i].img_url,
+        success: (e) => {
+          console.log(e)
+          var path = e.path;
+          this.saveimaeg(path)
+        },
+      });
+    }
+  },
+
+  // 保存图片
+  saveimaeg: function (path) {
+    var that = this;
+    wx.saveImageToPhotosAlbum({
+      filePath: path,
+      success: (e) => {
+        console.log(e)
+        that.data.download_index++
+        that.plan_status()
+      },
+      fail: () => {
+        that.data.download_index++
+        that.data.fail_img.push(that.data.download_index)
+        that.plan_status()
+      }
+    });
+
+  },
+  // 统计下载状态
+  plan_status: function () {
+    var that = this;
+    if (that.data.download_index == that.data.download_img.length && that.data.download_img.length != 0) {
+      that.setData({
+        download_plan: '结束',
+        download_index: 0,
+      })
+      wx.showToast({
+        title: '图片全部下载完毕',
+        icon: 'none',
+        duration: 1500,
+        mask: false,
+      });
+    }
+  },
+
+
+
+  // 首次登陆
   getUserInfo: function (e) {
     console.log(e.target.dataset.type)
     var type = e.target.dataset.type;
@@ -544,24 +857,29 @@ Page({
   },
 
   // 签到
-  sign_in:function () {
+  sign_in: function () {
+    var that = this;
     wx.request({
       url: app.url.dailySign,
       method: 'POST',
       data: {
-        uid: 1
+        uid: app.open_user.uid
       },
       header: app.header,
-      success: (e)=>{
+      success: (e) => {
         console.log(e)
         var tips = ''
         var status = e.data.status;
-        if(status == '505' || status == '500' || status == '502'){
+        if (status == '505' || status == '500' || status == '502') {
           tips = '网络异常，请稍后重试'
-        }else if( status == '400'){
+        } else if (status == '400') {
           tips = '您今日已经签到'
-        }else if( status == '200'){
-          tips = '签到成功'
+        } else if (status == '200') {
+          that.setData({
+            sign_in_status: true
+          })
+          that.tips_animate()
+          return false
         }
         wx.showToast({
           title: tips,
@@ -570,7 +888,7 @@ Page({
           mask: false,
         });
       },
-      fail: ()=>{
+      fail: () => {
         wx.showToast({
           title: '网络异常，请稍后重试',
           icon: 'none',
@@ -578,7 +896,7 @@ Page({
           mask: false,
         });
       }
-    });  
+    });
   },
 
   onShow: function () {

@@ -234,7 +234,8 @@
 .order_item {
     width: 100%;
     box-shadow: 0 2px 7px 0 #D9DFED;
-    background: #ffffff
+    background: #ffffff;
+    margin-bottom: 20rpx
 }
 
 .order_item .title {

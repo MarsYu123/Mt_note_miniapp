@@ -41,7 +41,8 @@ Page({
     this.setData({
       user_info: app.open_user,
       site: site,
-      profile: app.profile
+      profile: app.profile,
+      is_getuser:true
     })
   },
   // 获取授权后提示
@@ -51,15 +52,19 @@ Page({
       profile: app.profile
     })
   },
+
+  // 跳转下载教程
+  nav_help: function () {
+    wx.navigateTo({
+      url: '../help/help'
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     if (app.bind_user) {
-      this.setData({
-        is_getuser: true,
-        user_info: app.open_user
-      })
+      this.login_success()
     } else {
       // 若已授权，则自动登录
       module_login.userlogin(this);
@@ -115,7 +120,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.data.load = true
+    this.setData({
+      load: true
+    })
   },
 
   /**

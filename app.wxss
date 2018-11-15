@@ -1,6 +1,74 @@
 /**app.wxss**/
-page{
+page {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.sign_in_box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.sign_in_cont {
+  width: 592rpx;
+  height: 360rpx;
+  background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/sign_in_bg.png');
+  background-size: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 300%);
+}
+
+.sign_title {
+  font-size: 36rpx;
+  color: #000000;
+  position: absolute;
+  left: 324rpx;
+  top: 50rpx;
+}
+
+.sign_tips {
+  font-size: 24rpx;
+  color: #FF9100;
+  position: absolute;
+  left: 324rpx;
+  top: 120rpx;
+}
+
+.sign_btn {
+  background: #39CCE1;
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 36rpx;
+  width: 180rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  position: absolute;
+  left: 324rpx;
+  top: 184rpx;
+}
+
+.df {
+  margin: auto;
+  margin-top: 300rpx;
+  text-align: center
+}
+
+.df image {
+  width: 206rpx;
+  height: 144rpx;
+}
+
+.df view {
+  font-size: 28rpx;
+  color: #39CCE1;
+  margin: auto;
+  margin-top: 20rpx
 }

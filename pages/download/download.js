@@ -15,7 +15,14 @@ Page({
     article_msg: [], //页面数据
     is_vip: false, // 是否是vip（任何形式）
     check_num: 0, //下载数量
-    all_check: false
+    all_check: false,
+    sign_in_status: false,
+    tips: {
+      title: '签到成功',
+      num: '5'
+    },
+    tips_show: false,
+    tips_animate: {} //提示框动画
   },
 
   /**
@@ -35,18 +42,9 @@ Page({
       header: app.header,
       success: (e) => {
         console.log(e)
-        var data = [];
-        var arr = []
-        if (!app.open_user.is_vip) {
-          data = e.data.data;
-          for (var i in data) {
-            arr[i] = {
-              url: data[i],
-              check: true,
-              index: i
-            }
-          }
-        } else {
+        if(e.data.status == 200){
+          var data = [];
+          var arr = []
           data = e.data.data;
           for (var i in data) {
             arr[i] = {
@@ -55,13 +53,28 @@ Page({
               index: i
             }
           }
+          that.setData({
+            img: arr,
+            article_msg: app.article_msg,
+            is_vip: app.open_user.is_vip
+          })
+        }else if(e.data.status == 555){
+          wx.showModal({
+            title: '提示',
+            content: '非会员每天只能下载一次',
+            showCancel: false,
+            confirmText: '确定',
+            confirmColor: '#3CC51F',
+            success: res => {
+              if(res.confirm){
+                wx.navigateBack({
+                  delta: 1
+                });
+              }
+            }
+          });
         }
-
-        that.setData({
-          img: arr,
-          article_msg: app.article_msg,
-          is_vip: app.open_user.is_vip
-        })
+     
       },
       fail: () => {}
     });
@@ -115,79 +128,40 @@ Page({
     var photo = 'scope.writePhotosAlbum'
     // 获取授权信息，查看是否已授权保存相册
     if (this.data.img.length > 0) {
-      wx.request({
-        url: app.url.downloadArticlePic,
-        method: 'POST',
-        data: {
-          uid: app.open_user.uid,
-          wx_url: app.article_msg.url,
-          article_id: app.article_msg.article_id
-        },
-        header: app.header,
-        success: (e) => {
-          console.log()
-          var tips = ''
-          if (e.data.status == '2000') {
-            tips = '下载成功，完成下载任务'
-          } else if (e.data.status == '500') {
-            tips = '网络异常'
-          } else if (e.data.status == '200') {
-            tips = '开始下载'
 
-            if (that.data.download_plan != '进行中') {
-              wx.getSetting({
-                success: res => {
-                  that.setData({
-                    download_plan: '进行中'
-                  })
-                  // 已授权
-                  if (res.authSetting[photo]) {
-                    that.getimage()
-                  } else {
-                    // 未授权
-                    if (res.authSetting[photo] === false) {
-                      that.setData({
-                        opensetting: true,
-                        download_plan: '未开始'
-                      })
-                      wx.showToast({
-                        title: "由于您之前拒绝授权访问相册，请重新授权",
-                        icon: 'none',
-                        duration: 1500,
-                        mask: false,
-                      });
-                    } else {
-                      // 初次授权
-                      wx.authorize({
-                        scope: 'scope.writePhotosAlbum',
-                        success: res => {
-                          that.getimage()
-                        },
-                      });
-                    }
-                  }
-                }
+      wx.getSetting({
+        success: res => {
+          that.setData({
+            download_plan: '进行中'
+          })
+          // 已授权
+          if (res.authSetting[photo]) {
+            that.request_down()
+          } else {
+            // 未授权
+            if (res.authSetting[photo] === false) {
+              that.setData({
+                opensetting: true,
+                download_plan: '未开始'
               })
-            } else {
               wx.showToast({
-                title: '下载正在进行，请勿重复操作',
+                title: "由于您之前拒绝授权访问相册，请重新授权",
                 icon: 'none',
                 duration: 1500,
                 mask: false,
               });
+            } else {
+              // 初次授权
+              wx.authorize({
+                scope: 'scope.writePhotosAlbum',
+                success: res => {
+                  that.request_down()
+                },
+              });
             }
-
-
           }
-          wx.showToast({
-            title: tips,
-            icon: 'none',
-            duration: 1500,
-            mask: false,
-          });
-        },
-        fail: () => {}
-      });
+        }
+      })
     } else {
       wx.showToast({
         title: '请选择图片',
@@ -198,6 +172,50 @@ Page({
     }
   },
 
+
+  //  请求是否可以下载
+  request_down: function () {
+    wx.request({
+      url: app.url.downloadArticlePic,
+      method: 'POST',
+      data: {
+        uid: app.open_user.uid,
+        wx_url: app.article_msg.url,
+        article_id: app.article_msg.article_id
+      },
+      header: app.header,
+      success: (e) => {
+        console.log()
+        var tips = ''
+        if (e.data.status == '500') {
+          tips = '网络异常'
+        } else if (e.data.status == '200' || e.data.status == '2000') {
+          tips = '开始下载'
+          if (that.data.download_plan != '进行中') {
+            that.getimage()
+          } else {
+            wx.showToast({
+              title: '下载正在进行，请勿重复操作',
+              icon: 'none',
+              duration: 1500,
+              mask: false,
+            });
+          }
+          if(e.data.status == '2000'){
+            that.tips_animate()
+            return false
+          }
+        }
+        wx.showToast({
+          title: tips,
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      },
+      fail: () => {}
+    });
+  },
 
   getimage: function (e) {
     var that = this;
@@ -260,6 +278,46 @@ Page({
         mask: false,
       });
     }
+  },
+
+  // 提示框动画
+  tips_animate: function () {
+    this.setData({
+      tips_show: true
+    })
+    var animate = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animate.translate('-50%', '-50%').step();
+    this.setData({
+      tips_animate: animate.export()
+    })
+  },
+
+  // 关闭提示框动画
+  clear_tips_animate: function () {
+    var that = this;
+    this.setData({
+      tips_show: true
+    })
+    var animate = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animate.translate('-50%', '300%').step();
+    this.setData({
+      tips_animate: animate.export()
+    })
+    setTimeout(function () {
+      that.setData({
+        tips_show: false
+      })
+    },200)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

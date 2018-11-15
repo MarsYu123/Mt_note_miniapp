@@ -281,12 +281,21 @@
     color: #A7B0C2;
 }
 
-.float {
+.float_box {
     position: fixed;
-    right: 30rpx;
-    bottom: 60rpx;
+    right: 0;
+    bottom: 160rpx;
+    width: 20px;
+    height: 400rpx;
 }
-
+.float_box movable-view{
+    height: 200rpx;
+    width: 20px
+}
+.float{
+    position: absolute;
+    left: -60rpx;
+}
 .float view {
     width: 75rpx;
     height: 75rpx;
@@ -313,3 +322,4 @@
 .download_btn {
     background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/download.png');
 }
+

@@ -34,18 +34,58 @@
                 </view>
               </view>
             </view>
-
           </block>
-
-
         </scroll-view>
       </view>
     </block>
     <block wx:else>
-      <button class="login down" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        登陆/注册
-      </button>
+      <view class="de_index">
+        <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_index.png' />
+        <view>您还没有下载记录</view>
+        <button class="login down" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+          登陆/注册
+        </button>
+      </view>
     </block>
+
+
+    <movable-area class="user_box">
+      <movable-view direction='vertical' inertia='true' x='-30px' y='200'>
+        <view class="user">
+
+          <!-- 签到 -->
+          <view class="sign_in">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/index/{{sign_in_status?'sign_in_active':'sign_in'}}.png"
+              mode="widthFix" bindtap="sign_in" />
+
+            <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+              登陆/注册
+            </button>
+          </view>
+
+          <!-- 个人中心 -->
+          <view class="tx">
+            <image src='{{profile}}' mode="widthFix" bindtap="nav_user" />
+
+            <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+              登陆/注册
+            </button>
+          </view>
+
+          <!-- 新建下载 -->
+          <view class="new_download">
+            <image src='https://www.mati.hk/Public/MiniProgram-note/index/more.png' mode="widthFix" bindtap="new_donload" />
+
+            <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+              登陆/注册
+            </button>
+          </view>
+        </view>
+      </movable-view>
+    </movable-area>
+
+
+
 
   </block>
 
@@ -55,21 +95,27 @@
         <image wx:for="{{new_img}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" bindload="img_load" data-index="{{item.index}}"
           id="{{item.picture_id || ''}}" />
       </view>
+      <button class="set_save_img" open-type='openSetting' wx:if="{{opensetting}}" type="primary">授权保存</button>
       <scroll-view class="photo_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_photo"
         enable-back-to-top="true">
         <view class="photo_cont">
+
           <view class="left">
-            <view wx:for="{{img.left}}" class="img {{item.check?'active':''}}" bindtap="check_img" data-index="{{index}}"
-              data-id="{{item.picture_id}}" data-direction='left' data-url="{{item.img_url}}" data-labelid="{{item.label_id}}">
-              <image src="{{img_host}}{{item.img_url}}" mode="widthFix" lazy-load="{{true}}" />
+            <view wx:for="{{img.left}}" class="img {{item.check?'active':''}}" bindtap="{{is_check?'check_img':'open_img'}}"
+              data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='left' data-url="{{item.img_url}}"
+              data-labelid="{{item.label_id}}">
+              <image src="{{img_host}}{{item.img_url}}?x-oss-process=image/resize,w_200" mode="widthFix" lazy-load="{{true}}" />
             </view>
           </view>
+
           <view class="right">
-            <view class="img {{item.check?'active':''}}" bindtap="check_img" wx:for="{{img.right}}" data-index="{{index}}"
-              data-id="{{item.picture_id}}" data-direction='right' data-url="{{item.img_url}}" data-labelid="{{item.label_id}}">
-              <image src="{{img_host}}{{item.img_url}}" mode="widthFix" lazy-load="{{true}}" />
+            <view class="img {{item.check?'active':''}}" bindtap="{{is_check?'check_img':'open_img'}}" wx:for="{{img.right}}"
+              data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='right' data-url="{{item.img_url}}"
+              data-labelid="{{item.label_id}}">
+              <image src="{{img_host}}{{item.img_url}}?x-oss-process=image/resize,w_200" mode="widthFix" lazy-load="{{true}}" />
             </view>
           </view>
+
         </view>
       </scroll-view>
     </view>
@@ -78,9 +124,16 @@
         <view class="screen" bindtap="screen">
           筛选标签
         </view>
-        <view class="download_check" bindtap="download_check">
-          选择下载
-        </view>
+        <block wx:if="{{is_getuser}}">
+          <view class="download_check" bindtap="download_check">
+            选择下载
+          </view>
+        </block>
+        <block wx:else>
+          <button class="download_check" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+            选择下载
+          </button>
+        </block>
       </view>
     </block>
     <block wx:else>
@@ -88,8 +141,8 @@
         <view class="screen" bindtap="esc_check">
           取消
         </view>
-        <view class="download_check" style="background:#39CCE1;color:#ffffff" bindtap="download_check">
-          下载
+        <view class="download_check" style="background:#39CCE1;color:#ffffff" bindtap="download_pic">
+          下载{{download_img.length}}
         </view>
       </view>
     </block>
@@ -123,35 +176,6 @@
 
   </view>
 
-  <view class="user">
-
-    <!-- 签到 -->
-    <view class="sign_in">
-      <image src='https://www.mati.hk/Public/MiniProgram-note/index/sign_in.png' mode="widthFix" bindtap="sign_in" />
-
-      <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        登陆/注册
-      </button>
-    </view>
-
-    <!-- 个人中心 -->
-    <view class="tx">
-      <image src='{{profile}}' mode="widthFix" bindtap="nav_user" />
-
-      <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        登陆/注册
-      </button>
-    </view>
-
-    <!-- 新建下载 -->
-    <view class="new_download">
-      <image src='https://www.mati.hk/Public/MiniProgram-note/index/more.png' mode="widthFix" bindtap="new_donload" />
-
-      <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        登陆/注册
-      </button>
-    </view>
-  </view>
 
   <view class="inbox_box" wx:if="{{box_link}}">
     <view class="box">
@@ -175,6 +199,26 @@
           <text bindtap="record_article">记录文章</text>
           <text bindtap="dowload_article">前往下载</text>
         </block>
+      </view>
+    </view>
+  </view>
+  <view class="open_img" wx:if="{{is_open_img}}">
+    <image src="{{open_img.url}}" mode="widthFix" bindload='open_img_load' bindtouchstart='touch_start' bindtouchmove='touch_move'
+      style="transform:translate(-50%,-50%) scale({{open_img.scale}})" />
+    <view class="open_img_clear" bindtap="open_img_claer"></view>
+  </view>
+  <view class="sign_in_box" wx:if="{{tips_show}}">
+    <view class="sign_in_cont" animation="{{tips_animate}}">
+      <view class="sign_title">
+        {{tips.title}}
+      </view>
+      <view class="sign_tips">
+        <text>+</text>
+        <text style="font-size:36rpx">{{tips.num}}</text>
+        <text>积分</text>
+      </view>
+      <view class="sign_btn" bindtap='clear_tips_animate'>
+        确定
       </view>
     </view>
   </view>

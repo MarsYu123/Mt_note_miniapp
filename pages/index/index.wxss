@@ -198,9 +198,11 @@
 
 .photo_cont image {
   width: 100%;
+  height: 340rpx;
   background: #ffffff;
   margin-bottom: 20rpx;
   border-radius: 5px;
+  transition: all .2s;
 }
 
 .photo_bottom {
@@ -215,7 +217,8 @@
   box-shadow: 0 -2px 2px 0 rgba(87, 90, 102, 0.3);
 }
 
-.photo_bottom view {
+.photo_bottom view,
+.photo_bottom button {
   width: 50%;
   text-align: center;
   line-height: 100rpx;
@@ -224,10 +227,25 @@
   color: #39CCE1;
 }
 
-.user {
+.photo_bottom button {
+  background: #ffffff;
+}
+
+.photo_bottom button::after {
+  border: none;
+}
+
+.user_box {
   position: fixed;
   right: 20rpx;
   bottom: 30rpx;
+  width: 20rpx;
+  height: 800rpx;
+}
+
+movable-view {
+  width: 100rpx;
+  height: 400rpx;
 }
 
 .user view {
@@ -511,7 +529,8 @@
   box-sizing: border-box;
 }
 
-.inbox_box .box .btn text, .inbox_box .box .btn button {
+.inbox_box .box .btn text,
+.inbox_box .box .btn button {
   height: 50rpx;
   line-height: 50rpx;
   width: 50%;
@@ -522,7 +541,8 @@
   box-sizing: border-box;
 }
 
-.inbox_box .box .btn text:last-child, .inbox_box .box .btn button:last-child {
+.inbox_box .box .btn text:last-child,
+.inbox_box .box .btn button:last-child {
   border: none;
 }
 
@@ -534,5 +554,69 @@
 }
 
 .inbox_box .box .btn button::after {
+  border: none;
+}
+
+.open_img {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.open_img image {
+  width: 90%;
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.open_img .open_img_clear {
+  width: 100%;
+  height: 100%;
+}
+
+.set_save_img {
+  margin-bottom: 20rpx;
+}
+
+.de_index {
+  margin-top: 300rpx;
+  text-align: center;
+}
+
+.de_index image {
+  width: 228rpx;
+  height: 170rpx;
+}
+
+.de_index view {
+  font-size: 28rpx;
+  color: #39CCE1;
+  text-align: center;
+  margin: auto;
+  margin-top: 40rpx;
+}
+
+.de_index button {
+  margin: auto;
+  margin-top: 20rpx;
+  width: 300rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #39CCE1;
+  box-shadow: 0 4px 4px 0 #A7B0C2;
+  font-size: 38rpx;
+  color: #FFFFFF;
+  text-align: center;
+  border: none !important;
+}
+
+.de_index button::after {
   border: none;
 }

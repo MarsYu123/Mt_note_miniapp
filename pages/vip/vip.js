@@ -22,7 +22,8 @@ Page({
     eq_price: '', //优惠金额
     money: '', // 金额
     old_money: 0, //实际金额
-    kind: ''
+    kind: '',  //优惠券kind
+    order: []  //订单记录
   },
 
   /**
@@ -33,7 +34,8 @@ Page({
       user_msg: app.open_user,
       profile: app.profile,
     })
-    this.order()
+    this.vip_msg();
+    this.orderList()
   },
 
   // 导航切换
@@ -44,8 +46,8 @@ Page({
     })
   },
 
-  // 订单记录
-  order: function () {
+  // vip_购买内容
+  vip_msg: function () {
     var that = this;
     wx.request({
       url: app.url.payHome,
@@ -65,6 +67,27 @@ Page({
       fail: () => {}
     });
   },
+
+  //订单记录
+  orderList:function () {
+    var that = this;
+    wx.request({
+      url: app.url.orderList,
+      method: 'POST',
+      data: {
+        uid: app.open_user.id
+      },
+      header: app.header,
+      success: (e)=>{
+        console.log(e)
+        that.setData({
+          order:e.data.data
+        })
+      },
+      fail: ()=>{}
+    });
+  },
+
 
   // 选择金额
   check: function (e) {

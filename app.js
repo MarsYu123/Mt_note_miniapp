@@ -11,6 +11,7 @@ App({
     wx.getSystemInfo({
       success: res => {
         console.log(res)
+        this.system = res
       }
     });
   },
@@ -18,7 +19,7 @@ App({
   host: 'https://www.mati.hk/Mobile/', 
 
   //  图片加速域名
-  img_host: 'https://img.mati.hk/Public/',
+  img_host: 'https://img.mati.hk/Public',
 
   //小程序api地址
   url: { 
@@ -46,7 +47,10 @@ App({
     pointExchange: 'Noteuser/pointExchange',  //积分兑换
     notePay: 'Notepay/notePay', // 兑换vip支付接口
     orderStatus: 'Notepay/orderStatus', //支付结果返回接口
-    downloadArticlePic: 'Notearticle/downloadArticlePic' //下载文章回调接口
+    downloadArticlePic: 'Notearticle/downloadArticlePic', //下载文章回调接口
+    orderList: 'Notepay/orderList', //订单记录
+    downloadPics:'Notepic/downloadPics', //下载图库图片
+    myCoupon: 'Noteuser/myCoupon' //我的卡券
   },
 
   //post请求的header头
@@ -76,5 +80,8 @@ App({
   open_user:{},
 
   // 临时存储文章信息
-  article_msg:{}
+  article_msg:{},
+
+  // 设备信息
+  system:{}
 })
