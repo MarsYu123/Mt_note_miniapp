@@ -69,7 +69,8 @@ Page({
       num: '5'
     },
     tips_show: false,
-    tips_animate: {} //提示框动画
+    tips_animate: {}, //提示框动画
+    label_show: false
   },
 
   // 登陆后获取信息
@@ -112,7 +113,7 @@ Page({
   clear_link: function () {
     this.setData({
       box_link: false,
-      link_cont:''
+      link_cont: ''
     })
   },
 
@@ -250,7 +251,7 @@ Page({
       },
       header: app.header,
       success: (e) => {
-        console.log(new Date())
+        console.log(e.data.data)
         that.setData({
           history_cont: e.data.data
         })
@@ -382,6 +383,12 @@ Page({
     this.setData({
       animate: animate.export()
     })
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        label_show: false
+      })
+    }, 100)
     if (type == "enter") {
       this.checked_img(this.data.label_checked)
     }
@@ -389,6 +396,9 @@ Page({
 
   //打开选择标签
   screen: function () {
+    this.setData({
+      label_show: true
+    })
     var animate = wx.createAnimation({
       duration: 200,
       timingFunction: 'linear',
@@ -438,7 +448,7 @@ Page({
       that.setData({
         tips_show: false
       })
-    },200)
+    }, 200)
   },
 
   // 选择下载
@@ -538,6 +548,7 @@ Page({
   onLoad: function () {
     // 若已授权，则自动登录
     module_login.userlogin(this);
+    // 获取剪切板
     wx.getClipboardData({
       success: res => {
         if (res.data != '') {
@@ -687,23 +698,25 @@ Page({
     var download_img = this.data.download_img
     var that = this;
     var photo = 'scope.writePhotosAlbum'
+    var img_url = [],
+      picture_id = [];
     // 获取授权信息，查看是否已授权保存相册
     if (download_img.length > 0) {
-      var img_url = [],
-        picture_id = [];
+
       for (var i in download_img) {
         img_url.push(that.data.img_host + download_img[i].img_url)
         picture_id.push(download_img[i].picture_id)
       }
 
+
       wx.getSetting({
         success: res => {
           that.setData({
-            download_plan: '进行中'
+            download_plan: '未开始'
           })
           // 已授权
           if (res.authSetting[photo]) {
-            that.request_down()
+            that.request_down(img_url, picture_id, download_img)
           } else {
             // 未授权
             if (res.authSetting[photo] === false) {
@@ -722,7 +735,8 @@ Page({
               wx.authorize({
                 scope: 'scope.writePhotosAlbum',
                 success: res => {
-                  that.request_down()
+                  that.request_down(img_url, picture_id, download_img)
+                  console.log(img_url)
                 },
               });
             }
@@ -742,8 +756,10 @@ Page({
 
 
   // 请求是否可下载
-  request_down: function () {
+  request_down: function (img, picture_id, download_img) {
     var that = this;
+    console.log(img)
+    var img_url = img;
     wx.request({
       url: app.url.downloadPics,
       method: 'POST',
@@ -756,13 +772,12 @@ Page({
       },
       header: app.header,
       success: (e) => {
-
+        console.log(e)
         var tips = ''
         if (e.data.status == '500') {
           tips = '网络异常'
         } else if (e.data.status == '200') {
           tips = '开始下载'
-
           if (that.data.download_plan != '进行中') {
             that.getimage()
           } else {
@@ -773,6 +788,8 @@ Page({
               mask: false,
             });
           }
+        } else if (e.data.status == '400') {
+          tips = '您不是VIP'
         }
         wx.showToast({
           title: tips,
@@ -789,6 +806,7 @@ Page({
 
   // 开始下载图片
   getimage: function (e) {
+    console.log('ss')
     var that = this;
     var download_img = that.data.download_img
     that.esc_check()
@@ -903,10 +921,34 @@ Page({
     // 更新用户信息
     if (this.data.load) {
       module_login.userlogin(this);
+      // 获取剪切板
+      wx.getClipboardData({
+        success: res => {
+          if (res.data != '') {
+            this.setData({
+              link_cont: res.data,
+              box_link: true
+            })
+          }
+        }
+      });
+      this.download_history()
     }
   },
-  onRead: function () {
-    this.data.load = true
+  onReady: function () {
+    this.setData({
+      load:true
+    })
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function (res) {
+    return {
+      title: '微信文章图片一键下载神器',
+      path: '/pages/index/index'
+    }
   }
 
 })

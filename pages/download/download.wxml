@@ -6,7 +6,7 @@
     <view class="article_cont {{article_msg.has_download?'active':''}}">
         <view class="title">
             <text class="article_title">{{article_msg.title}}</text>
-            <text class="download_state">{{article_msg.has_download?'已下载':'未下载'}}</text>
+            <text class="download_state">{{has_download?'已下载':'未下载'}}</text>
         </view>
         <view class="article_info">
             <view class="source">

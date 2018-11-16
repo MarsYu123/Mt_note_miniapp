@@ -1,0 +1,5 @@
+<!--pages/poster/poster.wxml-->
+<view class="poster">
+    <canvas canvas-id="poster" class="poster"/>
+    <image src="{{poster_url}}" />
+</view>

@@ -3,7 +3,7 @@
     <view class="article_cont">
         <view class="title">
             <text class="article_title">{{article_cont.title}}</text>
-            <text class="download_state">{{has_download?'已下载':'未下载'}}</text>
+            <text class="download_state">{{article_cont.has_download?'已下载':'未下载'}}</text>
         </view>
         <view class="article_info">
             <view class="source">
@@ -79,10 +79,13 @@
     <movable-area class="float_box">
         <movable-view direction='vertical' inertia='true' x='-30px' y='0'>
             <view class="float">
+                <!-- 点赞 -->
                 <view class="like_btn {{is_like? 'active':''}}" bindtap="articleLike">
                 </view>
-                <view class="share_btn">
+                <!-- 分享 -->
+                <view class="share_btn" bindtap="share">
                 </view>
+                <!-- 下载 -->
                 <view class="download_btn" bindtap="download">
                 </view>
             </view>
@@ -100,6 +103,22 @@
             </view>
             <view class="sign_btn" bindtap='clear_tips_animate'>
                 确定
+            </view>
+        </view>
+    </view>
+
+    <view class='share_box' wx:if="{{share_show}}">
+        <view class="share_cont" animation='{{share_animate}}'>
+            <view class="title">
+                分享
+            </view>
+            <view class="clear_share" bindtap="claer_share"></view>
+            <view class="share_option">
+                <view>
+                    小程序
+                    <button open-type="share"></button>
+                </view>
+                <view bindtap="share_poster">海报</view>
             </view>
         </view>
     </view>

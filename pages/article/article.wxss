@@ -288,14 +288,17 @@
     width: 20px;
     height: 400rpx;
 }
-.float_box movable-view{
+
+.float_box movable-view {
     height: 200rpx;
     width: 20px
 }
-.float{
+
+.float {
     position: absolute;
     left: -60rpx;
 }
+
 .float view {
     width: 75rpx;
     height: 75rpx;
@@ -323,3 +326,89 @@
     background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/download.png');
 }
 
+
+
+.share_box {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(87, 90, 102, 0.5);
+    z-index: 99;
+}
+
+.share_cont {
+    width: 638rpx;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 300%);
+    background: #ffffff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.share_cont .title {
+    line-height: 112rpx;
+    height: 112rpx;
+    text-align: center;
+    font-size: 36rpx;
+    color: #495E8B;
+}
+
+.share_option {
+    display: flex;
+    justify-content: space-between
+}
+
+.share_option view {
+    width: 314rpx;
+    height: 104rpx;
+    line-height: 104rpx;
+    text-align: center;
+    background: #39CCE1;
+    color: #ffffff;
+    font-size: 36rpx;
+    position: relative;
+}
+
+.share_option button {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0
+}
+
+.clear_share {
+    width: 33rpx;
+    height: 33rpx;
+    position: absolute;
+    top: 30rpx;
+    right: 30rpx;
+    transform: rotate(-45deg)
+}
+
+.clear_share::before {
+    content: '';
+    position: absolute;
+    width: 45rpx;
+    height: 6rpx;
+    background: #39CCE1;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.clear_share::after {
+    content: '';
+    position: absolute;
+    width: 6rpx;
+    height: 45rpx;
+    background: #39CCE1;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}

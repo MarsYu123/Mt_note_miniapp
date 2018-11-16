@@ -22,7 +22,7 @@
         </view>
         <view class="user_info_bottom">
             <block wx:if="{{is_getuser}}">
-                <view class="info_item">
+                <view class="info_item" bindtap="nav_vip">
                     <text class="title">VIP</text>
                     <block wx:if="{{user_info.is_vip}}">
                         <text class="cont">{{user_info.vipData.remain_days}}</text>

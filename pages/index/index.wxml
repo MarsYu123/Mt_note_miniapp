@@ -12,28 +12,37 @@
       <view class="download_history">
         <scroll-view class="down_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_download"
           enable-back-to-top="true">
-          <block wx:for="{{history_cont}}">
-            <view class="history_item active" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
-              <view class="title">
-                <text class="title_cont">{{item.title}}</text>
-                <text class="title_state">{{item.is_download == '1'?'已下载':'未下载'}}</text>
-              </view>
-              <view class="img_box">
-                <block wx:for="{{item.img}}">
-                  <image src="{{item}}" mode="aspectFill" />
-                </block>
-              </view>
-              <view class="bottom">
-                <view class="info">
-                  <text>{{item.source}}</text>
-                  <text>{{item.create_time}}</text>
+          <block wx:if="{{history_cont.length>0}}">
+            <block wx:for="{{history_cont}}">
+              <view class="history_item active" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
+                <view class="title">
+                  <text class="title_cont">{{item.title}}</text>
+                  <text class="title_state">{{item.is_download == '1'?'已下载':'未下载'}}</text>
                 </view>
-                <view class="like_box">
-                  <text class="like">{{item.like_count}}</text>
-                  <text class="msg">{{item.reply_count}}</text>
+                <view class="img_box">
+                  <block wx:for="{{item.img}}">
+                    <image src="{{item}}" mode="aspectFill" />
+                  </block>
+                </view>
+                <view class="bottom">
+                  <view class="info">
+                    <text>{{item.source}}</text>
+                    <text>{{item.create_time}}</text>
+                  </view>
+                  <view class="like_box">
+                    <text class="like">{{item.like_count}}</text>
+                    <text class="msg">{{item.reply_count}}</text>
+                  </view>
                 </view>
               </view>
+            </block>
+          </block>
+          <block wx:else>
+            <view class="de_index">
+              <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_index.png' />
+              <view>您还没有下载记录</view>
             </view>
+
           </block>
         </scroll-view>
       </view>
@@ -148,7 +157,7 @@
     </block>
   </block>
 
-  <view class="label_box" animation="{{animate}}">
+  <view class="label_box" wx:if="{{label_show}}" animation="{{animate}}">
 
 
     <view class="box_cont">

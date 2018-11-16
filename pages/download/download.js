@@ -22,7 +22,8 @@ Page({
       num: '5'
     },
     tips_show: false,
-    tips_animate: {} //提示框动画
+    tips_animate: {}, //提示框动画
+    has_download: false
   },
 
   /**
@@ -31,6 +32,7 @@ Page({
   onLoad: function (options) {
     console.log(app.article_msg)
     var that = this;
+    var has_download = options.has_download
     wx.request({
       url: app.url.toArticlePic,
       method: 'POST',
@@ -56,7 +58,8 @@ Page({
           that.setData({
             img: arr,
             article_msg: app.article_msg,
-            is_vip: app.open_user.is_vip
+            is_vip: app.open_user.is_vip,
+            has_download: has_download
           })
         }else if(e.data.status == 555){
           wx.showModal({
@@ -132,7 +135,7 @@ Page({
       wx.getSetting({
         success: res => {
           that.setData({
-            download_plan: '进行中'
+            download_plan: '未开始'
           })
           // 已授权
           if (res.authSetting[photo]) {
@@ -175,6 +178,7 @@ Page({
 
   //  请求是否可以下载
   request_down: function () {
+    var that = this
     wx.request({
       url: app.url.downloadArticlePic,
       method: 'POST',
@@ -377,6 +381,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '微信文章图片一键下载神器',
+      path:'/pages/index/index'
+    }
   }
 })

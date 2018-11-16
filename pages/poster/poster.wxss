@@ -1,0 +1,10 @@
+/* pages/poster/poster.wxss */
+
+.poster{
+    width: 710rpx;
+    height: 1078rpx;
+    margin: auto;
+    margin-top: 20rpx;
+    border-radius: 8px;
+    /* background: #39CCE1 */
+}

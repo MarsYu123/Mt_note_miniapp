@@ -21,7 +21,9 @@ Page({
       num: '5'
     },
     tips_show: false,
-    tips_animate: {} //提示框动画
+    tips_animate: {}, //提示框动画
+    share_show: false,
+    share_animate: {} //分享动画
   },
 
   /**
@@ -214,6 +216,40 @@ Page({
   },
 
 
+  // 分享动画
+  share_animate:function () {
+    let animate = wx.createAnimation({
+      duration: 400,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animate.translate('-50%', '-50%').step();
+    this.setData({
+      share_animate: animate.export()
+    })
+  },
+
+  // 关闭分享
+  claer_share:function () {
+    var that = this;
+    let animation = wx.createAnimation({
+      duration: 400,
+      timingFunction: 'linear',
+      delay: 0,
+      transformOrigin: '50% 50% 0'
+    });
+    animation.translate('-50%','300%').step();
+    this.setData({
+      share_animate: animation.export()
+    })
+    setTimeout(function () {
+      that.setData({
+        share_show:false
+      })
+    },400)
+  },
+
 
 
   // 点赞文章
@@ -272,7 +308,7 @@ Page({
   download:function () {
     if(this.data.article_cont.code == true){
       wx.navigateTo({
-        url: '../download/download'
+        url: '../download/download?has_download='+this.data.article_cont.has_download
       });
     }else{
       wx.showToast({
@@ -282,6 +318,21 @@ Page({
         mask: false,
       });
     }
+  },
+
+  // 分享
+  share:function () {
+    this.setData({
+      share_show: true,
+    })
+    this.share_animate()
+  },
+
+  // 分享海报
+  share_poster:function () {
+    wx.navigateTo({
+      url: '../poster/poster?article_id='+ this.data.article_id
+    });
   },
 
   /**
@@ -329,7 +380,10 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+    return {
+      title: '微信文章图片一键下载神器',
+      path:'/pages/index/index'
+    }
   }
 })

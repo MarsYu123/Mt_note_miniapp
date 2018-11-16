@@ -50,7 +50,8 @@ App({
     downloadArticlePic: 'Notearticle/downloadArticlePic', //下载文章回调接口
     orderList: 'Notepay/orderList', //订单记录
     downloadPics:'Notepic/downloadPics', //下载图库图片
-    myCoupon: 'Noteuser/myCoupon' //我的卡券
+    myCoupon: 'Noteuser/myCoupon',//我的卡券
+    QrCode: 'Notelogin/QrCode' //生成qrcode
   },
 
   //post请求的header头

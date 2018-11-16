@@ -13,7 +13,8 @@
     "pages/ticket/ticket",
     "pages/article/article",
     "pages/login/login",
-    "pages/help/help"
+    "pages/help/help",
+    "pages/poster/poster"
   ],
   "window": {
     "backgroundTextStyle": "light",
