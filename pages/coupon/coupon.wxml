@@ -11,12 +11,15 @@
             <block wx:if="{{coupon_msg.length>0}}">
                 <view class="store_item" wx:for="{{coupon_msg}}">
                     <view class="store_left">
-                        <view class="store_title">
+                        <view class="store_title" style="top:9rpx;">
                             <text class="h3" style="color:#E62112">￥</text>
                             <text class="h1">{{item.eq_price}}</text>
                             <text class="h3">代金券</text>
                         </view>
-                        <view class="store_tips">
+                        <view class="store_tips" style="top:97rpx">
+                            兑换时间：{{item.add_time}}
+                        </view>
+                        <view class="store_tips" style="top:135rpx">
                             {{item.coupon_content}}
                         </view>
                     </view>
@@ -36,12 +39,15 @@
             <block wx:if="{{use_list.length>0}}">
                 <view class="store_item" wx:for="{{use_list}}">
                     <view class="store_left">
-                        <view class="store_title">
+                        <view class="store_title" style="top:9rpx;">
                             <text class="h3">￥</text>
                             <text class="h1">{{item.eq_price}}</text>
                             <text class="h3">代金券</text>
                         </view>
-                        <view class="store_tips">
+                        <view class="store_tips" style="top:97rpx">
+                            兑换时间：{{item.add_time}}
+                        </view>
+                        <view class="store_tips" style="top:135rpx">
                             使用时间：{{item.use_time}}
                         </view>
                     </view>

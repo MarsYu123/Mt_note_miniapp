@@ -202,25 +202,35 @@
     margin-bottom: 30rpx;
     background: #ffffff;
     height: 138rpx;
-    line-height: 138rpx;
+    /* line-height: 138rpx; */
     width: 690rpx;
     box-shadow: 0 2px 7px 0 #D9DFED;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: baseline; */
     padding: 0 50rpx;
     box-sizing: border-box
 }
+.record_left{
+    padding-top:40rpx;
 
+}
 .record_left .h1 {
     font-size: 48rpx;
     color: #495E8B;
-    margin-right: 5rpx
+    margin-right: 5rpx;
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 95rpx;
+    line-height:48rpx;
+
 }
 
 .record_left .h3 {
     font-size: 28rpx;
     color: #495E8B;
+    display: inline-block;
+    vertical-align: text-bottom
 }
 
 .record_right {

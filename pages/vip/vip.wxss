@@ -18,7 +18,8 @@
     background-size: 100% 100%;
     display: flex;
     padding: 30rpx 104rpx;
-    margin-bottom: 40rpx
+    margin-bottom: 40rpx;
+    box-sizing: border-box
 }
 
 .tx {
@@ -33,23 +34,22 @@
     font-size: 36rpx;
     color: #FFFFFF;
 }
+.user_info .name::after {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/vip_icon.png');
+    width: 84rpx;
+    height: 28rpx;
+    margin-left: 30rpx;
+    background-size: 100% 100%;
 
+}
 .user_info .info {
     font-size: 24rpx;
     color: #FFFFFF;
 }
 
-.user_info .info::before {
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-    background: url('https://www.mati.hk/Public/MiniProgram-note/user/vip_icon.png');
-    width: 52rpx;
-    height: 18rpx;
-    margin-right: 30rpx;
-    background-size: 100% 100%;
-
-}
 
 
 .store_nav {
@@ -113,6 +113,8 @@
 .money_item .h3 {
     font-size: 28rpx;
     color: #495E8B;
+    width: 90rpx;
+    display: inline-block;
     margin-right: 70rpx;
 }
 
@@ -179,7 +181,8 @@
 
 .ticket_check .right {
     display: flex;
-    align-items: center
+    align-items: center;
+    color: #E62112
 }
 
 .ticket_check .right::after {
@@ -255,6 +258,9 @@
 .order_state {
     font-size: 30rpx;
     color: #E62112;
+    width: 220rpx;
+    flex-shrink: 0;
+    text-align: center
 }
 
 .order_info {

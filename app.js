@@ -1,6 +1,6 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function (options) {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -8,12 +8,30 @@ App({
     for (var i in this.url) {
       this.url[i] = this.host + this.url[i];
     }
+
+    // 获取article_id
+    var article_id = options.query.article_id
+
+    //将分享的文章加入历史纪录 
+
+    if(article_id !=""){
+      // wx.request({
+      //   url: app.url,
+      //   method: 'GET',
+      //   data: {},
+      //   header: 'application/x-www-form-urlencoded',
+      //   success: ()=>{},
+      //   fail: ()=>{}
+      // });
+    }
+
     wx.getSystemInfo({
       success: res => {
         console.log(res)
         this.system = res
       }
     });
+
   },
   // 小程序域名
   host: 'https://www.mati.hk/Mobile/', 
@@ -51,7 +69,8 @@ App({
     orderList: 'Notepay/orderList', //订单记录
     downloadPics:'Notepic/downloadPics', //下载图库图片
     myCoupon: 'Noteuser/myCoupon',//我的卡券
-    QrCode: 'Notelogin/QrCode' //生成qrcode
+    QrCode: 'Notelogin/QrCode', //生成qrcode
+    noteBanner: 'Noteindex/noteBanner' //首页banner
   },
 
   //post请求的header头

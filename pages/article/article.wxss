@@ -132,7 +132,7 @@
 }
 
 .article_img .no_check:last-child::after {
-    content: '查看下载';
+    content: '查看全部';
     height: 138rpx;
     line-height: 138rpx;
     width: 100%;
@@ -144,6 +144,13 @@
     top: 0;
     font-size: 28rpx;
     color: #3489FF;
+}
+
+.vip_tips {
+    font-size: 24rpx;
+    color: #495E8B;
+    text-align: center;
+    margin: 10rpx auto;
 }
 
 .download_num {
@@ -168,7 +175,8 @@
     height: 66rpx;
     border-radius: 50%;
     background: #eeeeee;
-    margin: 7rpx
+    margin: 7rpx;
+    flex-shrink: 0
 }
 
 .tx_box .img_tips {
@@ -204,8 +212,9 @@
 
 .comment_box {
     width: 100%;
-    padding: 10rpx 20rpx;
-    font-size: 20rpx;
+    height: 90rpx;
+    padding: 24rpx 30rpx;
+    font-size: 24rpx;
     border-radius: 3px;
     border: 1px solid #D8E7ED;
     box-sizing: border-box
@@ -232,7 +241,8 @@
 .comment_item {
     display: flex;
     border-bottom: 1px solid #D8E7ED;
-    align-items: flex-start
+    align-items: flex-start;
+    padding-top: 20rpx
 }
 
 .comment_item:last-child {
@@ -284,28 +294,26 @@
 .float_box {
     position: fixed;
     right: 0;
-    bottom: 160rpx;
+    bottom: 360rpx;
     width: 20px;
     height: 400rpx;
 }
 
-.float_box movable-view {
-    height: 200rpx;
-    width: 20px
-}
 
 .float {
-    position: absolute;
-    left: -60rpx;
+    display: flex;
+    align-items: center;
+    margin: 30rpx auto;
+    width: 450rpx;
+    justify-content: space-around
 }
 
 .float view {
-    width: 75rpx;
-    height: 75rpx;
+    width: 96rpx;
+    height: 96rpx;
     border-radius: 50%;
     background-size: 100% 100%;
     box-shadow: 0 2px 7px 0 #A7B0C2;
-    margin-bottom: 20rpx
 }
 
 .like_btn {
@@ -353,23 +361,35 @@
     line-height: 112rpx;
     height: 112rpx;
     text-align: center;
-    font-size: 36rpx;
+    font-size: 32rpx;
     color: #495E8B;
 }
 
 .share_option {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    border-top: 1px solid #D8E7ED;
+    position: relative;
+}
+.share_option::after{
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 1px;
+    height: 48rpx;
+    background: #D9DFED;
 }
 
 .share_option view {
-    width: 314rpx;
+    width: 320rpx;
     height: 104rpx;
     line-height: 104rpx;
     text-align: center;
-    background: #39CCE1;
-    color: #ffffff;
-    font-size: 36rpx;
+    color: #39CCE1;
+    font-size: 34rpx;
     position: relative;
 }
 
@@ -394,8 +414,8 @@
 .clear_share::before {
     content: '';
     position: absolute;
-    width: 45rpx;
-    height: 6rpx;
+    width: 40rpx;
+    height: 3rpx;
     background: #39CCE1;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -405,8 +425,8 @@
 .clear_share::after {
     content: '';
     position: absolute;
-    width: 6rpx;
-    height: 45rpx;
+    width: 3rpx;
+    height: 40rpx;
     background: #39CCE1;
     transform: translate(-50%, -50%);
     top: 50%;

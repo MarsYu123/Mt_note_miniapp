@@ -48,10 +48,8 @@
                     <view class="record_left">
                         <text class="h3">￥</text>
                         <text class="h1">{{item.eq_price}}</text>
-                        <text class="h3">代金券</text>
-                    </view>
-                    <view class="record_right">
-                        兑换日期：{{item.add_time}}
+                        <text class="h3" style="margin-right:100rpx">代金券</text>
+                        <text class="h3">{{item.add_time}}</text>
                     </view>
                 </view>
             </block>

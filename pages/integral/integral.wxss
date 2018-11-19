@@ -38,12 +38,28 @@
     border-radius: 50%;
     /* box-sizing: border-box */
 }
+.kv_title .info {
+    font-size: 24rpx;
+    color: #FFFFFF;
+    margin-top: 22rpx;
+}
 
 .kv_title .name {
-    font-size: 28rpx;
+    font-size: 36rpx;
     color: #FFFFFF;
 }
 
+.kv_title .name::after {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/vip_icon.png');
+    width: 84rpx;
+    height: 28rpx;
+    margin-left: 30rpx;
+    background-size: 100% 100%;
+
+}
 .kv_num {
     position: absolute;
     left: 60rpx;

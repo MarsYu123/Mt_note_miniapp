@@ -56,6 +56,9 @@
 .store_left {
     width: 100%;
 }
+.store_left{
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg2.png')
+}
 
 .store_list.active .h3 {
     color: #A7B0C2;

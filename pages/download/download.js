@@ -18,7 +18,7 @@ Page({
     all_check: false,
     sign_in_status: false,
     tips: {
-      title: '签到成功',
+      title: '下载成功',
       num: '5'
     },
     tips_show: false,
@@ -44,7 +44,7 @@ Page({
       header: app.header,
       success: (e) => {
         console.log(e)
-        if(e.data.status == 200){
+        if (e.data.status == 200) {
           var data = [];
           var arr = []
           data = e.data.data;
@@ -61,7 +61,7 @@ Page({
             is_vip: app.open_user.is_vip,
             has_download: has_download
           })
-        }else if(e.data.status == 555){
+        } else if (e.data.status == 555) {
           wx.showModal({
             title: '提示',
             content: '非会员每天只能下载一次',
@@ -69,7 +69,7 @@ Page({
             confirmText: '确定',
             confirmColor: '#3CC51F',
             success: res => {
-              if(res.confirm){
+              if (res.confirm) {
                 wx.navigateBack({
                   delta: 1
                 });
@@ -77,7 +77,7 @@ Page({
             }
           });
         }
-     
+
       },
       fail: () => {}
     });
@@ -129,8 +129,14 @@ Page({
   save_image: function () {
     var that = this;
     var photo = 'scope.writePhotosAlbum'
+    var length = 0
     // 获取授权信息，查看是否已授权保存相册
-    if (this.data.img.length > 0) {
+    for (var i in this.data.img) {
+      if (this.data.img[i].check) {
+        length++
+      }
+    }
+    if (length > 0) {
 
       wx.getSetting({
         success: res => {
@@ -191,10 +197,12 @@ Page({
       success: (e) => {
         console.log()
         var tips = ''
+        var type = '0' //下载提示状态0为正常toast，1为load，2为hideload
         if (e.data.status == '500') {
           tips = '网络异常'
         } else if (e.data.status == '200' || e.data.status == '2000') {
-          tips = '开始下载'
+          tips = '开始下载,请稍等...'
+          type = '1'
           if (that.data.download_plan != '进行中') {
             that.getimage()
           } else {
@@ -205,17 +213,24 @@ Page({
               mask: false,
             });
           }
-          if(e.data.status == '2000'){
+          if (e.data.status == '2000') {
             that.tips_animate()
             return false
           }
         }
-        wx.showToast({
-          title: tips,
-          icon: 'none',
-          duration: 1500,
-          mask: false,
-        });
+        if (type == '0') {
+          wx.showToast({
+            title: tips,
+            icon: 'none',
+            duration: 1500,
+            mask: false,
+          });
+        } else if (type == '1') {
+          wx.showLoading({
+            title: tips,
+            mask: true,
+          });
+        }
       },
       fail: () => {}
     });
@@ -227,25 +242,29 @@ Page({
     var img = that.data.img
     for (var i in img) {
       if (img[i].check) {
-        download_img.push(img[i])
-        img[i].check = false
+        if (img[i].url.indexOf("http") != -1) {
+          download_img.push(img[i])
+          // img[i].check = false
+        }
       }
     }
     that.data.img_length = download_img.length;
     this.setData({
       img: img,
-      check_num: 0,
-      all_check: false
+      // check_num: 0,
+      // all_check: false
     })
     for (var i in download_img) {
-      wx.getImageInfo({
-        src: download_img[i].url,
-        success: (e) => {
-          console.log(e)
-          var path = e.path;
-          this.saveimaeg(path)
-        },
-      });
+      if (download_img[i].url.indexOf('http') != -1) {
+        wx.getImageInfo({
+          src: download_img[i].url,
+          success: (e) => {
+            console.log(e)
+            var path = e.path;
+            this.saveimaeg(path)
+          },
+        });
+      }
     }
   },
 
@@ -275,17 +294,24 @@ Page({
         download_length: 0,
         img_length: 0
       })
+      wx.hideLoading();
       wx.showToast({
         title: '图片全部下载完毕',
         icon: 'none',
         duration: 1500,
         mask: false,
       });
+      setTimeout(function () {
+        wx.navigateBack({
+          delta: 1
+        });
+      }, 1500)
     }
   },
 
   // 提示框动画
   tips_animate: function () {
+    var that = this;
     this.setData({
       tips_show: true
     })
@@ -299,6 +325,17 @@ Page({
     this.setData({
       tips_animate: animate.export()
     })
+    setTimeout(function () {
+      animate.translate('-50%', '300%').step();
+      that.setData({
+        tips_animate: animate.export()
+      })
+      setTimeout(function () {
+        that.setData({
+          tips_show: false
+        })
+      }, 200)
+    }, 1200)
   },
 
   // 关闭提示框动画
@@ -321,7 +358,7 @@ Page({
       that.setData({
         tips_show: false
       })
-    },200)
+    }, 200)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -383,7 +420,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '微信文章图片一键下载神器',
-      path:'/pages/index/index'
+      path: '/pages/index/index'
     }
   }
 })

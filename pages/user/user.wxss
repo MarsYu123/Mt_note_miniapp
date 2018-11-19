@@ -100,7 +100,8 @@
     border-bottom: #D8E7ED solid 1px;
     box-sizing: border-box;
     height: 100rpx;
-    padding: 0 10rpx
+    padding: 0 10rpx;
+    position: relative
 }
 
 .user_item:last-child {
@@ -122,6 +123,14 @@
     margin: auto;
     display: block;
     margin-top: 40rpx
+}
+.user_list button{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
 }
 
 button.name {

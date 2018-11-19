@@ -1,7 +1,9 @@
 <!--pages/ticket/ticket.wxml-->
 <view class="ticket">
     <view class="store_list">
-        <view class="store_item {{check_ticket == item.user_coupon_id?'active':''}}  {{vip_kind != item.coupon_kind?'no_check':''}}" bindtap="{{vip_kind != item.coupon_kind?'no_check':'check_ticket'}}"  wx:for="{{ticket}}" data-id="{{item.user_coupon_id}}" data-money="{{item.eq_price}}" data-kind="{{item.coupon_kind}}">
+        <view class="store_item {{check_ticket == item.user_coupon_id?'active':''}}  {{vip_kind != item.coupon_kind?'no_check':''}}"
+            bindtap="{{vip_kind != item.coupon_kind?'no_check':'check_ticket'}}" wx:for="{{ticket}}" data-id="{{item.user_coupon_id}}"
+            data-money="{{item.eq_price}}" data-kind="{{item.coupon_kind}}">
             <view class="store_left">
                 <view class="store_title">
                     <text class="h3" style="color:#E62112">￥</text>
@@ -14,6 +16,9 @@
                             当前选择商品与代金券使用条件不符
                         </view>
                     </block>
+                    <view>
+                        兑换时间：{{item.add_time}}
+                    </view>
                     <view>
                         {{item.coupon_content}}
                     </view>

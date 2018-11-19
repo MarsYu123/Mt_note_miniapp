@@ -5,9 +5,16 @@
     <view class="integral_kv">
         <image class="bg" src="https://www.mati.hk/Public/MiniProgram-note/user/integal_bg.png" mode="widthFix" />
         <view class="kv_title">
-            <image class="tx" src="{{profile}}" mode="widthFix" />
-            <view class="name">
-                {{user_msg.nickname}}{{user_msg.is_vip?'-VIP用户':''}}
+            <view>
+                <image class="tx" src="{{profile}}" mode="widthFix" />
+            </view>
+            <view>
+                <view class="name">
+                    {{user_msg.nickname}}
+                </view>
+                <view class="info" wx:if="{{user_msg.is_vip}}">
+                    {{user_msg.vipData.remain_date}}
+                </view>
             </view>
         </view>
         <view class="kv_num">
@@ -93,10 +100,10 @@
             <view class="task_item">
                 <view class="task_left">
                     <view class="title">现金消费</view>
-                    <view class="msg">在线支付每1元加1积分</view>
+                    <view class="msg">在线支付每1元加10积分</view>
                 </view>
                 <view class="task_right">
-                    +1
+                    +10
                 </view>
             </view>
         </view>

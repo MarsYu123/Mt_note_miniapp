@@ -84,6 +84,7 @@
         <view class="user_item">
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/kf.png" mode="widthFix" />
             <text class="title">联系客服</text>
+            <button open-type="contact"></button>
         </view>
     </view>
 

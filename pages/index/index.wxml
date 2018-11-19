@@ -1,7 +1,13 @@
 <!--index.wxml-->
 <view class="index">
 
-  <image src='https://www.mati.hk/Public/MiniProgram-note/user/store_kv.png' mode="widthFix" class="kv" />
+  <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}" class="banner">
+    <block wx:for="{{banner}}">
+      <swiper-item>
+        <image data-kind="{{item.kind}}" data-id="{{item.banner_id}}" class="swiper-image" src="https://www.mati.hk/Public{{item.banner_img}}" mode="widthFix"/>
+      </swiper-item>
+    </block>
+  </swiper>
 
   <view class="nav">
     <view class="nav_item {{nav_index == index? 'active':''}}" bindtap='nav_click' wx:for="{{nav}}" data-id="{{index}}">{{item}}</view>
@@ -187,6 +193,7 @@
 
 
   <view class="inbox_box" wx:if="{{box_link}}">
+    <view class="bg" bindtap="clear_link"></view>
     <view class="box">
       <view class="title">
         <text>已为您粘贴微信文章链接</text>
@@ -225,9 +232,6 @@
         <text>+</text>
         <text style="font-size:36rpx">{{tips.num}}</text>
         <text>积分</text>
-      </view>
-      <view class="sign_btn" bindtap='clear_tips_animate'>
-        确定
       </view>
     </view>
   </view>

@@ -53,16 +53,16 @@
         </view>
 
         <!-- 卡券 -->
-        <view class="ticket_check">
+        <view class="ticket_check" bindtap="ticket">
             <view class="title">卡券</view>
             <block wx:if="{{ticket.user_coupon_id}}">
-                <view class="right" bindtap="ticket">
-                    <view>-￥ {{ticket.eq_price}}</view>
+                <view class="right">
+                    <view>-￥{{ticket.eq_price}}</view>
                 </view>
             </block>
             <block wx:else>
                 <block wx:if="{{vip_msg.coupon_count > 0}}">
-                    <view class="right" bindtap="ticket">
+                    <view class="right">
                         <view class="num">已有{{vip_msg.coupon_count}}张优惠券</view>
                     </view>
                 </block>

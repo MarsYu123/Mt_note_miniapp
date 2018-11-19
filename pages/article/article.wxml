@@ -16,14 +16,29 @@
             </view>
         </view>
         <view class="article_img">
-            <view class="img no_check" wx:for="{{article_cont.article_img}}">
-                <block wx:if="{{index == article_cont.article_img.length-1}}">
-                    <image src="{{item}}" mode="aspectFill" bindtap='download' />
-                </block>
-                <block wx:else>
-                    <image src="{{item}}" mode="aspectFill" />
-                </block>
+            <block wx:for="{{article_cont.article_img}}">
+                <view class="img no_check" bindtap='download' wx:if="{{index == article_cont.article_img.length-1}}">
+                    <image class="" src="{{item}}" mode="aspectFill" />
+                </view>
 
+                <view class="img no_check" wx:else>
+                    <image src="{{item}}" mode="aspectFill" />
+                </view>
+            </block>
+
+        </view>
+        <view wx:if="{{!is_vip}}" class="vip_tips">
+            非会员仅显示20张,<text style="color:#F05D5C">充值会员</text>查看更多
+        </view>
+        <view class="float">
+            <!-- 点赞 -->
+            <view class="like_btn {{is_like? 'active':''}}" bindtap="articleLike">
+            </view>
+            <!-- 分享 -->
+            <view class="share_btn" bindtap="share">
+            </view>
+            <!-- 下载 -->
+            <view class="download_btn" bindtap="download">
             </view>
         </view>
     </view>
@@ -76,21 +91,6 @@
         </view>
     </view>
 
-    <movable-area class="float_box">
-        <movable-view direction='vertical' inertia='true' x='-30px' y='0'>
-            <view class="float">
-                <!-- 点赞 -->
-                <view class="like_btn {{is_like? 'active':''}}" bindtap="articleLike">
-                </view>
-                <!-- 分享 -->
-                <view class="share_btn" bindtap="share">
-                </view>
-                <!-- 下载 -->
-                <view class="download_btn" bindtap="download">
-                </view>
-            </view>
-        </movable-view>
-    </movable-area>
     <view class="sign_in_box" wx:if="{{tips_show}}">
         <view class="sign_in_cont" animation="{{tips_animate}}">
             <view class="sign_title">
@@ -100,9 +100,6 @@
                 <text>+</text>
                 <text style="font-size:36rpx">{{tips.num}}</text>
                 <text>积分</text>
-            </view>
-            <view class="sign_btn" bindtap='clear_tips_animate'>
-                确定
             </view>
         </view>
     </view>

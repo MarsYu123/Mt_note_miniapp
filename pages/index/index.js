@@ -70,7 +70,8 @@ Page({
     },
     tips_show: false,
     tips_animate: {}, //提示框动画
-    label_show: false
+    label_show: false,
+    banner: [] //首页轮播banner
   },
 
   // 登陆后获取信息
@@ -215,7 +216,10 @@ Page({
               link_cont: ''
             })
             if (type == 1) {
-
+              that.download_history()
+              that.setData({
+                box_link: false,
+              })
             } else if (type == 2) {
               app.article_msg.url = url;
               wx.navigateTo({
@@ -271,9 +275,20 @@ Page({
 
   // 新建下载
   new_donload: function () {
-    this.setData({
-      box_link: true
-    })
+    var cont = ''
+    wx.getClipboardData({
+      success: res => {
+        if (res.data != '') {
+          if(res.data.indexOf('mp.weixin.qq.com')!=-1){
+            cont = res.data
+          }
+        }
+        this.setData({
+          link_cont: cont,
+          box_link: true
+        })
+      }
+    });
   },
 
 
@@ -413,6 +428,7 @@ Page({
 
   // 提示框动画
   tips_animate: function () {
+    var that = this;
     this.setData({
       tips_show: true
     })
@@ -426,6 +442,17 @@ Page({
     this.setData({
       tips_animate: animate.export()
     })
+    setTimeout(function () {
+      animate.translate('-50%', '300%').step();
+      that.setData({
+        tips_animate: animate.export()
+      })
+      setTimeout(function () {
+        that.setData({
+          tips_show: false
+        })
+      }, 200)
+    },1200)
   },
 
   // 关闭提示框动画
@@ -541,25 +568,56 @@ Page({
 
   // 关闭缩放
   open_img_claer: function () {
+    var that = this;
     this.setData({
       is_open_img: false
     })
   },
-  onLoad: function () {
+  onLoad: function (options) {
+    var that = this;
+    wx.setNavigationBarTitle({
+      title: '看点笔记',
+    });
+    console.log(options.article_id)
+    if(options.type == 'right_share'){
+      wx.navigateTo({
+        url: '../article/article?article_id='+options.article_id 
+      });
+    }
+
+    wx.request({
+      url: app.url.noteBanner,
+      method: 'POST',
+      data: {},
+      header: app.header,
+      success: (e)=>{
+        console.log(e)
+        that.setData({
+          banner: e.data.data
+        })
+      },
+      fail: ()=>{}
+    });
+
+
+
     // 若已授权，则自动登录
     module_login.userlogin(this);
     // 获取剪切板
     wx.getClipboardData({
       success: res => {
         if (res.data != '') {
-          this.setData({
-            link_cont: res.data,
-            box_link: true
-          })
+          if(res.data.indexOf('mp.weixin.qq.com')!=-1){
+            console.log(res.data.indexOf('mp.weixin.qq.com'))
+            this.setData({
+              link_cont: res.data,
+              box_link: true
+            })
+          }
         }
       }
     });
-    var that = this;
+
     this.checked_img()
     // 获取图库标签
     wx.request({
@@ -655,7 +713,6 @@ Page({
     var is_repeat = false;
     var img_url = e.currentTarget.dataset.url;
     var label_id = e.currentTarget.dataset.labelid;
-    console.log(index)
     if (direction == 'left') {
       all_img.left[index].check = !all_img.left[index].check
       this.setData({
@@ -774,10 +831,12 @@ Page({
       success: (e) => {
         console.log(e)
         var tips = ''
+        var type = '0'//0不出现load 1出现 2隐藏
         if (e.data.status == '500') {
           tips = '网络异常'
         } else if (e.data.status == '200') {
           tips = '开始下载'
+          type = '1'
           if (that.data.download_plan != '进行中') {
             that.getimage()
           } else {
@@ -791,12 +850,19 @@ Page({
         } else if (e.data.status == '400') {
           tips = '您不是VIP'
         }
-        wx.showToast({
-          title: tips,
-          icon: 'none',
-          duration: 1500,
-          mask: false,
-        });
+        if(type == '1'){
+          wx.showLoading({
+            title: tips,
+            mask: true,
+          });
+        }else{
+          wx.showToast({
+            title: tips,
+            icon: 'none',
+            duration: 1500,
+            mask: false,
+          }); 
+        }
       },
       fail: () => {}
     });
@@ -848,6 +914,7 @@ Page({
         download_plan: '结束',
         download_index: 0,
       })
+      wx.hideLoading();
       wx.showToast({
         title: '图片全部下载完毕',
         icon: 'none',
@@ -856,8 +923,6 @@ Page({
       });
     }
   },
-
-
 
   // 首次登陆
   getUserInfo: function (e) {
@@ -925,10 +990,12 @@ Page({
       wx.getClipboardData({
         success: res => {
           if (res.data != '') {
-            this.setData({
-              link_cont: res.data,
-              box_link: true
-            })
+            if(res.data.indexOf('mp.weixin.qq.com')!=-1){
+              this.setData({
+                link_cont: res.data,
+                box_link: true
+              })
+            }
           }
         }
       });
@@ -937,7 +1004,7 @@ Page({
   },
   onReady: function () {
     this.setData({
-      load:true
+      load: true
     })
   },
 

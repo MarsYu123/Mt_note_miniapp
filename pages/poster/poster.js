@@ -9,7 +9,8 @@ Page({
     poster_url: '',
     article_id: '', //文章id
     scale: 1, //缩放比例
-    article_cont: {}
+    article_cont: {},
+    opensetting: false
   },
 
   /**
@@ -17,11 +18,11 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    // var article_id = options.article_id;
+    var article_id = options.article_id;
 
 
     // 测试
-    var article_id = 1527
+    // var article_id = 1527
 
     // 获取屏幕比例
     wx.getSystemInfo({
@@ -114,6 +115,7 @@ Page({
               })
             } else {
               res(res_img)
+              console.log('获取图片成功')
             }
           }
         } else {
@@ -121,6 +123,7 @@ Page({
             src: img[0],
             success: (e) => {
               res(e)
+              console.log('获取图片成功')
             },
           });
         }
@@ -134,24 +137,29 @@ Page({
           b()
 
           function b() {
-
-
             // 有问题
-            console.log(i < user_data.length)
-            if (i < 2) {
-              console.log("发起" + user_data[i].profile)
+            console.log(user_data.length)
+            if (i < user_data.length) {
+              console.log(user_data[i])
+              var src = ''
+              console.log('============')
+              if (user_data[i].profile == '') {
+                src = 'https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png'
+              } else {
+                src = user_data[i].profile
+              }
               wx.getImageInfo({
-                src: user_data[i].profile,
+                src: src,
                 success: function (e) {
-                  console.log("获取")
                   res_img.push(e)
                   i++;
                   b()
-                }
+                },
               })
             } else {
               console.log(res_img)
               res(res_img)
+              console.log('获取下载用户成功')
             }
           }
 
@@ -166,6 +174,7 @@ Page({
           src: that.data.cord_img,
           success: (e) => {
             res(e.path)
+            console.log('获取二维码成功')
           },
         });
       })
@@ -173,11 +182,12 @@ Page({
       // 头像
       var promise4 = new Promise(function (res, rej) {
         wx.getImageInfo({
-          // src: app.profile,
+          src: app.profile,
           // 测试
-          src: 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eplJ7blJGjAOHhmp41Icibfag0yicicT6yFacaflJ2ukNGGwoHqledXol11OLtmXHibg7lNwRzOEHkia7g/132',
+          // src: 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eplJ7blJGjAOHhmp41Icibfag0yicicT6yFacaflJ2ukNGGwoHqledXol11OLtmXHibg7lNwRzOEHkia7g/132',
           success: (e) => {
             res(e.path)
+            console.log('获取头像成功')
           },
         });
       });
@@ -189,6 +199,7 @@ Page({
           src: 'https://www.mati.hk/Public/MiniProgram-note/index/canvas_bg.png',
           success: (e) => {
             res(e.path)
+            console.log('获取背景成功')
           },
         });
       });
@@ -205,6 +216,7 @@ Page({
               success: (e) => {
                 img.push(e.path)
                 res(img)
+                console.log('获取icon成功')
               },
             });
           },
@@ -251,6 +263,7 @@ Page({
           ctx.closePath()
 
 
+          ctx.save();
           ctx.beginPath()
           // 绘制文字
           ctx.fillStyle = "#ffffff";
@@ -258,19 +271,17 @@ Page({
           ctx.fillText('@' + app.open_user.nickname, scale * 130, scale * 65)
           ctx.closePath()
 
-          ctx.beginPath();
           ctx.fillStyle = "#495E8B";
           ctx.setFontSize(28 * scale)
           ctx.fillText(article_cont.source + '的看点', scale * 45, scale * 140)
           ctx.closePath()
 
-          ctx.beginPath();
           ctx.drawImage(res[5][0], 460 * scale, scale * 120, 24 * scale, 24 * scale);
           ctx.fillText(article_cont.like_count, scale * 500, scale * 142)
 
           ctx.drawImage(res[5][1], 570 * scale, scale * 120, 24 * scale, 24 * scale);
           ctx.fillText(article_cont.reply_count, scale * 610, scale * 142)
-
+          ctx.beginPath();
           if (res[0].length > 1) {
             var x = 45
             var y = 176
@@ -293,16 +304,29 @@ Page({
               } else if (i == 3 * n + 2) {
                 x = 465
               }
-              ctx.drawImage(res[0][i].path, x * scale, y * scale, 200 * scale, 150 * scale);
+              ctx.save();
+              ctx.rect( x * scale,  y * scale, 200 * scale, 150 * scale)
+              ctx.clip();
+              ctx.setStrokeStyle('#ffffff');
+              ctx.stroke();
+              var img_w = res[0][i].width;
+              var img_h = res[0][i].height;
+              var img_scale = img_w/img_h;
+              var img_y = y
+              img_h = 200 /img_scale
+              if(img_h < 150){
+                img_h = 200
+              }
+              // img_x = x-100
+              ctx.drawImage(res[0][i].path, x * scale, y * scale, 200 * scale, img_h * scale);
+              ctx.restore();
             }
           } else {
-            ctx.restore()
-
-            ctx.save();
-            ctx.rect(45 * scale, 176 * scale, 620 * scale, 600 * scale)
+            console.log('ss')
+            ctx.rect(45 * scale, 176 * scale, 620 * scale, 480 * scale)
             ctx.clip();
-            var img_w = res[0].width;
-            var img_h = res[0].header;
+            var img_w = res[0][0].width;
+            var img_h = res[0][0].height;
             var a = 45,
               b = 176;
             if (img_w * img_h > 665 * 646) {
@@ -310,28 +334,47 @@ Page({
               b = Math.abs(img_h - 550) / 2
             }
             ctx.drawImage(res[0].path, a * scale, b * scale, 665 * scale, 500 * scale);
-            ctx.restore()
+            ctx.restore();
+            ctx.closePath();
           }
 
-          ctx.save();
-          ctx.beginPath();
-          // 下载用户
+          // // 下载用户
           if (res[1].length > 0) {
             ctx.setFontSize(24 * scale)
             ctx.fillText('下载用户', 45 * scale, 720 * scale);
 
 
-            var x = 150;
+            var x = 180;
             for (let i in res[1]) {
               console.log(res[1])
-              var r = 35 *scale;
-              ctx.arc(x/2 + r, 680/2 + r, r, 0, 2 * Math.PI)
+              var r = 35 * scale;
+              ctx.save();
+              ctx.beginPath();
+              ctx.arc(x * scale + r, 680 * scale + r, r, 0, 2 * Math.PI)
               ctx.clip()
+              ctx.setStrokeStyle('#ffffff');
+              ctx.stroke();
               ctx.drawImage(res[1][i].path, x * scale, 680 * scale, 70 * scale, 70 * scale);
+              ctx.restore();
+              ctx.closePath()
               x = x + 80
             }
           }
 
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(288 * scale, 780 * scale, 150 * scale, 140 * scale);
+          ctx.clip();
+          ctx.drawImage(res[2], 288 * scale, 780 * scale, 150 * scale, 170 * scale);
+          ctx.restore();
+
+          ctx.save();
+          ctx.setFillStyle('#495E8B');
+          ctx.fillText('扫一扫，一键下载', 265 * scale, 960 * scale);
+
+          ctx.setFillStyle('#ffffff');
+          ctx.setFontSize(12);
+          ctx.fillText('微信文章图片一键下载神器', 200 * scale, 1030 * scale);
 
           // 绘制
           ctx.draw(false, that.getTempFilePath())
@@ -351,7 +394,6 @@ Page({
     var that = this;
     var scale = that.data.scale;
     setTimeout(function () {
-      console.log('ss')
       wx.canvasToTempFilePath({
         x: 0,
         y: 0,
@@ -366,7 +408,62 @@ Page({
           wx.hideLoading();
         }
       })
-    }, 100)
+    }, 200)
+  },
+
+  //开始保存 
+  save: function () {
+    var that = this;
+    var photo = 'scope.writePhotosAlbum'
+    // 获取授权信息，查看是否已授权保存相册
+    console.log('sda')
+    wx.getSetting({
+      success: res => {
+        // 已授权
+        console.log(res)
+        if (res.authSetting[photo]) {
+          that.save_img()
+        } else {
+          // 未授权
+          // console.log(res.authSetting[photo])
+          if (res.authSetting[photo] === false) {
+            that.setData({
+              opensetting: true,
+            })
+            wx.showToast({
+              title: "由于您之前拒绝授权访问相册，请重新授权",
+              icon: 'none',
+              duration: 1500,
+              mask: false,
+            });
+          } else {
+            // 初次授权
+            wx.authorize({
+              scope: 'scope.writePhotosAlbum',
+              success: res => {
+                that.save_img()
+              },
+            });
+          }
+        }
+      }
+    })
+  },
+
+  //保存图片
+  save_img: function () {
+    wx.saveImageToPhotosAlbum({
+      filePath: this.data.poster_url,
+      success: () => {
+        wx.showToast({
+          title: '保存成功',
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      },
+      fail: () => {}
+    });
   },
 
   /**
@@ -380,7 +477,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    var photo = 'scope.writePhotosAlbum'
+    wx.getSetting({
+      success: res => {
+        // 已授权
+        console.log(res)
+        if (res.authSetting[photo]) {
+          that.setData({
+            opensetting: false
+          })
+        }
+      }
+    })
   },
 
   /**

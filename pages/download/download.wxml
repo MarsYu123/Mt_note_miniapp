@@ -6,7 +6,7 @@
     <view class="article_cont {{article_msg.has_download?'active':''}}">
         <view class="title">
             <text class="article_title">{{article_msg.title}}</text>
-            <text class="download_state">{{has_download?'已下载':'未下载'}}</text>
+            <text class="download_state">{{has_download == 'true'?'已下载':'未下载'}}</text>
         </view>
         <view class="article_info">
             <view class="source">
@@ -29,9 +29,9 @@
                     <image src="{{item.url}}" mode="aspectFill" />
                 </view>
             </block>
+                 <view wx:if="{{!is_vip}}" class="vip_tips">
+            非会员仅显示20张,<text style="color:#F05D5C">充值会员</text>查看更多
         </view>
-        <view class="tips" wx:if="{{!is_vip}}">
-            非会员仅显示20张,<text>充值会员</text>查看更多
         </view>
     </view>
 
@@ -68,9 +68,6 @@
                 <text>+</text>
                 <text style="font-size:36rpx">{{tips.num}}</text>
                 <text>积分</text>
-            </view>
-            <view class="sign_btn" bindtap='clear_tips_animate'>
-                确定
             </view>
         </view>
     </view>

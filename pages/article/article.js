@@ -17,7 +17,7 @@ Page({
     is_vip: false, // 是否vip
     sign_in_status: false,
     tips: {
-      title: '签到成功',
+      title: '留言成功',
       num: '5'
     },
     tips_show: false,
@@ -30,6 +30,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     var id = options.article_id;
     var that = this;
     var key = 'articleid_'+options.article_id
@@ -68,6 +69,9 @@ Page({
           article_id: that.data.article_id
         }
         app.article_msg = article_msg
+        wx.setNavigationBarTitle({
+          title: article_msg.source,
+        });
       },
       fail: ()=>{}
     });
@@ -175,8 +179,9 @@ Page({
   },
 
 
-  // 提示框动画
-  tips_animate: function () {
+   // 提示框动画
+   tips_animate: function () {
+    var that = this;
     this.setData({
       tips_show: true
     })
@@ -190,6 +195,17 @@ Page({
     this.setData({
       tips_animate: animate.export()
     })
+    setTimeout(function () {
+      animate.translate('-50%', '300%').step();
+      that.setData({
+        tips_animate: animate.export()
+      })
+      setTimeout(function () {
+        that.setData({
+          tips_show: false
+        })
+      }, 200)
+    },1200)
   },
 
   // 关闭提示框动画
@@ -330,6 +346,7 @@ Page({
 
   // 分享海报
   share_poster:function () {
+    this.claer_share()
     wx.navigateTo({
       url: '../poster/poster?article_id='+ this.data.article_id
     });
@@ -383,7 +400,7 @@ Page({
   onShareAppMessage: function (res) {
     return {
       title: '微信文章图片一键下载神器',
-      path:'/pages/index/index'
+      path:'/pages/index/index?article_id=' + this.data.article_id +'&type=right_share' 
     }
   }
 })

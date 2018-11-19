@@ -1,5 +1,11 @@
 <!--pages/poster/poster.wxml-->
 <view class="poster">
-    <canvas canvas-id="poster" class="poster"/>
-    <image src="{{poster_url}}" />
+    <view class="poster_box">
+        <button open-type="openSetting" wx:if="{{opensetting}}" type="primary">授权保存</button>
+    <canvas canvas-id="poster" class="poster_canvas"/>
+    <image src="{{poster_url}}" class="img"/>
+    <view class="save" bindtap="save">
+        保存图片
+    </view>
+    </view>
 </view>

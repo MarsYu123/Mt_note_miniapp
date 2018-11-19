@@ -15,8 +15,10 @@
     padding-bottom: 130rpx
 }
 
+
 .no_check{
   opacity: 0.7;
+  height: 290rpx;
 }
 .no_check .store_right{
     display: none
@@ -25,10 +27,16 @@
     color: #E62112;
 }
 .no_check .store_left{
-    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg2.png?time=123');
-    width: 570rpx;
-    height: 234rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg4.png?time=123');
+    width: 542rpx;
+    height: 290rpx;
     background-size: 100%;
+}
+.no_check .store_title{
+    top: 14rpx
+}
+.no_check .store_tips{
+    top: 94rpx
 }
 .no_check_tips::before{
     width: 30rpx;
@@ -39,12 +47,15 @@
     content: '';
     background-size: 100%;
 }
+.store_item{
+    height: 258rpx;
+}
 .store_left {
-    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg2.png');
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/store_bg4.png');
     background-size: 100% 100%;
     position: relative;
     width: 542rpx;
-    height: 208rpx;
+    height: 258rpx;
 }
 
 .store_title {
