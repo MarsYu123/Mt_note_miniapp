@@ -122,13 +122,5 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return {
-      title: '微信文章图片一键下载神器',
-      path:'/pages/index/index'
-    }
-  }
+
 })

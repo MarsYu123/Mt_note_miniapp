@@ -4,7 +4,7 @@
     <view class="user_info">
 
         <view class="user_info_top">
-            <image src="{{profile}}" mode="widthFix" />
+            <image src="{{profile}}" mode="aspectFill" />
             <block wx:if="{{is_getuser}}">
                 <view class="info_msg">
                     <view class="name">{{user_info.nickname}}</view>
@@ -86,7 +86,19 @@
             <text class="title">联系客服</text>
             <button open-type="contact"></button>
         </view>
+         <!-- 分享 -->
+        <view class="user_item">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/share.png" mode="widthFix" />
+            <text class="title">分享小程序</text>
+            <text style="font-size: 11px;color: #A7B0C2;margin-left:12rpx">分享小程序并邀请好友注册可获得积分</text>
+            <button open-type="share"></button>
+        </view>
     </view>
 
-    <image class="logo_bottom" src="https://www.mati.hk/Public/MiniProgram-note/user/bottom.png" mode="widthFix" />
+
+    <view class="bottom_text">
+        <view>
+            <text style="font-size:20rpx;">马蹄（深圳）科技有限公司</text>
+        </view>
+    </view>
 </view>

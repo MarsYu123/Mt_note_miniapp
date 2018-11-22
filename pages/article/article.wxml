@@ -2,7 +2,7 @@
 <view class="article">
     <view class="article_cont">
         <view class="title">
-            <text class="article_title">{{article_cont.title}}</text>
+            <text class="article_title" data-url="{{article_cont.wx_url}}" bindtap="open_view">{{article_cont.title}}</text>
             <text class="download_state">{{article_cont.has_download?'已下载':'未下载'}}</text>
         </view>
         <view class="article_info">
@@ -17,8 +17,9 @@
         </view>
         <view class="article_img">
             <block wx:for="{{article_cont.article_img}}">
-                <view class="img no_check" bindtap='download' wx:if="{{index == article_cont.article_img.length-1}}">
+                <view class="img no_check" bindtap='all_img' wx:if="{{index == article_cont.article_img.length-1}}">
                     <image class="" src="{{item}}" mode="aspectFill" />
+                    <text class="gd">查看全部 \n（共{{article_cont.img_count}}张）</text>
                 </view>
 
                 <view class="img no_check" wx:else>
@@ -51,9 +52,9 @@
         <view class="tx_box">
             <block wx:for="{{article_cont.user_data}}">
                 <image wx:if="{{item.profile_is_http == 2}}" src="https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png"
-                    mode="widthFix" data-id="{{item.user_id}}" />
-                <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="widthFix" data-id="{{item.user_id}}" />
-                <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="widthFix"
+                    mode="aspectFill" data-id="{{item.user_id}}" />
+                <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="aspectFill" data-id="{{item.user_id}}" />
+                <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="aspectFill"
                     data-id="{{item.user_id}}" />
             </block>
             <view wx:if="{{article_cont.user_data.length > 15}}" class="img_tips">123</view>
@@ -73,9 +74,9 @@
         <view class="comment_list">
             <view class="comment_item" wx:for="{{reply_msg}}" data-id="{{item.user_id}}">
                 <image wx:if="{{item.profile_is_http == 2}}" src="https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png"
-                    mode="widthFix" data-id="{{item.user_id}}" />
-                <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="widthFix" data-id="{{item.user_id}}" />
-                <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="widthFix"
+                    mode="aspectFill" data-id="{{item.user_id}}" />
+                <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="aspectFill" data-id="{{item.user_id}}" />
+                <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="aspectFill"
                     data-id="{{item.user_id}}" />
 
                 <view class="item_right">
@@ -92,14 +93,19 @@
     </view>
 
     <view class="sign_in_box" wx:if="{{tips_show}}">
-        <view class="sign_in_cont" animation="{{tips_animate}}">
+        <view class="sign_in_cont {{is_vip?'vip':''}}" animation="{{tips_animate}}">
             <view class="sign_title">
                 {{tips.title}}
             </view>
             <view class="sign_tips">
                 <text>+</text>
                 <text style="font-size:36rpx">{{tips.num}}</text>
-                <text>积分</text>
+                <block wx:if="{{!is_vip}}">
+                    <text style="color:#9B9B9B;">积分</text>
+                </block>
+                <block wx:else>
+                    <text style="color:#9B9B9B;">会员双倍积分</text>
+                </block>
             </view>
         </view>
     </view>
@@ -108,6 +114,9 @@
         <view class="share_cont" animation='{{share_animate}}'>
             <view class="title">
                 分享
+            </view>
+            <view class="share_tips">
+                分享小程序并邀请好友注册可获得积分
             </view>
             <view class="clear_share" bindtap="claer_share"></view>
             <view class="share_option">

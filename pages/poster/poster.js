@@ -20,10 +20,6 @@ Page({
     var that = this;
     var article_id = options.article_id;
 
-
-    // 测试
-    // var article_id = 1527
-
     // 获取屏幕比例
     wx.getSystemInfo({
       success: e => {
@@ -66,7 +62,7 @@ Page({
       method: 'POST',
       data: {
         uid: app.open_user.uid,
-        article_id: that.data.article_id
+        article_id: that.data.article_id,
       },
       header: app.header,
       success: (e) => {
@@ -130,6 +126,7 @@ Page({
       })
       // 下载用户
       var promise2 = new Promise(function (res, rej) {
+        console.log(user_data)
         if (user_data.length > 0) {
 
           var i = 0;
@@ -146,7 +143,11 @@ Page({
               if (user_data[i].profile == '') {
                 src = 'https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png'
               } else {
-                src = user_data[i].profile
+                if(user_data[i].profile_is_http == '0'){
+                  src = 'https://www.mati.hk/Public/' +user_data[i].profile
+                }else{
+                  src = user_data[i].profile
+                }
               }
               wx.getImageInfo({
                 src: src,
@@ -268,10 +269,10 @@ Page({
           // 绘制文字
           ctx.fillStyle = "#ffffff";
           ctx.setFontSize(32 * scale)
-          ctx.fillText('@' + app.open_user.nickname, scale * 130, scale * 65)
+          ctx.fillText('@' + app.open_user.nickname + '推荐给你', scale * 130, scale * 65)
           ctx.closePath()
 
-          ctx.fillStyle = "#495E8B";
+          ctx.fillStyle = "#39CCE1";
           ctx.setFontSize(28 * scale)
           ctx.fillText(article_cont.source + '的看点', scale * 45, scale * 140)
           ctx.closePath()
@@ -305,16 +306,16 @@ Page({
                 x = 465
               }
               ctx.save();
-              ctx.rect( x * scale,  y * scale, 200 * scale, 150 * scale)
+              ctx.rect(x * scale, y * scale, 200 * scale, 150 * scale)
               ctx.clip();
               ctx.setStrokeStyle('#ffffff');
               ctx.stroke();
               var img_w = res[0][i].width;
               var img_h = res[0][i].height;
-              var img_scale = img_w/img_h;
+              var img_scale = img_w / img_h;
               var img_y = y
-              img_h = 200 /img_scale
-              if(img_h < 150){
+              img_h = 200 / img_scale
+              if (img_h < 150) {
                 img_h = 200
               }
               // img_x = x-100
@@ -325,8 +326,8 @@ Page({
             console.log('ss')
             ctx.rect(45 * scale, 176 * scale, 620 * scale, 480 * scale)
             ctx.clip();
-            var img_w = res[0][0].width;
-            var img_h = res[0][0].height;
+            var img_w = res[0].width;
+            var img_h = res[0].height;
             var a = 45,
               b = 176;
             if (img_w * img_h > 665 * 646) {
@@ -361,16 +362,29 @@ Page({
             }
           }
 
-          ctx.save();
-          ctx.beginPath();
-          ctx.rect(288 * scale, 780 * scale, 150 * scale, 140 * scale);
-          ctx.clip();
-          ctx.drawImage(res[2], 288 * scale, 780 * scale, 150 * scale, 170 * scale);
-          ctx.restore();
+          if (res[1].length > 0) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(288 * scale, 780 * scale, 150 * scale, 140 * scale);
+            ctx.clip();
+            ctx.drawImage(res[2], 288 * scale, 780 * scale, 150 * scale, 170 * scale);
+            ctx.restore();
 
-          ctx.save();
-          ctx.setFillStyle('#495E8B');
-          ctx.fillText('扫一扫，一键下载', 265 * scale, 960 * scale);
+            ctx.save();
+            ctx.setFillStyle('#39CCE1');
+            ctx.fillText('扫一扫，一键下载', 265 * scale, 960 * scale);
+          }else{
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(288 * scale, 730 * scale, 150 * scale, 140 * scale);
+            ctx.clip();
+            ctx.drawImage(res[2], 288 * scale, 730 * scale, 150 * scale, 170 * scale);
+            ctx.restore();
+
+            ctx.save();
+            ctx.setFillStyle('#39CCE1');
+            ctx.fillText('扫一扫，一键下载', 265 * scale, 910 * scale);
+          }
 
           ctx.setFillStyle('#ffffff');
           ctx.setFontSize(12);
@@ -520,10 +534,5 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
-  }
 })

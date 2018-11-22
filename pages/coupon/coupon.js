@@ -16,6 +16,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: '我的卡券',
+    });
     this.rquest_msg(1)
     this.rquest_msg(2)
   },
@@ -96,13 +99,5 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return {
-      title: '微信文章图片一键下载神器',
-      path:'/pages/index/index'
-    }
-  }
+
 })

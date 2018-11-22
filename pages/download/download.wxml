@@ -3,7 +3,7 @@
 <button open-type='openSetting' wx:if="{{opensetting}}" type="primary">授权保存</button>
 
 <view class="article">
-    <view class="article_cont {{article_msg.has_download?'active':''}}">
+    <view class="article_cont {{article_msg.has_download?'active':''}}"  style="margin-bottom: 160rpx">
         <view class="title">
             <text class="article_title">{{article_msg.title}}</text>
             <text class="download_state">{{has_download == 'true'?'已下载':'未下载'}}</text>
@@ -18,7 +18,7 @@
                 <text class="msg_num">{{article_msg.reply_count}}</text>
             </view>
         </view>
-        <view class="article_img" style="margin-bottom: 160rpx">
+        <view class="article_img">
             <block wx:if="{{is_vip}}">
                 <view class="img is_check {{item.check?'active':''}}" wx:for="{{img}}" bindtap="check_img" data-index="{{index}}">
                     <image src="{{item.url}}" mode="aspectFill" />
@@ -29,16 +29,16 @@
                     <image src="{{item.url}}" mode="aspectFill" />
                 </view>
             </block>
-                 <view wx:if="{{!is_vip}}" class="vip_tips">
-            非会员仅显示20张,<text style="color:#F05D5C">充值会员</text>查看更多
         </view>
+        <view wx:if="{{!is_vip}}" class="vip_tips">
+            非会员仅显示20张,<text style="color:#F05D5C">充值会员</text>查看更多
         </view>
     </view>
 
     <block wx:if="{{!is_vip}}">
         <view class="download_btn">
             <view class="download_tips">
-                非会员一天能下载20张图片，<text>充值会员</text>下载无上限
+                非会员每篇文章只能下载20张图片，<text>充值会员</text>下载无上限
             </view>
             <view class="download_enter" bindtap="save_image">
                 开始下载
@@ -60,14 +60,19 @@
     </block>
 
     <view class="sign_in_box" wx:if="{{tips_show}}">
-        <view class="sign_in_cont" animation="{{tips_animate}}">
+        <view class="sign_in_cont {{is_vip?'vip':''}}" animation="{{tips_animate}}">
             <view class="sign_title">
                 {{tips.title}}
             </view>
             <view class="sign_tips">
                 <text>+</text>
                 <text style="font-size:36rpx">{{tips.num}}</text>
-                <text>积分</text>
+                <block wx:if="{{!is_vip}}">
+                    <text style="color:#9B9B9B;">积分</text>
+                </block>
+                <block wx:else>
+                    <text style="color:#9B9B9B;">会员双倍积分</text>
+                </block>
             </view>
         </view>
     </view>

@@ -36,11 +36,11 @@
 }
 
 .nav_item.active {
-  color: #495E8B;
+  color: #39CCE1;
 }
 
 .nav_item.active::after {
-  background: #495E8B;
+  background: #39CCE1;
   content: '';
   display: block;
   width: 100%;
@@ -54,7 +54,9 @@
 .download_history,
 .photo {
   width: 100%;
-  height: calc(100% - 330rpx);
+  height: calc(100% - 300rpx);
+  padding-bottom: 30rpx;
+  box-sizing: border-box;
 }
 
 .down_box {
@@ -281,6 +283,7 @@ movable-view {
 
 .user image {
   width: 100%;
+  height: 100%;
 }
 
 .login {
@@ -608,7 +611,7 @@ movable-view {
 }
 
 .de_index {
-  margin-top: 300rpx;
+  margin-top: 200rpx;
   text-align: center;
 }
 

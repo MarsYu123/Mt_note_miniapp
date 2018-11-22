@@ -70,12 +70,11 @@ Page({
       city: app.open_user.city, //城市
       province: app.open_user.province, //省份
       gender: app.open_user.gender, //性别
-      channel:wx.getStorageSync('source') //来源
+      share_uid: wx.getStorageSync('share_uid')
     }
     that.setData({
       login_data: data,
       type: type,
-      course_id: course_id
     })
     wx.setTopBarText({
       text: 'hello, world!'
@@ -193,7 +192,7 @@ Page({
       header: app.header,
       data: {
         "phone_number": phone,
-        "openid":app.open_user.openId
+        "openid":app.open_user.note_openid
       },
       success: e => {
         console.log(e)
@@ -252,9 +251,6 @@ Page({
     var data = that.data.login_data;
     if (that.data.asyn) {
       console.log(data)
-      // that.setData({
-      //   login_data: data
-      // })
       that.setData({
         asyn: false
       })
@@ -294,12 +290,6 @@ Page({
             })
             app.open_user = e.data.data
             app.bind = true
-            var type = that.data.type
-            // if(type == 'record_article'){
-              
-            // }else{
-              
-            // }
             setTimeout(function () {
               wx.navigateBack()
           }, 500)

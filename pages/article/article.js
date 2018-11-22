@@ -7,10 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    article_id:'', // 文章id
-    article_cont: {},  //文章数据
+    article_id: '', // 文章id
+    article_cont: {}, //文章数据
     reply_msg: {}, //获取留言内容
-    reply_cont:'', //提交留言内容
+    reply_cont: '', //提交留言内容
     async: true, //同步控制
     like_arr: {}, // 点赞情况
     is_like: false,
@@ -33,11 +33,11 @@ Page({
 
     var id = options.article_id;
     var that = this;
-    var key = 'articleid_'+options.article_id
+    var key = 'articleid_' + options.article_id
     that.data.article_id = id;
     console.log(id)
     var like_arr = {};
-    if(wx.getStorageSync('like') != ""){
+    if (wx.getStorageSync('like') != "") {
       like_arr = wx.getStorageSync('like');
     }
     this.setData({
@@ -53,7 +53,7 @@ Page({
         uid: app.open_user.uid
       },
       header: app.header,
-      success: (e)=>{
+      success: (e) => {
         console.log(e)
         that.setData({
           article_cont: e.data.data
@@ -73,13 +73,13 @@ Page({
           title: article_msg.source,
         });
       },
-      fail: ()=>{}
+      fail: () => {}
     });
     this.getReply()
   },
 
   //获取留言信息 
-  getReply:function () {
+  getReply: function () {
     var that = this;
     wx.request({
       url: app.url.getReply,
@@ -88,28 +88,27 @@ Page({
         article_id: that.data.article_id
       },
       header: app.header,
-      success: (e)=>{
+      success: (e) => {
         console.log(e)
         that.setData({
-          reply_msg:e.data.data.reply
+          reply_msg: e.data.data.reply
         })
       },
-      fail: ()=>{}
+      fail: () => {}
     });
   },
 
   // 记录留言
-  input_change:function (e) {
+  input_change: function (e) {
     var val = e.detail.value
     this.setData({
-      reply_cont:val
+      reply_cont: val
     })
   },
 
   // 提交留言
-  reply_up:function () {
-    var that = this;
-    if(module_login.remove_space(this.data.reply_cont) == ''){
+  reply_up: function () {
+    var that = this;if (module_login.remove_space(this.data.reply_cont) == '') {
       wx.showToast({
         title: '请勿提交空白内容',
         icon: 'none',
@@ -118,7 +117,7 @@ Page({
       });
       return false
     }
-    if(this.data.async){
+    if (this.data.async) {
       this.data.async = false;
       wx.request({
         url: app.url.articleReply,
@@ -129,14 +128,14 @@ Page({
           reply_content: that.data.reply_cont
         },
         header: app.header,
-        success: (e)=>{
+        success: (e) => {
           console.log(e)
           var status = e.data.status;
           this.data.async = true;
           var reply_count = 'article_cont.reply_count';
           var reply_num = that.data.article_cont.reply_count;
           var reply_tips = '留言成功';
-          if(status == '200' || status == '2000'){
+          if (status == '200' || status == '2000') {
             reply_num++;
 
             that.setData({
@@ -145,7 +144,12 @@ Page({
             })
             that.getReply()
 
-            if(status == '2000'){
+            if (status == '2000') {
+              var tips = 'tips.num'
+              that.setData({
+                sign_in_status: true,
+                [tips]: e.data.data
+              })
               that.tips_animate()
               return false
             }
@@ -155,7 +159,7 @@ Page({
               duration: 1500,
               mask: false,
             });
-          }else if(status == '500' || status == '504'){
+          } else if (status == '500' || status == '504') {
             wx.showToast({
               title: '网络异常，请稍后重试',
               icon: 'none',
@@ -164,7 +168,7 @@ Page({
             });
           }
         },
-        fail: ()=>{
+        fail: () => {
           wx.showToast({
             title: '网络异常，请稍后重试',
             icon: 'none',
@@ -175,12 +179,12 @@ Page({
         }
       });
     }
-    
+
   },
 
 
-   // 提示框动画
-   tips_animate: function () {
+  // 提示框动画
+  tips_animate: function () {
     var that = this;
     this.setData({
       tips_show: true
@@ -205,7 +209,7 @@ Page({
           tips_show: false
         })
       }, 200)
-    },1200)
+    }, 1200)
   },
 
   // 关闭提示框动画
@@ -228,12 +232,12 @@ Page({
       that.setData({
         tips_show: false
       })
-    },200)
+    }, 200)
   },
 
 
   // 分享动画
-  share_animate:function () {
+  share_animate: function () {
     let animate = wx.createAnimation({
       duration: 400,
       timingFunction: 'linear',
@@ -247,7 +251,7 @@ Page({
   },
 
   // 关闭分享
-  claer_share:function () {
+  claer_share: function () {
     var that = this;
     let animation = wx.createAnimation({
       duration: 400,
@@ -255,35 +259,35 @@ Page({
       delay: 0,
       transformOrigin: '50% 50% 0'
     });
-    animation.translate('-50%','300%').step();
+    animation.translate('-50%', '300%').step();
     this.setData({
       share_animate: animation.export()
     })
     setTimeout(function () {
       that.setData({
-        share_show:false
+        share_show: false
       })
-    },400)
+    }, 400)
   },
 
 
 
   // 点赞文章
-  articleLike:function () {
+  articleLike: function () {
     var like_arr = this.data.like_arr;
     console.log(JSON.stringify(wx.getStorageSync('like')))
-    
+
     var that = this;
     var type = 1;
     var article_id = that.data.article_id;
-    var key = 'articleid_'+article_id;
+    var key = 'articleid_' + article_id;
     var like_num = that.data.article_cont.like_count
-    if(JSON.stringify(like_arr) != "{}"){
-      if(like_arr[key]){
+    if (JSON.stringify(like_arr) != "{}") {
+      if (like_arr[key]) {
         type = 2
       }
     }
-    if(that.data.async){
+    if (that.data.async) {
       that.data.async = false
       wx.request({
         url: app.url.articleLike,
@@ -293,15 +297,15 @@ Page({
           like_kind: type
         },
         header: app.header,
-        success: (e)=>{
+        success: (e) => {
           console.log(e)
           that.data.async = true;
-          if(e.data.status == 200){
-            if(type == 1){
+          if (e.data.status == 200) {
+            if (type == 1) {
               console.log(typeof like_arr)
               like_arr[key] = true;
               like_num++;
-            }else{
+            } else {
               like_arr[key] = false;
               like_num--
             }
@@ -314,19 +318,19 @@ Page({
             })
           }
         },
-        fail: ()=>{}
+        fail: () => {}
       });
     }
   },
-  
+
 
   // 下载图片
-  download:function () {
-    if(this.data.article_cont.code == true){
+  download: function () {
+    if (this.data.article_cont.code == true) {
       wx.navigateTo({
-        url: '../download/download?has_download='+this.data.article_cont.has_download
+        url: '../download/download?has_download=' + this.data.article_cont.has_download
       });
-    }else{
+    } else {
       wx.showToast({
         title: '非会员每天只能下载一次',
         icon: 'none',
@@ -337,7 +341,7 @@ Page({
   },
 
   // 分享
-  share:function () {
+  share: function () {
     this.setData({
       share_show: true,
     })
@@ -345,10 +349,10 @@ Page({
   },
 
   // 分享海报
-  share_poster:function () {
+  share_poster: function () {
     this.claer_share()
     wx.navigateTo({
-      url: '../poster/poster?article_id='+ this.data.article_id
+      url: '../poster/poster?article_id=' + this.data.article_id
     });
   },
 
@@ -400,7 +404,20 @@ Page({
   onShareAppMessage: function (res) {
     return {
       title: '微信文章图片一键下载神器',
-      path:'/pages/index/index?article_id=' + this.data.article_id +'&type=right_share' 
+      path: '/pages/index/index?article_id=' + this.data.article_id + '&source=menu&share_uid='+ app.open_user.uid
     }
+  },
+  //打开全部
+  all_img:function () {
+    wx.navigateTo({
+      url: '../all_img/all_img?article_id=' + this.data.article_id
+    });
   }
+  // open_view:function (e) {
+  //   var url = e.target.dataset.url;
+  //   console.log(url)
+  //   wx.navigateTo({
+  //     url: '../web_open/web_open?url='+url
+  //   });
+  // }
 })

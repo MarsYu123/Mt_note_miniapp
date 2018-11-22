@@ -131,7 +131,21 @@
     display: block
 }
 
-.article_img .no_check:last-child::after {
+.gd{
+    padding: 30rpx 0; 
+    height: 138rpx;
+    width: 100%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.60);
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 28rpx;
+    color: #3489FF;
+    box-sizing: border-box
+}
+/* .article_img .no_check:last-child::after {
     content: '查看全部';
     height: 138rpx;
     line-height: 138rpx;
@@ -144,7 +158,7 @@
     top: 0;
     font-size: 28rpx;
     color: #3489FF;
-}
+} */
 
 .vip_tips {
     font-size: 24rpx;
@@ -358,11 +372,18 @@
 }
 
 .share_cont .title {
-    line-height: 112rpx;
-    height: 112rpx;
+    line-height: 127rpx;
+    height: 90rpx;
     text-align: center;
     font-size: 32rpx;
     color: #495E8B;
+}
+
+.share_cont .share_tips {
+    font-size: 28rpx;
+    color: #495E8B;
+    margin: 10rpx auto;
+    text-align: center
 }
 
 .share_option {
@@ -371,13 +392,14 @@
     border-top: 1px solid #D8E7ED;
     position: relative;
 }
-.share_option::after{
+
+.share_option::after {
     content: '';
     display: block;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     width: 1px;
     height: 48rpx;
     background: #D9DFED;
@@ -403,8 +425,8 @@
 }
 
 .clear_share {
-    width: 33rpx;
-    height: 33rpx;
+    width: 22rpx;
+    height: 22rpx;
     position: absolute;
     top: 30rpx;
     right: 30rpx;

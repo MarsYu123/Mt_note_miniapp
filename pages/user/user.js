@@ -172,7 +172,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '微信文章图片一键下载神器',
-      path:'/pages/index/index'
+      path:'/pages/index/index?share_uid='+ app.open_user.uid + '&source=user'
     }
   }
 })

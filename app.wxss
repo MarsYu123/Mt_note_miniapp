@@ -17,30 +17,46 @@ page {
 .sign_in_cont {
   width: 454rpx;
   height: 172rpx;
-  background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/sign_in_bg.png');
-  background-size: 100%;
+  background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/sign_in_bg.png?time=1');
+  background-repeat: no-repeat;
+  background-color:  #ffffff;
+  background-size: 112rpx;
+  background-position: 80rpx 40rpx;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, 300%);
+  border-radius: 5px
 }
-
+.sign_in_cont.vip{
+  background-position:  46rpx 40rpx;
+}
 .sign_title {
   font-size: 36rpx;
   color: #000000;
   position: absolute;
-  left: 223rpx;
-  top: 40rpx;
-
+  left: 232rpx;
+  top: 32rpx;
 }
 
+.vip .sign_title{
+  left: 198rpx;
+  top: 32rpx;
+}
 .sign_tips {
   font-size: 24rpx;
   color: #FF9100;
   position: absolute;
-  left: 220rpx;
-  top: 96rpx;
+  left: 232rpx;
+  top: 92rpx;
 
+}
+.sign_tips text:nth-child(3){
+  margin-left: 5rpx
+}
+.vip .sign_tips{
+  left: 198rpx;
+  top: 92rpx;
 }
 
 .df {

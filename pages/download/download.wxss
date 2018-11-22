@@ -36,6 +36,10 @@
     width: 100%;
     text-align: center
 }
+.vip_tips{
+    /* display */
+    text-align: center
+}
 
 .tips text {
     color: #F05D5C;

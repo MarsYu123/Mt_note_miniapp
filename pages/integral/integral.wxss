@@ -29,6 +29,9 @@
     display: flex;
     align-items: flex-start
 }
+.kv_title view:nth-child(2){
+    max-width: 400rpx;
+}
 
 .kv_title .tx {
     width: 100rpx;
@@ -48,17 +51,24 @@
     font-size: 36rpx;
     color: #FFFFFF;
 }
-
+.name text{
+    max-width: 280rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 50rpx;
+    line-height: 50rpx;
+}
 .kv_title .name::after {
     content: '';
     display: inline-block;
     vertical-align: middle;
     background: url('https://www.mati.hk/Public/MiniProgram-note/user/vip_icon.png');
-    width: 84rpx;
-    height: 28rpx;
-    margin-left: 30rpx;
+    width: 53.91rpx;
+    height: 18.66rpx;
+    margin-left: 15rpx;
+    line-height: 50rpx;
     background-size: 100% 100%;
-
 }
 .kv_num {
     position: absolute;
@@ -193,6 +203,7 @@
 .task_right .num {
     font-size: 28rpx;
     color: #3489FF;
+    height:48rpx;
 }
 
 .task_right .time {

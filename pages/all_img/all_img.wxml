@@ -1,0 +1,9 @@
+<!--pages/all_img/all_img.wxml-->
+<view class="all_img" style="{{!is_open_img?'overflow-y: auto;':'overflow-y: hidden'}}">
+    <view class="title" wx:if="{{!is_vip}}">
+        非会员仅显示20张,<text style="color:#F05D5C">充值会员</text>查看更多
+    </view>
+    <view class="box">
+        <image src="{{item}}" wx:for="{{img}}" class="img" mode="widthFix" data-url="{{item}}" />
+    </view>
+</view>

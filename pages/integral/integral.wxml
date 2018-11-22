@@ -6,11 +6,11 @@
         <image class="bg" src="https://www.mati.hk/Public/MiniProgram-note/user/integal_bg.png" mode="widthFix" />
         <view class="kv_title">
             <view>
-                <image class="tx" src="{{profile}}" mode="widthFix" />
+                <image class="tx" src="{{profile}}" mode="aspectFill" />
             </view>
             <view>
                 <view class="name">
-                    {{user_msg.nickname}}
+                   <text>{{user_msg.nickname}}</text> 
                 </view>
                 <view class="info" wx:if="{{user_msg.is_vip}}">
                     {{user_msg.vipData.remain_date}}
@@ -165,9 +165,9 @@
                     <view class="title">邀请100个好友注册</view>
                     <view class="msg">邀请人数达100人加10000积分</view>
                 </view>
-                <block wx:if="{{task.invite_friend < 101}}">
+                <block wx:if="{{task.friend_register}}">
                     <view class="task_right">
-                        {{task.invite_friend}}/100
+                        {{task.friend_reg_count}}/100
                     </view>
                 </block>
                 <block wx:else>

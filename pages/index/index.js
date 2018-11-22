@@ -51,7 +51,7 @@ Page({
     link_cont: '', //复制的链接内容
     getuser_type: '', //未授权时点击记录文章或前往下载后自动操作
     history_cont: {}, //下载历史文章记录
-    label_checked: '101', // 筛选标签id
+    label_checked: '121', // 筛选标签id
     open_img: {
       baseWidth: '',
       baseHeight: '',
@@ -71,7 +71,8 @@ Page({
     tips_show: false,
     tips_animate: {}, //提示框动画
     label_show: false,
-    banner: [] //首页轮播banner
+    banner: [], //首页轮播banner
+    banner_height: 150
   },
 
   // 登陆后获取信息
@@ -130,6 +131,10 @@ Page({
   record_article: function () {
     if (JSON.stringify(app.open_user.note_openid) != '') {
       this.link_add(1)
+      this.setData({
+        box_link: false,
+        link_cont: ''
+      })
     } else {
       wx.showModal({
         title: '提示',
@@ -154,6 +159,10 @@ Page({
   dowload_article: function () {
     if (JSON.stringify(app.open_user.note_openid) != '') {
       this.link_add(2)
+      this.setData({
+        box_link: false,
+        link_cont: ''
+      })
     } else {
       wx.showModal({
         title: '提示',
@@ -279,7 +288,7 @@ Page({
     wx.getClipboardData({
       success: res => {
         if (res.data != '') {
-          if(res.data.indexOf('mp.weixin.qq.com')!=-1){
+          if (res.data.indexOf('mp.weixin.qq.com') != -1) {
             cont = res.data
           }
         }
@@ -452,7 +461,7 @@ Page({
           tips_show: false
         })
       }, 200)
-    },1200)
+    }, 1200)
   },
 
   // 关闭提示框动画
@@ -495,7 +504,6 @@ Page({
     this.setData({
       is_check: false,
       img: img,
-      download_img: []
     })
   },
 
@@ -579,9 +587,9 @@ Page({
       title: '看点笔记',
     });
     console.log(options.article_id)
-    if(options.type == 'right_share'){
+    if (options.type == 'right_share') {
       wx.navigateTo({
-        url: '../article/article?article_id='+options.article_id 
+        url: '../article/article?article_id=' + options.article_id
       });
     }
 
@@ -590,13 +598,13 @@ Page({
       method: 'POST',
       data: {},
       header: app.header,
-      success: (e)=>{
+      success: (e) => {
         console.log(e)
         that.setData({
           banner: e.data.data
         })
       },
-      fail: ()=>{}
+      fail: () => {}
     });
 
 
@@ -607,7 +615,7 @@ Page({
     wx.getClipboardData({
       success: res => {
         if (res.data != '') {
-          if(res.data.indexOf('mp.weixin.qq.com')!=-1){
+          if (res.data.indexOf('mp.weixin.qq.com') != -1) {
             console.log(res.data.indexOf('mp.weixin.qq.com'))
             this.setData({
               link_cont: res.data,
@@ -831,7 +839,7 @@ Page({
       success: (e) => {
         console.log(e)
         var tips = ''
-        var type = '0'//0不出现load 1出现 2隐藏
+        var type = '0' //0不出现load 1出现 2隐藏
         if (e.data.status == '500') {
           tips = '网络异常'
         } else if (e.data.status == '200') {
@@ -850,18 +858,18 @@ Page({
         } else if (e.data.status == '400') {
           tips = '您不是VIP'
         }
-        if(type == '1'){
+        if (type == '1') {
           wx.showLoading({
             title: tips,
             mask: true,
           });
-        }else{
+        } else {
           wx.showToast({
             title: tips,
             icon: 'none',
             duration: 1500,
             mask: false,
-          }); 
+          });
         }
       },
       fail: () => {}
@@ -878,7 +886,7 @@ Page({
     that.esc_check()
     for (var i in download_img) {
       wx.getImageInfo({
-        src: that.data.img_host + download_img[i].img_url,
+        src: "https://www.mati.hk/Public" + download_img[i].img_url,
         success: (e) => {
           console.log(e)
           var path = e.path;
@@ -913,6 +921,7 @@ Page({
       that.setData({
         download_plan: '结束',
         download_index: 0,
+        download_img: []
       })
       wx.hideLoading();
       wx.showToast({
@@ -958,8 +967,10 @@ Page({
         } else if (status == '400') {
           tips = '您今日已经签到'
         } else if (status == '200') {
+          var tips = 'tips.num'
           that.setData({
-            sign_in_status: true
+            sign_in_status: true,
+            [tips]: e.data.data
           })
           that.tips_animate()
           return false
@@ -986,19 +997,6 @@ Page({
     // 更新用户信息
     if (this.data.load) {
       module_login.userlogin(this);
-      // 获取剪切板
-      wx.getClipboardData({
-        success: res => {
-          if (res.data != '') {
-            if(res.data.indexOf('mp.weixin.qq.com')!=-1){
-              this.setData({
-                link_cont: res.data,
-                box_link: true
-              })
-            }
-          }
-        }
-      });
       this.download_history()
     }
   },
@@ -1008,14 +1006,12 @@ Page({
     })
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function (res) {
-    return {
-      title: '微信文章图片一键下载神器',
-      path: '/pages/index/index'
-    }
+  // banner自适应
+  banner_load:function (e) {
+    console.log(e)
+    this.setData({
+      banner_height: e.detail.height/2
+    })
   }
 
 })

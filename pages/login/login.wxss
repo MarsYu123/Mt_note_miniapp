@@ -1,6 +1,6 @@
 /* pages/login/login.wxss */
 
-.login{
+.login {
     margin-top: 132rpx;
 }
 
@@ -26,7 +26,8 @@ button::after {
     border-bottom: solid 1px #edebeb;
     text-align: left;
 }
-.phone_icon{
+
+.phone_icon {
     vertical-align: middle;
     background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/phone.png');
     background-size: 100% 100%;
@@ -34,7 +35,8 @@ button::after {
     height: 42rpx;
     display: inline-block;
 }
-.check_icon{
+
+.check_icon {
     vertical-align: middle;
     background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/check.png');
     background-size: 100% 100%;
@@ -42,7 +44,8 @@ button::after {
     height: 32rpx;
     display: inline-block;
 }
-.password_icon{
+
+.password_icon {
     vertical-align: middle;
     background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/password.png');
     background-size: 100% 100%;
@@ -50,6 +53,7 @@ button::after {
     height: 20rpx;
     display: inline-block;
 }
+
 .phone_text {
     display: inline-block;
     vertical-align: bottom;
@@ -86,7 +90,8 @@ button::after {
     padding: 0;
     z-index: 100;
 }
-.get_msg::after{
+
+.get_msg::after {
     border: none;
     background: transparent
 }
@@ -120,7 +125,7 @@ button {
     margin-top: 120rpx;
     position: relative;
     background: #39CCE1;
-box-shadow: 0 2px 4px 0 #A7B0C2;
+    box-shadow: 0 2px 4px 0 #A7B0C2;
 }
 
 .phone_up[disabled]:not([type]) {
@@ -136,11 +141,17 @@ box-shadow: 0 2px 4px 0 #A7B0C2;
 
 .login_tips {
     width: 565rpx;
-    height: 112rpx;
     position: absolute;
     bottom: 360rpx;
     left: 50%;
-    transform: translateX(-50%)
+    transform: translateX(-50%);
+    text-align: left;
+}
+
+.login_tips text {
+    font-size: 12px;
+    color: #A7B0C2;
+    word-break:break-all
 }
 
 .login_tips image {

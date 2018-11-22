@@ -23,7 +23,8 @@ Page({
     money: '', // 金额
     old_money: 0, //实际金额
     kind: '',  //优惠券kind
-    order: []  //订单记录
+    order: [],  //订单记录
+    is_ios: false
   },
 
   /**
@@ -33,9 +34,17 @@ Page({
     wx.setNavigationBarTitle({
       title: '我的VIP',
     });
+    var is_ios
+    console.log(app.system)
+    if(app.system == 'ios'){
+      is_ios = true
+    }else{
+      is_ios = false
+    }
     this.setData({
       user_msg: app.open_user,
       profile: app.profile,
+      is_ios: is_ios
     })
     this.vip_msg();
     this.orderList()
@@ -228,13 +237,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return {
-      title: '微信文章图片一键下载神器',
-      path:'/pages/index/index'
-    }
-  }
 })

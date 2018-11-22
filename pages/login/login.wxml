@@ -28,6 +28,7 @@
   <view>
   </view>
   <view class="login_tips">
-    <image src="https://home.mati.hk/Public/web_image/login/login_tips.png" />
+    <!-- <image src="https://home.mati.hk/Public/web_image/login/login_tips.png" /> -->
+    <text style="text-align:left">为了保障您的权益，将为您绑定手机；\n如匹配到您是马蹄网(https://www.mati.hk/)的老用户，查询后自动登录；如未匹配到，将用您的手机自动注册。请上马蹄网(https://www.mati.hk/)了解小程序更多权益和功能，\n</text>
   </view>
 </view>

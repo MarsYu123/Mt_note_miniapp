@@ -144,3 +144,24 @@ button.name {
 button::after{
     border: none
 }
+
+.bottom_text{
+    text-align: center;
+    color: #A7B0C2;
+}
+.bottom_text view{
+    width: 100%;
+}
+.bottom_text text{
+    display: inline-block;
+    vertical-align: middle
+}
+.bottom_text view::before{
+    content: '';
+    display: inline-block;
+    margin-right: 20rpx;
+    width: 37.5rpx;
+    height: 25rpx;
+    background: url('https://www.mati.hk/Public/MiniProgram-note/user/logo.png') no-repeat;
+    background-size: 37.5rpx 24rpx;
+}

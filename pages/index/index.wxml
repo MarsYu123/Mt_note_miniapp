@@ -1,10 +1,10 @@
 <!--index.wxml-->
 <view class="index">
 
-  <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}" class="banner">
+  <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}" class="banner" style="height:{{banner_height}}px">
     <block wx:for="{{banner}}">
       <swiper-item>
-        <image data-kind="{{item.kind}}" data-id="{{item.banner_id}}" class="swiper-image" src="https://www.mati.hk/Public{{item.banner_img}}" mode="widthFix"/>
+        <image data-kind="{{item.kind}}" data-id="{{item.banner_id}}" class="swiper-image" src="https://www.mati.hk/Public{{item.banner_img}}" mode="widthFix" bindload="banner_load"/>
       </swiper-item>
     </block>
   </swiper>
@@ -20,7 +20,7 @@
           enable-back-to-top="true">
           <block wx:if="{{history_cont.length>0}}">
             <block wx:for="{{history_cont}}">
-              <view class="history_item active" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
+              <view class="history_item {{item.is_download == '1'?'active':''}}" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
                 <view class="title">
                   <text class="title_cont">{{item.title}}</text>
                   <text class="title_state">{{item.is_download == '1'?'已下载':'未下载'}}</text>
@@ -80,7 +80,7 @@
 
           <!-- 个人中心 -->
           <view class="tx">
-            <image src='{{profile}}' mode="widthFix" bindtap="nav_user" />
+            <image src='{{profile}}' mode="aspectFill" bindtap="nav_user" />
 
             <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
               登陆/注册
@@ -111,7 +111,7 @@
           id="{{item.picture_id || ''}}" />
       </view>
       <button class="set_save_img" open-type='openSetting' wx:if="{{opensetting}}" type="primary">授权保存</button>
-      <scroll-view class="photo_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_photo"
+      <scroll-view class="photo_box" scroll-y="{{!is_open_img?true:false}}" lower-threshold="80" bindscrolltolower="load_photo"
         enable-back-to-top="true">
         <view class="photo_cont">
 
@@ -218,20 +218,29 @@
       </view>
     </view>
   </view>
+
+  <!-- 放大查看 -->
   <view class="open_img" wx:if="{{is_open_img}}">
     <image src="{{open_img.url}}" mode="widthFix" bindload='open_img_load' bindtouchstart='touch_start' bindtouchmove='touch_move'
       style="transform:translate(-50%,-50%) scale({{open_img.scale}})" />
     <view class="open_img_clear" bindtap="open_img_claer"></view>
   </view>
+
+
   <view class="sign_in_box" wx:if="{{tips_show}}">
-    <view class="sign_in_cont" animation="{{tips_animate}}">
+    <view class="sign_in_cont {{user_info.is_vip?'vip':''}}" animation="{{tips_animate}}">
       <view class="sign_title">
         {{tips.title}}
       </view>
       <view class="sign_tips">
         <text>+</text>
         <text style="font-size:36rpx">{{tips.num}}</text>
-        <text>积分</text>
+        <block wx:if="{{!user_info.is_vip}}">
+          <text style="color:#9B9B9B;">积分</text>
+        </block>
+        <block wx:else>
+          <text style="color:#9B9B9B;">会员双倍积分</text>
+        </block>
       </view>
     </view>
   </view>

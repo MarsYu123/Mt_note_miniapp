@@ -1,118 +1,125 @@
 <!--pages/vip/vip.wxml-->
 <view class="vip">
     <view class="kv">
-        <image class="tx" src="{{profile}}" mode="widthFix" />
+        <image class="tx" src="{{profile}}" mode="aspectFill" />
         <view class="user_info">
             <view class="name">
-                {{user_msg.nickname}}
+                <text>{{user_msg.nickname}}</text>
             </view>
             <view class="info" wx:if="{{user_msg.is_vip}}">
                 {{user_msg.vipData.remain_date}}
             </view>
-            <view class="tips" wx:else>
+            <view class="info" wx:else>
                 您还不是VIP
             </view>
         </view>
     </view>
-
-    <view class="store_nav">
-        <view class="nav_item {{class == index?'active':''}}" wx:for="{{nav}}" data-id="{{index}}" bindtap="nav">
-            {{item}}
-        </view>
-    </view>
-
-    <block wx:if="{{class == 0}}">
-        <view class="money_check">
-            <view class="money_item {{check_id == 2?'active':''}}" bindtap="check" data-id="2" data-money="{{vip_msg.month_vip_price}}">
-                <view class="h3">
-                    1个月
-                </view>
-                <view class="h1">
-                    <text style="font-size: 36rpx;">￥</text>
-                    <text>{{vip_msg.month_vip_price}}</text>
-                </view>
-                <view class="h4" style="text-decoration:line-through">
-                    原价 30元/月
-                </view>
-            </view>
-            <view class="money_item {{check_id == 1?'active':''}}" bindtap="check" data-id="1" data-money="{{vip_msg.year_vip_price}}">
-                <view class="h3">
-                    12个月
-                </view>
-                <view class="h1">
-                    <text style="font-size: 36rpx;">￥</text>
-                    <text>{{vip_msg.year_vip_price}}</text>
-                </view>
-                <view class="h4" style="text-decoration:line-through">
-                    原价 30元/月
-                </view>
-            </view>
-            <view class="end_time">
-                优惠价截止 {{vip_msg.coupon_count_down}}
+    <block wx:if="{{!is_ios}}">
+        <view class="store_nav">
+            <view class="nav_item {{class == index?'active':''}}" wx:for="{{nav}}" data-id="{{index}}" bindtap="nav">
+                {{item}}
             </view>
         </view>
 
-        <!-- 卡券 -->
-        <view class="ticket_check" bindtap="ticket">
-            <view class="title">卡券</view>
-            <block wx:if="{{ticket.user_coupon_id}}">
-                <view class="right">
-                    <view>-￥{{ticket.eq_price}}</view>
+        <block wx:if="{{class == 0}}">
+            <view class="money_check">
+                <view class="money_item {{check_id == 2?'active':''}}" bindtap="check" data-id="2" data-money="{{vip_msg.month_vip_price}}">
+                    <view class="h3">
+                        1个月
+                    </view>
+                    <view class="h1">
+                        <text style="font-size: 36rpx;">￥</text>
+                        <text>{{vip_msg.month_vip_price}}</text>
+                    </view>
+                    <view class="h4" style="text-decoration:line-through">
+                        原价 30元/月
+                    </view>
                 </view>
-            </block>
-            <block wx:else>
-                <block wx:if="{{vip_msg.coupon_count > 0}}">
+                <view class="money_item {{check_id == 1?'active':''}}" bindtap="check" data-id="1" data-money="{{vip_msg.year_vip_price}}">
+                    <view class="h3">
+                        12个月
+                    </view>
+                    <view class="h1">
+                        <text style="font-size: 36rpx;">￥</text>
+                        <text>{{vip_msg.year_vip_price}}</text>
+                    </view>
+                    <view class="h4" style="text-decoration:line-through">
+                        原价 300元/年
+                    </view>
+                </view>
+                <view class="end_time">
+                    优惠价截止 {{vip_msg.coupon_count_down}}
+                </view>
+            </view>
+
+            <!-- 卡券 -->
+            <view class="ticket_check" bindtap="ticket">
+                <view class="title">卡券</view>
+                <block wx:if="{{ticket.user_coupon_id}}">
                     <view class="right">
-                        <view class="num">已有{{vip_msg.coupon_count}}张优惠券</view>
+                        <view>-￥{{ticket.eq_price}}</view>
                     </view>
                 </block>
                 <block wx:else>
-                    <view class="num no_num">暂无优惠券</view>
+                    <block wx:if="{{vip_msg.coupon_count > 0}}">
+                        <view class="right">
+                            <view class="num">已有{{vip_msg.coupon_count}}张优惠券</view>
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view class="num no_num">暂无优惠券</view>
+                    </block>
                 </block>
-            </block>
-        </view>
-
-        <!-- 会员特权 -->
-        <image class="vip_msg" src="https://www.mati.hk/Public/MiniProgram-note/user/vip_msg.jpg" mode="widthFix" />
-
-        <!-- 购买会员 -->
-        <view class="pay">
-            <view class="money">
-                实付 ￥{{money}}
             </view>
-            <view class="pay_btn" bindtap="pay_submit">
-                确认支付
+
+            <!-- 会员特权 -->
+            <image class="vip_msg" src="https://www.mati.hk/Public/MiniProgram-note/user/vip_msg.jpg" mode="widthFix" />
+
+            <!-- 购买会员 -->
+            <view class="pay">
+                <view class="money">
+                    实付 ￥{{money}}
+                </view>
+                <view class="pay_btn" bindtap="pay_submit">
+                    确认支付
+                </view>
             </view>
-        </view>
+        </block>
+
+        <block wx:if="{{class == 1}}">
+            <view class="order_list">
+                <block wx:if="{{order.length>0}}">
+                    <view class="order_item" wx:for="{{order}}">
+                        <view class="title">
+                            <view>
+                                <text class="order_no">订单编号：{{item.out_trade_no}}</text>
+                                <text class="order_state">{{item.pay_status==1?'交易成功':'交易取消'}}</text>
+                            </view>
+                        </view>
+                        <view class="order_info">
+                            <view class="info_item">
+                                VIP类型：{{item.subject}}
+                            </view>
+                            <view class="info_item">
+                                交易时间：{{item.order_time}}
+                            </view>
+                            <view class="info_item">
+                                实付款：¥{{item.total_fee}}
+                            </view>
+                        </view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="df">
+                        <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_wdkq.png' />
+                        <view>您还没有订单记录</view>
+                    </view>
+                </block>
+            </view>
+        </block>
     </block>
-
-    <block wx:if="{{class == 1}}">
-        <view class="order_list">
-            <block wx:if="{{order.length>0}}">
-                <view class="order_item" wx:for="{{order}}">
-                    <view class="title">
-                        <text class="order_no">订单编号：{{item.out_trade_no}}</text>
-                        <text class="order_state">{{item.pay_status==1?'交易成功':'交易取消'}}</text>
-                    </view>
-                    <view class="order_info">
-                        <view class="info_item">
-                            VIP类型：月付会员
-                        </view>
-                        <view class="info_item">
-                            交易时间：{{item.order_time}}
-                        </view>
-                        <view class="info_item">
-                            实付款：¥{{item.total_fee}}
-                        </view>
-                    </view>
-                </view>
-            </block>
-            <block wx:else>
-                <view class="df">
-                    <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_wdkq.png' />
-                    <view>您还没有订单记录</view>
-                </view>
-            </block>
-        </view>
+    <block wx:else>
+        <!-- 会员特权 -->
+            <image class="vip_msg" src="https://www.mati.hk/Public/MiniProgram-note/user/vip_msg.jpg" mode="widthFix" />
     </block>
 </view>
