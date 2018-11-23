@@ -66,12 +66,9 @@ Page({
     wx.setNavigationBarTitle({
       title: '个人中心',
     });
-    if (app.bind_user) {
-      this.login_success()
-    } else {
+    console.log(app.bind_user)
       // 若已授权，则自动登录
       module_login.userlogin(this);
-    }
   },
 
   //未授权提示用户授权，获取用户信息
@@ -135,6 +132,7 @@ Page({
     // 更新用户信息
     if (this.data.load) {
       module_login.userlogin(this);
+      console.log("ss")
     }
   },
 

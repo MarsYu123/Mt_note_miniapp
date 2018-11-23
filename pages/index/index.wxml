@@ -4,7 +4,7 @@
   <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}" class="banner" style="height:{{banner_height}}px">
     <block wx:for="{{banner}}">
       <swiper-item>
-        <image data-kind="{{item.kind}}" data-id="{{item.banner_id}}" class="swiper-image" src="https://www.mati.hk/Public{{item.banner_img}}" mode="widthFix" bindload="banner_load"/>
+        <image data-kind="{{item.kind}}" data-id="{{item.banner_id}}" class="swiper-image" src="https://www.mati.hk/Public{{item.banner_img}}" mode="widthFix" bindload="banner_load" bindtap="banner_nav"/>
       </swiper-item>
     </block>
   </swiper>
@@ -228,7 +228,7 @@
 
 
   <view class="sign_in_box" wx:if="{{tips_show}}">
-    <view class="sign_in_cont {{user_info.is_vip?'vip':''}}" animation="{{tips_animate}}">
+     <view class="sign_in_cont {{is_vip?'vip':''}} {{tips_animate?'active':'not'}}" >
       <view class="sign_title">
         {{tips.title}}
       </view>

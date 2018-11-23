@@ -192,7 +192,7 @@ Page({
       header: app.header,
       data: {
         "phone_number": phone,
-        "openid":app.open_user.note_openid
+        "openid":app.open_user.openId
       },
       success: e => {
         console.log(e)

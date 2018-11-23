@@ -25,9 +25,39 @@ page {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, 300%);
+  transform: translate(-50%, 400%);
   border-radius: 5px
 }
+
+.sign_in_cont.active,.share_cont.active{
+  animation:  aa 1s ease;
+  animation-fill-mode: forwards;
+}
+.sign_in_cont.not,.share_cont.not{
+  animation:  bb 1s ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes aa{
+  0%{
+    transform: translate(-50%, 400%);
+  }
+  100%{
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes bb {
+  0%{
+    transform: translate(-50%, -50%);
+  }
+  100%{
+    transform: translate(-50%, 400%);
+  }
+}
+
+
+
 .sign_in_cont.vip{
   background-position:  46rpx 40rpx;
 }

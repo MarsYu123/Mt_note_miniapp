@@ -4,7 +4,7 @@
   <view class="phone">
     <view class="phone_box">
       <text class="phone_icon"></text>
-      <input class="phone_num" type="text" bindinput="phone_inp" placeholder="请填写手机号" placeholder-class="input_msg"></input>
+      <input class="phone_num" type="idcard" bindinput="phone_inp" placeholder="请填写手机号" placeholder-class="input_msg"></input>
       <icon size="25" type="{{button.icons}}" wx:if="{{button.icons}}"></icon>
     </view>
   </view>

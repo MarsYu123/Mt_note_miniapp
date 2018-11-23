@@ -93,7 +93,7 @@
     </view>
 
     <view class="sign_in_box" wx:if="{{tips_show}}">
-        <view class="sign_in_cont {{is_vip?'vip':''}}" animation="{{tips_animate}}">
+        <view class="sign_in_cont {{is_vip?'vip':''}} {{tips_animate?'active':'not'}}" >
             <view class="sign_title">
                 {{tips.title}}
             </view>
@@ -111,7 +111,7 @@
     </view>
 
     <view class='share_box' wx:if="{{share_show}}">
-        <view class="share_cont" animation='{{share_animate}}'>
+        <view class="share_cont {{share_animate?'active':'not'}}">
             <view class="title">
                 分享
             </view>

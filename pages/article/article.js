@@ -21,8 +21,9 @@ Page({
       num: '5'
     },
     tips_show: false,
-    tips_animate: {}, //提示框动画
+    // tips_animate: {}, //提示框动画
     share_show: false,
+    tips_animate: false,
     share_animate: {} //分享动画
   },
 
@@ -148,8 +149,20 @@ Page({
               var tips = 'tips.num'
               that.setData({
                 sign_in_status: true,
-                [tips]: e.data.data
+                [tips]: e.data.data,
+                tips_show: true,
+                tips_animate: true
               })
+              setTimeout(function () {
+                that.setData({
+                  tips_animate:false
+                })
+                setTimeout(function () {
+                  that.setData({
+                    tips_show: false,
+                  })
+                },1000)
+              },1500)
               that.tips_animate()
               return false
             }
@@ -186,9 +199,6 @@ Page({
   // 提示框动画
   tips_animate: function () {
     var that = this;
-    this.setData({
-      tips_show: true
-    })
     var animate = wx.createAnimation({
       duration: 200,
       timingFunction: 'linear',
@@ -199,17 +209,17 @@ Page({
     this.setData({
       tips_animate: animate.export()
     })
-    setTimeout(function () {
-      animate.translate('-50%', '300%').step();
-      that.setData({
-        tips_animate: animate.export()
-      })
-      setTimeout(function () {
-        that.setData({
-          tips_show: false
-        })
-      }, 200)
-    }, 1200)
+    // setTimeout(function () {
+    //   animate.translate('-50%', '300%').step();
+    //   that.setData({
+    //     tips_animate: animate.export()
+    //   })
+    //   setTimeout(function () {
+    //     that.setData({
+    //       tips_show: false
+    //     })
+    //   }, 300)
+    // }, 1200)
   },
 
   // 关闭提示框动画
@@ -253,21 +263,29 @@ Page({
   // 关闭分享
   claer_share: function () {
     var that = this;
-    let animation = wx.createAnimation({
-      duration: 400,
-      timingFunction: 'linear',
-      delay: 0,
-      transformOrigin: '50% 50% 0'
-    });
-    animation.translate('-50%', '300%').step();
-    this.setData({
-      share_animate: animation.export()
-    })
-    setTimeout(function () {
       that.setData({
-        share_show: false
+        share_animate:false
       })
-    }, 400)
+      setTimeout(function () {
+        that.setData({
+          share_show: false,
+        })
+      },1000)
+    // let animation = wx.createAnimation({
+    //   duration: 400,
+    //   timingFunction: 'linear',
+    //   delay: 0,
+    //   transformOrigin: '50% 50% 0'
+    // });
+    // animation.translate('-50%', '300%').step();
+    // this.setData({
+    //   share_animate: animation.export()
+    // })
+    // setTimeout(function () {
+    //   that.setData({
+    //     share_show: false
+    //   })
+    // }, 400)
   },
 
 
@@ -342,10 +360,12 @@ Page({
 
   // 分享
   share: function () {
-    this.setData({
+    var that = this;
+    that.setData({
       share_show: true,
+      share_animate: true
     })
-    this.share_animate()
+    // this.share_animate()
   },
 
   // 分享海报

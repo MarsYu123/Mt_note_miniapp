@@ -22,7 +22,7 @@ Page({
       num: '5'
     },
     tips_show: false,
-    tips_animate: {}, //提示框动画
+    tips_animate: false, //提示框动画
     has_download: false
   },
 
@@ -230,8 +230,20 @@ Page({
             var tips = 'tips.num'
             that.setData({
               sign_in_status: true,
-              [tips]: e.data.data
+              [tips]: e.data.data,
+              tips_show: true,
+              tips_animate: true
             })
+            setTimeout(function () {
+              that.setData({
+                tips_animate:false
+              })
+              setTimeout(function () {
+                that.setData({
+                  tips_show: false,
+                })
+              },1000)
+            },1500)
             that.tips_animate()
             return false
           }

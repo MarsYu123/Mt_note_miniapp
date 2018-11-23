@@ -23,5 +23,8 @@
     "navigationBarTitleText": "看点笔记",
     "navigationBarTextStyle": "black"
   },
-  "debug": true
+  "debug": true,
+  "navigateToMiniProgramAppIdList": [
+    "wx5b81d3177b12c31a"
+  ]
 }

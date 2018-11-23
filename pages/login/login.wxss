@@ -141,10 +141,9 @@ button {
 
 .login_tips {
     width: 565rpx;
-    position: absolute;
-    bottom: 360rpx;
-    left: 50%;
-    transform: translateX(-50%);
+    text-align:left;
+    margin:auto;
+    margin-top:20px;    
     text-align: left;
 }
 

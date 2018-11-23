@@ -69,7 +69,7 @@ Page({
       num: '5'
     },
     tips_show: false,
-    tips_animate: {}, //提示框动画
+    tips_animate: false, //提示框动画
     label_show: false,
     banner: [], //首页轮播banner
     banner_height: 150
@@ -970,8 +970,20 @@ Page({
           var tips = 'tips.num'
           that.setData({
             sign_in_status: true,
-            [tips]: e.data.data
+            [tips]: e.data.data,
+            tips_show: true,
+            tips_animate: true
           })
+          setTimeout(function () {
+            that.setData({
+              tips_animate:false
+            })
+            setTimeout(function () {
+              that.setData({
+                tips_show: false,
+              })
+            },1000)
+          },1500)
           that.tips_animate()
           return false
         }
@@ -1012,6 +1024,18 @@ Page({
     this.setData({
       banner_height: e.detail.height/2
     })
+  },
+
+  // banner点击跳转
+  banner_nav:function (e) {
+    console.log('banner_nav')
+    var kind = e.target.dataset.kind;
+    if(kind == 11){
+      wx.navigateToMiniProgram({
+        appId:'wx5b81d3177b12c31a',
+        path: 'pages/vip/vip'
+      })
+    }
   }
 
 })

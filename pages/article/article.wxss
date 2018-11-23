@@ -365,7 +365,7 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, 300%);
+    transform: translate(-50%, 400%);
     background: #ffffff;
     border-radius: 5px;
     overflow: hidden;
@@ -454,3 +454,5 @@
     top: 50%;
     left: 50%;
 }
+
+

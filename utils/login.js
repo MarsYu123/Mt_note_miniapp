@@ -49,6 +49,7 @@ function getsession(page) {
         "code": app.code
       },
       success: e => {
+        console.log(e)
         if (e) {
           //需获取sessionid
           wx.setStorageSync("sessionId", e.data.data.session);
