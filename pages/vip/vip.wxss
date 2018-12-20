@@ -243,10 +243,14 @@
     width: 100%;
 }
 
-
 .order_list {
     width: 670rpx;
-    margin: 40rpx auto;
+    height: calc(100% - 400rpx) !important;
+    padding-bottom: 20rpx;
+    box-sizing: border-box;
+    overflow: auto;
+    margin: auto;
+    margin-top: 40rpx;
 }
 
 .order_item {

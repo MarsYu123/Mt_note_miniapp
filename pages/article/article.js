@@ -24,7 +24,17 @@ Page({
     // tips_animate: {}, //提示框动画
     share_show: false,
     tips_animate: false,
-    share_animate: {} //分享动画
+    share_animate: {}, //分享动画
+    is_getuser: false //是否获取权限
+  },
+
+  // 登陆后获取信息
+  login_success: function () {
+    this.setData({
+      is_getuser: true,
+      profile: app.profile,
+      is_vip: app.open_user.is_vip
+    })
   },
 
   /**
@@ -38,13 +48,17 @@ Page({
     that.data.article_id = id;
     console.log(id)
     var like_arr = {};
+
+    // 若已授权，则自动登录
+    module_login.userlogin(this);
+
     if (wx.getStorageSync('like') != "") {
       like_arr = wx.getStorageSync('like');
     }
     this.setData({
       like_arr: like_arr,
       is_like: like_arr[key] || false,
-      is_vip: app.open_user.is_vip
+      is_vip: app.open_user.is_vip || false
     })
     wx.request({
       url: app.url.articleDetail,
@@ -79,6 +93,11 @@ Page({
     this.getReply()
   },
 
+  // 首次登陆
+  getUserInfo: function (e) {
+    module_login.get_user_info(this, e);
+  },
+
   //获取留言信息 
   getReply: function () {
     var that = this;
@@ -109,7 +128,8 @@ Page({
 
   // 提交留言
   reply_up: function () {
-    var that = this;if (module_login.remove_space(this.data.reply_cont) == '') {
+    var that = this;
+    if (module_login.remove_space(this.data.reply_cont) == '') {
       wx.showToast({
         title: '请勿提交空白内容',
         icon: 'none',
@@ -155,14 +175,14 @@ Page({
               })
               setTimeout(function () {
                 that.setData({
-                  tips_animate:false
+                  tips_animate: false
                 })
                 setTimeout(function () {
                   that.setData({
                     tips_show: false,
                   })
-                },1000)
-              },1500)
+                }, 1000)
+              }, 1500)
               that.tips_animate()
               return false
             }
@@ -263,14 +283,14 @@ Page({
   // 关闭分享
   claer_share: function () {
     var that = this;
+    that.setData({
+      share_animate: false
+    })
+    setTimeout(function () {
       that.setData({
-        share_animate:false
+        share_show: false,
       })
-      setTimeout(function () {
-        that.setData({
-          share_show: false,
-        })
-      },1000)
+    }, 1000)
     // let animation = wx.createAnimation({
     //   duration: 400,
     //   timingFunction: 'linear',
@@ -424,11 +444,11 @@ Page({
   onShareAppMessage: function (res) {
     return {
       title: '微信文章图片一键下载神器',
-      path: '/pages/index/index?article_id=' + this.data.article_id + '&source=menu&share_uid='+ app.open_user.uid
+      path: '/pages/index/index?article_id=' + this.data.article_id + '&source=menu&share_uid=' + app.open_user.uid
     }
   },
   //打开全部
-  all_img:function () {
+  all_img: function () {
     wx.navigateTo({
       url: '../all_img/all_img?article_id=' + this.data.article_id
     });

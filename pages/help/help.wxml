@@ -7,11 +7,11 @@
     </view>
     <scroll-view class="help_cont" scroll-y='true' scroll-with-animation='true'>
         <block wx:if="{{class == 0}}">
-            <image wx:for="{{3}}" src="https://www.mati.hk/Public/MiniProgram-note/user/link_download_help_0{{item+1}}.png?time=11"
+            <image wx:for="{{4}}" src="https://www.mati.hk/Public/MiniProgram-note/user/link_download_help_0{{item+1}}.png?time=11"
                 mode="widthFix" lazy-load="{{true}}" />
         </block>
         <block wx:if="{{class == 1}}">
-            <image wx:for="{{3}}" src="https://www.mati.hk/Public/MiniProgram-note/user/picture_download_help_0{{item+1}}.png?time=11"
+            <image wx:for="{{4}}" src="https://www.mati.hk/Public/MiniProgram-note/user/picture_download_help_0{{item+1}}.png?time=11"
                 mode="widthFix" lazy-load="{{true}}" />
         </block>
     </scroll-view>

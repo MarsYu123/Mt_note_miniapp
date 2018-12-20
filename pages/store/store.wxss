@@ -90,7 +90,10 @@
 
 .store_list {
     margin: 32rpx 20rpx;
-
+    overflow: auto;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    height: calc(100% - 160rpx)
 }
 
 .store_item {
@@ -196,6 +199,10 @@
 
 .record_list {
     margin: 30rpx;
+    overflow: auto;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    height: calc(100% - 160rpx)
 }
 
 .record_item {

@@ -102,10 +102,6 @@ button::after {
     background: transparent
 }
 
-.check_code .phone_box {
-    /* border: none */
-}
-
 .password_box .phone_box {
     /* border-bottom: none; */
     border-top: solid 1px #edebeb;

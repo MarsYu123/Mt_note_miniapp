@@ -1,10 +1,12 @@
 <!--index.wxml-->
 <view class="index">
 
-  <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}" class="banner" style="height:{{banner_height}}px">
+  <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}" class="banner" style="height:{{banner_height}}px"
+    wx:if="{{banner_show}}">
     <block wx:for="{{banner}}">
       <swiper-item>
-        <image data-kind="{{item.kind}}" data-id="{{item.banner_id}}" class="swiper-image" src="https://www.mati.hk/Public{{item.banner_img}}" mode="widthFix" bindload="banner_load" bindtap="banner_nav"/>
+        <image data-kind="{{item.kind}}" data-id="{{item.banner_id}}" data-courseid="{{item.course_id}}" class="swiper-image"
+          src="https://www.mati.hk/Public{{item.banner_img}}" mode="widthFix" bindload="banner_load" bindtap="banner_nav" />
       </swiper-item>
     </block>
   </swiper>
@@ -15,12 +17,13 @@
 
   <block wx:if="{{nav_index == 0}}">
     <block wx:if="{{is_getuser}}">
-      <view class="download_history">
+      <view class="download_history {{banner_show?'':'active'}}">
         <scroll-view class="down_box" scroll-y="true" lower-threshold="80" bindscrolltolower="load_download"
           enable-back-to-top="true">
           <block wx:if="{{history_cont.length>0}}">
             <block wx:for="{{history_cont}}">
-              <view class="history_item {{item.is_download == '1'?'active':''}}" data-url="{{item.wx_url}}" bindtap="nva_article" data-article="{{item.article_id}}">
+              <view class="history_item {{item.is_download == '1'?'active':''}}" data-url="{{item.wx_url}}" bindtap="nva_article"
+                data-article="{{item.article_id}}">
                 <view class="title">
                   <text class="title_cont">{{item.title}}</text>
                   <text class="title_state">{{item.is_download == '1'?'已下载':'未下载'}}</text>
@@ -39,6 +42,9 @@
                     <text class="like">{{item.like_count}}</text>
                     <text class="msg">{{item.reply_count}}</text>
                   </view>
+                </view>
+                <view class="ai" wx:if="{{item.material_kind_name.length>0}}">
+                  已识别材料：{{item.material_kind_name}}
                 </view>
               </view>
             </block>
@@ -65,7 +71,7 @@
 
 
     <movable-area class="user_box">
-      <movable-view direction='vertical' inertia='true' x='-30px' y='200'>
+      <movable-view direction='vertical' inertia='true' x='-30px' y='80'>
         <view class="user">
 
           <!-- 签到 -->
@@ -95,16 +101,57 @@
               登陆/注册
             </button>
           </view>
+
+          <!-- 上传识别 -->
+          <view class="up_img">
+            <image src='https://www.mati.hk/Public/MiniProgram-note/index/up_img.png' mode="widthFix" bindtap="up_img" />
+
+            <button class="login" wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+              登陆/注册
+            </button>
+          </view>
+
         </view>
       </movable-view>
     </movable-area>
-
-
-
-
   </block>
 
-  <block wx:else>
+  <block wx:elif="{{nav_index == 1}}">
+    <view class="goods_box">
+      <view class="goods_nav">
+        <view class="goods_nav_item {{goods_index == 0? 'active':''}}" bindtap='goods_nav_click'
+          data-id="all" data-index="0">
+          全部
+        </view>
+        <view class="goods_nav_item {{goods_index == index+1? 'active':''}}" bindtap='goods_nav_click' wx:for="{{materials.material_kind_name}}"
+          data-id="{{item.material_kind_id}}" data-index="{{index+1}}">
+          {{item.material_kind_name}}
+        </view>
+      </view>
+
+      <scroll-view class="goods_list" scroll-y>
+        <view class="goods_item" bindtap="nav_goods" wx:for="{{materials.material_info}}" data-id="{{item.material_id}}">
+          <view class="item_left">
+            <view class="goods_title">{{item.material_name}}<text wx:if="{{item.material_brand != ''}}" style="font-size: 20rpx;color:#495E8B;margin-left:20rpx">@{{item.material_brand}}</text></view>
+            <view class="goods_msg">{{item.supplier_name}}</view>
+            <view class="info">
+              <view>
+                <text class="view">{{item.view_count}}</text>
+                <text class="like">{{item.like_count}}</text>
+                 <text class="money">{{item.material_price}}</text>
+              </view>
+            </view>
+          </view>
+
+          <view class="item_right">
+            <image src="https://www.mati.hk/Public/{{item.material_cover}}" />
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </block>
+
+  <block wx:elif="{{nav_index == 2}}">
     <view class="photo">
       <view class="history_img" style="display:none">
         <image wx:for="{{new_img}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" bindload="img_load" data-index="{{item.index}}"
@@ -116,7 +163,7 @@
         <view class="photo_cont">
 
           <view class="left">
-            <view wx:for="{{img.left}}" class="img {{item.check?'active':''}}" bindtap="{{is_check?'check_img':'open_img'}}"
+            <view wx:for="{{img.left}}" class="img {{item.check?'active':''}}" bindtap="{{is_check}}"
               data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='left' data-url="{{item.img_url}}"
               data-labelid="{{item.label_id}}">
               <image src="{{img_host}}{{item.img_url}}?x-oss-process=image/resize,w_200" mode="widthFix" lazy-load="{{true}}" />
@@ -124,7 +171,7 @@
           </view>
 
           <view class="right">
-            <view class="img {{item.check?'active':''}}" bindtap="{{is_check?'check_img':'open_img'}}" wx:for="{{img.right}}"
+            <view class="img {{item.check?'active':''}}" bindtap="{{is_check}}" wx:for="{{img.right}}"
               data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='right' data-url="{{item.img_url}}"
               data-labelid="{{item.label_id}}">
               <image src="{{img_host}}{{item.img_url}}?x-oss-process=image/resize,w_200" mode="widthFix" lazy-load="{{true}}" />
@@ -134,10 +181,13 @@
         </view>
       </scroll-view>
     </view>
-    <block wx:if="{{!is_check}}">
+    <block wx:if="{{is_check == 'open_img'}}">
       <view class="photo_bottom">
         <view class="screen" bindtap="screen">
-          筛选标签
+          筛选
+        </view>
+        <view class="discern" bindtap="discern_check">
+          识别材料
         </view>
         <block wx:if="{{is_getuser}}">
           <view class="download_check" bindtap="download_check">
@@ -151,13 +201,24 @@
         </block>
       </view>
     </block>
-    <block wx:else>
-      <view class="photo_bottom">
+    <block wx:if="{{is_check == 'check_img'}}">
+      <view class="photo_bottom check">
         <view class="screen" bindtap="esc_check">
           取消
         </view>
         <view class="download_check" style="background:#39CCE1;color:#ffffff" bindtap="download_pic">
           下载{{download_img.length}}
+        </view>
+      </view>
+    </block>
+
+     <block wx:if="{{is_check == 'discern'}}">
+      <view class="photo_bottom check">
+        <view class="screen" bindtap="esc_check">
+          取消
+        </view>
+        <view class="download_check" style="background:#39CCE1;color:#ffffff" bindtap="up_photo">
+          识别
         </view>
       </view>
     </block>
@@ -220,15 +281,16 @@
   </view>
 
   <!-- 放大查看 -->
-  <view class="open_img" wx:if="{{is_open_img}}">
+  <view class="open_img" wx:if="{{is_open_img}}" bindtap="open_img_claer">
     <image src="{{open_img.url}}" mode="widthFix" bindload='open_img_load' bindtouchstart='touch_start' bindtouchmove='touch_move'
-      style="transform:translate(-50%,-50%) scale({{open_img.scale}})" />
-    <view class="open_img_clear" bindtap="open_img_claer"></view>
+      style="transform:translate(-50%,-50%) scale({{open_img.scale}});width:{{open_img.baseWidth}}px;height:{{open_img.baseHeight}}px"
+      bindtap="open_img_claer" />
+    <!-- <view class="open_img_clear" bindtap="open_img_claer"></view> -->
   </view>
 
 
   <view class="sign_in_box" wx:if="{{tips_show}}">
-     <view class="sign_in_cont {{is_vip?'vip':''}} {{tips_animate?'active':'not'}}" >
+    <view class="sign_in_cont {{is_vip?'vip':''}} {{tips_animate?'active':'not'}}">
       <view class="sign_title">
         {{tips.title}}
       </view>

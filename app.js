@@ -1,20 +1,25 @@
 //app.js
 App({
   onLaunch: function (options) {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+
+    // 更新提示
+    const updateManager = wx.getUpdateManager();
+
+    updateManager.onUpdateReady(function () {
+      updateManager.applyUpdate()
+    })
+
     for (var i in this.url) {
       this.url[i] = this.host + this.url[i];
     }
     var that = this;
+    // 存储设备信息
     wx.getSystemInfo({
       success: res => {
         console.log(res)
-        that.system = res.platform
+        that.system = res
         if(res.model == 'iPhone 6'){
-          that.system = 'ios'
+          that.system.platform = 'ios'
           console.log(that.system)
         }
       }
@@ -26,12 +31,9 @@ App({
     var source = options.query.source
 
     
-    console.log(article_id,share_uid,source)
     if(article_id !=undefined){
-      wx.setStorageSync({
-        article_id: article_id,
-        source: source
-      }); 
+      wx.setStorageSync(source, source); 
+      wx.setStorageSync(article_id, article_id);
     }
     if(share_uid != undefined){
       wx.setStorageSync(share_uid,share_uid,);
@@ -82,7 +84,12 @@ App({
     check_num: 'Notelogin/msg_code_verify', //绑定接口
     phone_login: 'Notelogin/send_msg_code', //发送验证码
     user_register: "Notelogin/user_register", //注册接口
-    showAllImg: "Notearticle/showAllImg"  //查看所有
+    showAllimage: "Notearticle/showAllimage",  //查看所有
+    saveScreenshot: "Noteindex/saveScreenshot", //上传识别图片
+    searchImages: "Material/searchImages",  //图库以及文章识别图片
+    materialArea: "Material/materialArea", //材料模块首次加载
+    materialDetail: "Material/materialDetail", //材料详情页
+    likeMaterial: "Material/likeMaterial",  //材料点赞
   },
 
   //post请求的header头
@@ -115,5 +122,8 @@ App({
   article_msg:{},
 
   // 设备信息
-  system:{}
+  system:{},
+
+  // 图片识别信息
+  discern:{}
 })

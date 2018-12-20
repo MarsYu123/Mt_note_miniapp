@@ -1,0 +1,99 @@
+<!--pages/goods/goods.wxml-->
+<view class="goods">
+    <view>
+        <view class="content">
+            <view class="title">
+                {{material_info.material_name}}
+            </view>
+            <view>
+                <image wx:for="{{material_info.material_img}}" src="https://www.mati.hk/Public{{item}}" mode="widthFix" />
+            </view>
+            <view class="moer">点击查看更多图片</view>
+        </view>
+        <view class="goods_msg">
+            <view class="title">
+                <text>材料详情</text>
+            </view>
+            <view class="msg">
+                <text>材料名称：{{material_info.material_name}}</text>
+                <text>产地：{{material_info.material_address}}</text>
+                <text>风格：{{material_info.material_style_name}}</text>
+                <text>价格：{{material_info.material_price}}</text>
+                <text>型号：暂无</text>
+                <text>品牌：{{material_info.material_brand}}</text>
+                <text>尺寸：暂无</text>
+            </view>
+        </view>
+        <view class="brand">
+            <image class="logo" src='https://www.mati.hk/Public{{supplier_info.supplier_profile}}' />
+            <view class="brand_info">
+                <text class="title">{{supplier_info.supplier_name}}</text>
+                <text>地址：{{supplier_info.supplier_address}}</text>
+                <text>电话：{{supplier_info.supplier_phone_number}}</text>
+                <text>官网：{{supplier_info.supplier_web_sites}}</text>
+            </view>
+        </view>
+        <view class="like_btn {{is_like? 'active':''}}">
+            <view bindtap="articleLike"></view>
+        </view>
+        <view class="view_num">
+            <view class="num_title">
+                最近浏览
+            </view>
+            <view class="tx_box">
+                <block wx:for="{{view_info}}">
+                    <image wx:if="{{item.profile_is_http == 2}}" src="https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png"
+                        mode="aspectFill" data-id="{{item.user_id}}" />
+                    <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="aspectFill" data-id="{{item.user_id}}" />
+                    <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="aspectFill"
+                        data-id="{{item.user_id}}" />
+                </block>
+                <view wx:if="{{article_cont.view_count > 15}}" class="img_tips">{{view_count}}</view>
+            </view>
+        </view>
+        <view class="goods_num">
+            <view>
+                阅读<text style="margin-left:10rpx">{{view_count}}</text>
+            </view>
+            <view>
+                {{material_info.like_count}}
+            </view>
+        </view>
+
+        <!-- 评论 -->
+    <view class="comment">
+        <view class="title">
+            <text>评论</text>
+            <text>每日评论+5积分</text>
+        </view>
+        <input class="comment_box" placeholder="请输入您的评论" placeholder-style="color: #A7B0C2;" bindinput="input_change"
+            value="{{reply_cont}}" />
+        <view class="comment_btn" >
+            <view bindtap="reply_up">提交</view>
+            <button wx:if="{{!is_getuser}}" class=" comment_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                提交
+            </button>
+        </view>
+        <view style="content: '';display: block;clear: both"></view>
+        <view class="comment_list">
+            <view class="comment_item" wx:for="{{reply_info}}" data-id="{{item.user_id}}">
+                <image wx:if="{{item.profile_is_http == 2}}" src="https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png"
+                    mode="aspectFill" data-id="{{item.user_id}}" />
+                <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="aspectFill" data-id="{{item.user_id}}" />
+                <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="aspectFill"
+                    data-id="{{item.user_id}}" />
+
+                <view class="item_right">
+                    <view class="right_title">
+                        {{item.username}}
+                    </view>
+                    <view class="right_bottom">
+                        <text>{{item.reply_content}}</text>
+                        <text>{{item.time}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    </view>
+</view>

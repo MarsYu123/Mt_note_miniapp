@@ -17,24 +17,34 @@ Page({
       scale: 1
     }, // 放大图片url
     is_open_img:false,
-    is_vip:false
+    is_vip:false,
+    load:false,
+    article_id:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.article_id)
     var that = this;
-
+    that.data.article_id = options.article_id
     wx.setNavigationBarTitle({
       title: '查看全部',
     });
+    that.up_data(options);
+    that.setData({
+      load: true
+    })
+  },
+
+  // 拉取数据
+  up_data: function () {
+    var that = this;
     wx.request({
-      url: app.url.showAllImg,
+      url: app.url.showAllimage,
       method: 'POST',
       data: {
-        article_id: options.article_id,
+        article_id: that.data.article_id,
         uid: app.open_user.uid
       },
       header: app.header,
@@ -48,7 +58,6 @@ Page({
       fail: ()=>{}
     });
   },
-
 
   // 放大图片
   open_img: function (e) {
@@ -135,6 +144,69 @@ Page({
     })
   },
 
+  // 识别图片
+  up_img:function (e) {
+    var img_id = e.target.dataset.imgid;
+    wx.showLoading({
+      title: '识别中，请等待',
+      mask: true,
+    });
+    wx.request({
+      url: app.url.searchImages,
+      method: 'POST',
+      data: {
+        article_img_id: img_id,
+        flag: 11
+      },
+      header: app.header,
+      success: (e)=>{
+        console.log(e)
+        wx.hideLoading();
+        var data = e.data.data;
+        var tips = '';
+        if (e.data.status == 200) {
+          if( (data.keyword_info.length > 0) || (JSON.stringify(data.keyword_info) != '{}')){
+            app.duration = data;
+            wx.navigateTo({
+              url: '../discern_img/discern_img'
+            });
+            return false
+          }else{
+            tips = '未匹配到结果'
+          }
+        
+        } else if (e.data.status == 403) {
+          tips = '非法请求'
+        } else if (e.data.status == 502) {
+          tips = '图片为空'
+        } else if (e.data.status == 202) {
+          tips = '未匹配到结果'
+        } else if (e.data.status == 500) {
+          tips = '网络异常，请稍后重试'
+        }
+        
+        wx.showToast({
+          title: tips,
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      },
+      fail: ()=>{}
+    });
+  },
+
+  // 已识别图片跳转
+  nav_discern:function (e) {
+    var index = e.target.dataset.index;
+
+    app.duration = this.data.img[index];
+    wx.navigateTo({
+      url: '../discern_img/discern_img'
+    });
+  },
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -146,7 +218,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(this.data.load){
+      this.up_data()
+    }
   },
 
   /**

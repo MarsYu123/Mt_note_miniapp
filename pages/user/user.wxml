@@ -9,8 +9,8 @@
                 <view class="info_msg">
                     <view class="name">{{user_info.nickname}}</view>
                     <view class="site">{{site}}</view>
-                    <view class="user_edit" bindtap="nav_edit">编辑资料</view>
                 </view>
+                <view class="user_edit" bindtap="nav_edit">编辑资料</view>
             </block>
             <block wx:else>
                 <view class="info_msg">
@@ -66,32 +66,37 @@
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/kq.png" mode="widthFix" />
             <text class="title">我的卡券</text>
         </view>
+           <!-- 积分商城 -->
+        <view class="user_item" bindtap="nav_store">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/jf.png" mode="widthFix" />
+            <text class="title">积分商城</text>
+        </view>
+        <!-- 供应商 -->
+        <view class="user_item" bindtap="nav_store">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/jf.png" mode="widthFix" />
+            <text class="title">我的供应商</text>
+        </view>
     </view>
 
 
     <view class="user_list">
-        <!-- 积分商城 -->
-        <view class="user_item" bindtap="nav_store">
-            <image src="https://www.mati.hk/Public/MiniProgram-note/user/jf.png" mode="widthFix" />
-            <text class="title" bindtap="store_nav">积分商城</text>
-        </view>
-        <!-- 下载教程 -->
-        <view class="user_item" bindtap="nav_help">
-            <image src="https://www.mati.hk/Public/MiniProgram-note/user/xz.png" mode="widthFix" />
-            <text class="title">下载教程</text>
-        </view>
-        <!-- 联系客服 -->
+         <!-- 联系客服 -->
         <view class="user_item">
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/kf.png" mode="widthFix" />
             <text class="title">联系客服</text>
             <button open-type="contact"></button>
         </view>
-         <!-- 分享 -->
+        <!-- 分享 -->
         <view class="user_item">
             <image src="https://www.mati.hk/Public/MiniProgram-note/user/share.png" mode="widthFix" />
             <text class="title">分享小程序</text>
             <text style="font-size: 11px;color: #A7B0C2;margin-left:12rpx">分享小程序并邀请好友注册可获得积分</text>
             <button open-type="share"></button>
+        </view>
+        <!-- 下载教程 -->
+        <view class="user_item" bindtap="nav_help">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/xz.png" mode="widthFix" />
+            <text class="title">下载教程</text>
         </view>
     </view>
 

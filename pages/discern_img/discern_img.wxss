@@ -1,0 +1,64 @@
+/* pages/discern_img/discern_img.wxss */
+
+.discern_img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-right: 10rpx;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #f7f7fa;
+}
+
+.box {
+    margin: 40rpx;
+}
+
+.kv {
+    width: 100%;
+}
+
+.kv image {
+    width: 100%;
+}
+
+.result {
+    margin-top: 40rpx;
+}
+
+.result .title {
+    font-size: 36rpx;
+    color: #39CCE1;
+    font-weight: bold
+}
+
+.result>.title::before {
+    display: inline-block;
+    height: 40rpx;
+    width: 6rpx;
+    content: '';
+    background: #39CCE1;
+    margin-right: 28rpx;
+    vertical-align: sub;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+}
+
+.label .item {
+    width: 320rpx;
+    height: 190rpx;
+    background-size: 100% 100%;
+    padding: 10rpx 24rpx;
+    box-sizing: border-box
+}
+.label .title{
+    display: flex;
+    font-size: 28rpx;
+    color: #ffffff;
+    justify-content: space-between;
+    align-items: center
+}

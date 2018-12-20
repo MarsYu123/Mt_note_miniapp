@@ -1,0 +1,23 @@
+<!--pages/discern_img/discern_img.wxml-->
+<view class="discern_img">
+    <view class="box">
+        <view class="kv">
+            <image src="{{img_url}}" mode="widthFix" />
+        </view>
+        <view class="result">
+            <view class="title">
+                识别结果
+            </view>
+            <view class="label">
+                <view class="item">
+                    <view class="title">
+                        <text>布艺</text><text ></text>
+                    </view>
+                    <view class="msg">
+                        布艺品的分类方法有很多，通常把布艺品按照使用功能和空间分类
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

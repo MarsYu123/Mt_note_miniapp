@@ -11,7 +11,8 @@ Page({
     user_info: {}, //用户详细信息
     load: false, //是否已加载
     nav_index: 0, //导航栏位置
-    nav: ['下载记录', '图库'], //导航栏
+    nav: ['笔记', '材料', '图库'], //导航栏
+    goods_index:0,
     label_nav: [{
       key: 'space',
       name: '空间场景'
@@ -42,8 +43,10 @@ Page({
     r_height: 0, //瀑布流右边高度
     async: true, //同步
     animate: {}, //动画
-    is_check: false, //是否打开筛选
+    is_check: 'open_img', //是否打开筛选
+    is_check_discern: false,//是否打开识别
     download_img: [], //下载图片地址
+    article_img_id: '',//识别图片id
     download_index: 0, //目前下载下标
     fail_img: [], //下载失败的下标
     opensetting: false, //图片保存权限
@@ -72,7 +75,9 @@ Page({
     tips_animate: false, //提示框动画
     label_show: false,
     banner: [], //首页轮播banner
-    banner_height: 150
+    banner_height: 150,
+    banner_show: false, //广告是否关闭
+    materials:{}  //材料内容
   },
 
   // 登陆后获取信息
@@ -101,6 +106,51 @@ Page({
     var id = e.currentTarget.dataset.id;
     this.setData({
       nav_index: id
+    });
+    var that = this;
+    if(id == 1){
+      if(JSON.stringify(this.data.materials) == '{}'){
+        that.materials('all')
+      }
+    }
+  },
+
+  // 材料加载
+  materials:function (id) {
+    var that = this;
+    wx.request({
+      url: app.url.materialArea,
+      method: 'POST',
+      data: {
+        material_kind_id: id
+      },
+      header: app.header,
+      success: (e)=>{
+        console.log(e)
+        that.setData({
+          materials: e.data.data
+        })
+      },
+      fail: ()=>{}
+    });
+  },
+
+  // 商品导航
+  goods_nav_click:function (e) {
+    var index = e.currentTarget.dataset.index;
+    var id = e.currentTarget.dataset.id;
+    this.setData({
+      goods_index: index
+    })
+    this.materials(id)
+  },
+
+  // 跳转到商品详情页
+  nav_goods:function (e) {
+    console.log(e)
+    var id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../goods/goods?id=' + id
     });
   },
 
@@ -490,9 +540,17 @@ Page({
   // 选择下载
   download_check: function () {
     this.setData({
-      is_check: true
+      is_check: 'check_img'
     })
   },
+
+  // 选择识别
+  discern_check:function () {
+    this.setData({
+      is_check: 'discern'
+    })
+  },
+
   // 取消下载
   esc_check: function () {
     var img = this.data.img;
@@ -502,7 +560,7 @@ Page({
       }
     }
     this.setData({
-      is_check: false,
+      is_check: 'open_img',
       img: img,
     })
   },
@@ -521,11 +579,21 @@ Page({
   // 放大图片的load
   open_img_load: function (e) {
     var win_width = app.system.windowWidth;
-    console.log(app.system.windowWidth)
+    var win_height = app.system.windowHeight;
+    var img_width = e.detail.width;
+    var img_height = e.detail.height;
+    var img_ratio = img_width/img_height
+    console.log(app.system)
     console.log(e.detail.width)
     var open_img = this.data.open_img;
-    open_img.baseWidth = win_width * 0.8;
-    open_img.baseHeight = e.detail.height;
+    console.log(win_width / img_ratio)
+    if(win_width / img_ratio <app.system.windowHeight){
+      open_img.baseWidth = win_width;
+      open_img.baseHeight = win_width/img_ratio
+    }else{
+      open_img.baseHeight = win_height;
+      open_img.baseWidth = win_height*img_ratio
+    }
     open_img.scaleWidth = win_width * 0.8;
     open_img.scaleHeight = e.detail.heigh;
     this.setData({
@@ -535,6 +603,7 @@ Page({
 
   // 手指触摸
   touch_start: function (e) {
+    return false
     console.log(e.touches)
     if (e.touches.length > 1) {
       var x_dis = Math.abs(e.touches[1].clientX - e.touches[0].clientX);
@@ -548,6 +617,7 @@ Page({
 
   // 手指移动
   touch_move: function (e) {
+    return false
     var open_img = this.data.open_img
     var old_dis = open_img.dis
     if (e.touches.length > 1) {
@@ -586,8 +656,9 @@ Page({
     wx.setNavigationBarTitle({
       title: '看点笔记',
     });
-    console.log(options.article_id)
-    if (options.type == 'right_share') {
+    console.log('==========================================')
+    console.log(options.type)
+    if (options.type != 'user' && options.article_id != undefined) {
       wx.navigateTo({
         url: '../article/article?article_id=' + options.article_id
       });
@@ -601,7 +672,8 @@ Page({
       success: (e) => {
         console.log(e)
         that.setData({
-          banner: e.data.data
+          banner: e.data.data.banner,
+          banner_show: e.data.data.banner_show
         })
       },
       fail: () => {}
@@ -755,6 +827,39 @@ Page({
     }
     this.setData({
       download_img: download_img,
+    })
+  },
+
+  // 选择图片识别
+  discern:function (e) {
+    var article_img_id = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+    var direction = e.currentTarget.dataset.direction;
+    var all_img = this.data.img;
+    var one_img_l = 'img.left[' + index + '].check';
+    var one_img_r = 'img.right[' + index + '].check';
+    var img = this.data.img;
+    for (var i in img) {
+      for (var j in img[i]) {
+        img[i][j].check = false
+      }
+    }
+    this.setData({
+      img:img
+    })
+    if (direction == 'left') {
+      all_img.left[index].check = true
+      this.setData({
+        [one_img_l]: all_img.left[index].check
+      })
+    } else {
+      all_img.right[index].check = true
+      this.setData({
+        [one_img_r]: all_img.right[index].check
+      })
+    }
+    this.setData({
+      article_img_id:article_img_id
     })
   },
 
@@ -933,6 +1038,72 @@ Page({
     }
   },
 
+  // 识别图片
+  up_photo:function () {
+    var article_img_id = this.data.article_img_id;
+    wx.showLoading({
+      title: '识别中，请稍后',
+      mask: true,
+    });
+    wx.request({
+      url: app.url.searchImages,
+      method: 'POST',
+      data: {
+        article_img_id: article_img_id,
+        flag: 22
+      },
+      header: app.header,
+      success: (e)=>{
+        console.log(e)
+        wx.hideLoading();
+        var data = e.data.data;
+        var tips = '';
+        if (e.data.status == 200) {
+          if( (data.keyword_info.length > 0) || (JSON.stringify(data.keyword_info) != '{}')){
+            app.duration = data;
+            wx.navigateTo({
+              url: '../discern_img/discern_img'
+            });
+            return false
+          }else{
+            tips = '未匹配到结果'
+          }
+        
+        } else if (e.data.status == 403) {
+          tips = '非法请求'
+        } else if (e.data.status == 502) {
+          tips = '图片为空'
+        } else if (e.data.status == 202) {
+          tips = '未匹配到结果'
+        } else if (e.data.status == 500) {
+          tips = '网络异常，请稍后重试'
+        }
+        
+        wx.showToast({
+          title: tips,
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      },
+      fail: (e)=>{
+        wx.hideLoading();
+        wx.showModal({
+          title: '提示',
+          content: '网络异常，请稍后重试',
+          showCancel: false,
+          cancelText: '取消',
+          cancelColor: '#000000',
+          confirmText: '确定',
+          confirmColor: '#3CC51F',
+          success: res => {
+            if(res.confirm){}
+          }
+        });
+      }
+    });
+  },
+
   // 首次登陆
   getUserInfo: function (e) {
     console.log(e.target.dataset.type)
@@ -1035,7 +1206,28 @@ Page({
         appId:'wx5b81d3177b12c31a',
         path: 'pages/vip/vip'
       })
+    }else if(kind == 22){
+      var id = e.target.dataset.courseid;
+      wx.navigateToMiniProgram({
+        appId:'wx5b81d3177b12c31a',
+        path: 'pages/vip/vip?course_id='+id+'&course=true'
+      })
     }
-  }
+  },
+
+  // 上传图片识别
+  up_img:function () {
+    var that = this;
+    wx.chooseImage({
+      count: 1,
+      success: (e) => {
+        wx.navigateTo({
+          url: '../img_clip/img_clip?url='+e.tempFilePaths[0]
+        });
+      },
+      fail: () => {}
+    });
+  },
+
 
 })

@@ -15,7 +15,12 @@
     "pages/login/login",
     "pages/help/help",
     "pages/poster/poster",
-    "pages/all_img/all_img"
+    "pages/all_img/all_img",
+    "pages/goods/goods",
+    "pages/img_clip/img_clip",
+    "pages/brand/brand",
+    "pages/my_brand/my_brand",
+    "pages/discern_img/discern_img"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,0 +1,21 @@
+<view class="img_clip">
+    <view class="title">
+        为达到更好的识别结果，建议上传室内设计相关图片
+    </view>
+
+    <import src="../../utils/img_clip/we-cropper.wxml"></import>
+    <template is="we-cropper" data="{{...cropperOpt}}" />
+    <image src="{{img_src}}" mode="widthFix" />
+
+    <view class="tips">
+        双指放大图片来选择裁剪区域
+    </view>
+    <view class="btn_box">
+        <viwe class="btn" bindtap="no_cilp">
+            原图识别
+        </viwe>
+        <viwe class="btn getCropperImage" bindtap="getCropperImage">
+            裁剪识别
+        </viwe>
+    </view>
+</view>

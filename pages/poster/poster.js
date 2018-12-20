@@ -323,18 +323,30 @@ Page({
               ctx.restore();
             }
           } else {
+            ctx.closePath()
+            ctx.beginPath();
             console.log('ss')
             ctx.rect(45 * scale, 176 * scale, 620 * scale, 480 * scale)
             ctx.clip();
             var img_w = res[0].width;
             var img_h = res[0].height;
+            var img_s = img_w/img_h;
+            
+            if(img_w > img_h){
+              img_w = 620*1.2
+              img_h = img_w/ img_s
+            }else{
+              img_h = 480 *1.2
+              img_w = img_h*img_s
+            }
+
             var a = 45,
               b = 176;
-            if (img_w * img_h > 665 * 646) {
-              a = Math.abs(img_w - 665) / 2
+            if (img_w > 620) {
+              a = 45- Math.abs(img_w - 620) / 2 
               b = Math.abs(img_h - 550) / 2
             }
-            ctx.drawImage(res[0].path, a * scale, b * scale, 665 * scale, 500 * scale);
+            ctx.drawImage(res[0].path, a * scale, 176 * scale, img_w * scale, img_h * scale);
             ctx.restore();
             ctx.closePath();
           }

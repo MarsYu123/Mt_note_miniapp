@@ -91,9 +91,7 @@ Page({
   
   // 跳转到首页
   nav_index:function () {
-    wx.redirectTo({
-      url: '../index/index'
-    });
+    wx.navigateBack()
   },
 
   // 跳转到我的vip
@@ -114,6 +112,13 @@ Page({
   nav_store:function () {
     wx.navigateTo({
       url: '../store/store'
+    });
+  },
+
+  // 我的供应商
+  nav_store:function () {
+    wx.navigateTo({
+      url: '../my_brand/my_brand'
     });
   },
   /**
@@ -170,7 +175,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '微信文章图片一键下载神器',
-      path:'/pages/index/index?share_uid='+ app.open_user.uid + '&source=user'
+      path:'/pages/index/index?share_uid='+ app.open_user.uid + '&source=user&type=user'
     }
   }
 })

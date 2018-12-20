@@ -116,7 +116,7 @@ Page({
         }
         wx.showToast({
           title: tips,
-          icon: 'none',
+          icon: 'success',
           duration: 1500,
           mask: false,
         });

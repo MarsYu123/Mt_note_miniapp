@@ -33,7 +33,7 @@
         <view class="task_title">
             每日任务
         </view>
-        <view class="day_task">
+        <view class="day_task" style="margin-bottom:30rpx">
             <view class="task_item">
                 <view class="task_left">
                     <view class="title">每日签到</view>

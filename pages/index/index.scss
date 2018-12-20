@@ -12,7 +12,8 @@
     width: 100%;
     display: block;
 }
-.banner image{
+
+.banner image {
     width: 100%
 }
 
@@ -25,7 +26,6 @@
     display: flex;
     justify-content: space-around;
     box-shadow: 0 0 7px 0 #EBEBEB;
-    margin-bottom: 30rpx
 }
 
 .nav_item {
@@ -56,11 +56,13 @@
 
 
 .download_history,
-.photo {
+.photo,
+.goods_box {
     width: 100%;
-    height: calc(100% - 300rpx);
-    padding-bottom: 30rpx;
-    box-sizing: border-box
+    height: calc(100% - 300rpx) !important;
+    padding-bottom: 30rpx !important;
+    box-sizing: border-box;
+    margin-top: 30rpx;
 }
 
 .down_box {
@@ -133,6 +135,11 @@
 
 .msg {
     margin: 0 !important
+}
+.ai{
+    margin: 16px auto;
+    width: 100%;
+    font-size: 20rpx;
 }
 
 .like::before {
@@ -231,19 +238,12 @@
     background: #FFFFFF;
     box-shadow: 0 -2px 2px 0 rgba(87, 90, 102, 0.30);
     align-items: center;
-    &::after{
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 1px;
-        height: 70rpx;
-        background: #D9DFED;
-        content: '';
-        display: block;
-        transform: translate(-50%,-50%)
-    }
-}
 
+
+}
+.screen{
+    flex-shrink: 0
+}
 .photo_bottom view,
 .photo_bottom button {
     width: 50%;
@@ -252,6 +252,32 @@
     height: 100rpx;
     font-size: 36rpx;
     color: #39CCE1;
+    position: relative;
+}
+.photo_bottom view::after{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 1px;
+    height: 50rpx;
+    background: #D9DFED;
+    content: '';
+    display: block;
+    transform: translateY(-50%)
+}
+.photo_bottom view:last-child::after{
+    display: none
+}
+.screen{
+    width: 20% !important
+}
+.download_check ,.discern{
+    width: 40% !important
+}
+.check{
+    view{
+        width: 50% !important
+    }
 }
 
 .photo_bottom button {
@@ -293,6 +319,7 @@ movable-view {
 
 .user image {
     width: 100%;
+    height: 100%;
 }
 
 .login {
@@ -480,11 +507,13 @@ movable-view {
     z-index: 30;
     left: 0;
     top: 0;
-    .bg{
+
+    .bg {
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.50);
     }
+
     .box {
         width: 636rpx;
         height: 410rpx;
@@ -652,6 +681,147 @@ movable-view {
     text-align: center;
     border: none !important
 }
-.de_index button::after{
+
+.de_index button::after {
     border: none
+}
+
+
+/* 材料 */
+
+.goods_box {
+    margin-top: 0;
+
+    .goods_nav {
+        width: 100%;
+        height: 92rpx;
+        display: flex;
+        padding: 0 20rpx;
+        overflow: hidden;
+        overflow-x: auto;
+        align-items: center;
+        box-sizing: border-box;
+        background: #FFFFFF;
+        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.20);
+
+        .goods_nav_item {
+            padding: 14rpx 28rpx;
+            font-size: 24rpx;
+            border-radius: 50rpx;
+            color: #495E8B;
+            margin: 0 20rpx;
+            white-space: nowrap;
+            position: relative;
+            text-align: center;
+
+            &.active {
+                background: #39CCE1;
+                color: #FFFFFF;
+
+                &::after {
+                    content: '';
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    position: absolute;
+                    border-width: 18rpx;
+                    border-top: 10rpx;
+                    border-color: #39CCE1 transparent transparent transparent;
+                    border-style: solid;
+                    bottom: -28rpx;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+        }
+    }
+
+    .goods_list {
+        width: 100%;
+        height: calc(100% - 92rpx);
+
+        .goods_item {
+            padding: 20rpx 0;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            border-bottom: 1px #DDE2EE solid;
+            margin: 0 40rpx;
+
+            .item_left {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                color: #495E8B;
+                flex-grow: 1;
+
+                .goods_title {
+                    font-size: 28rpx;
+                    text-align: left;
+                }
+
+                .goods_msg {
+                    font-size: 20rpx;
+                    text-align: left;
+                }
+
+                .info {
+                    display: flex;
+                    font-size: 18rpx;
+                    align-items: center;
+
+                    .view {
+                        margin-right: 40rpx;
+                        width: 50rpx;
+
+                        &::before {
+                            content: '';
+                            display: inline-block;
+                            width: 20rpx;
+                            height: 16rpx;
+                            background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/view.png');
+                            background-size: 100% 100%;
+                            margin-right: 12rpx;
+                        }
+                    }
+
+                    .like {
+                        width: 50rpx;
+                        margin-right: 40rpx;
+                        &::before {
+                            content: '';
+                            display: inline-block;
+                            width: 16rpx;
+                            height: 16rpx;
+                            background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/like.png');
+                            background-size: 100% 100%;
+                            margin-right: 12rpx;
+                        }
+                    }
+                    .money {
+                        &::before {
+                            content: '';
+                            display: inline-block;
+                            width: 20rpx;
+                            height: 20rpx;
+                            background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/money.png');
+                            background-size: 100% 100%;
+                            margin-right: 12rpx;
+                        }
+                    }
+                }
+            }
+
+            .item_right {
+                flex-grow: 0;
+                width: 160rpx;
+                height: 100rpx;
+
+                image {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
 }

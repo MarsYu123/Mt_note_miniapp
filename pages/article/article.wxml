@@ -19,27 +19,45 @@
             <block wx:for="{{article_cont.article_img}}">
                 <view class="img no_check" bindtap='all_img' wx:if="{{index == article_cont.article_img.length-1}}">
                     <image class="" src="{{item}}" mode="aspectFill" />
-                    <text class="gd">查看全部 \n（共{{article_cont.img_count}}张）</text>
+                    <text class="gd">查看全部 \n（并识别）</text>
                 </view>
 
                 <view class="img no_check" wx:else>
                     <image src="{{item}}" mode="aspectFill" />
                 </view>
             </block>
-
         </view>
+
         <view wx:if="{{!is_vip}}" class="vip_tips">
             非会员仅显示20张,<text style="color:#F05D5C">充值会员</text>查看更多
         </view>
         <view class="float">
             <!-- 点赞 -->
-            <view class="like_btn {{is_like? 'active':''}}" bindtap="articleLike">
+            <view class="like_btn {{is_like? 'active':''}}">
+                <view bindtap="articleLike"></view>
+                <button wx:if="{{!is_getuser}}" class=" like_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                </button>
             </view>
+
             <!-- 分享 -->
-            <view class="share_btn" bindtap="share">
+            <view class="share_btn">
+                <view bindtap="share"></view>
+                <button wx:if="{{!is_getuser}}" class=" share_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                </button>
             </view>
             <!-- 下载 -->
-            <view class="download_btn" bindtap="download">
+            <view class="download_btn">
+                <view bindtap="download"></view>
+                <button wx:if="{{!is_getuser}}" class=" download_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                </button>
+            </view>
+        </view>
+
+        <!-- 识别材料 -->
+        <view class="label" wx:if="{{article_cont.keyword_info !=''}}">
+            <view class="title">已识别材料：</view>
+            <view class="label_list">
+                {{article_cont.keyword_info}}
             </view>
         </view>
     </view>
@@ -57,7 +75,7 @@
                 <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="aspectFill"
                     data-id="{{item.user_id}}" />
             </block>
-            <view wx:if="{{article_cont.user_data.length > 15}}" class="img_tips">123</view>
+            <view wx:if="{{article_cont.has_download_count > 15}}" class="img_tips">{{article_cont.has_download_count}}</view>
         </view>
     </view>
 
@@ -69,7 +87,12 @@
         </view>
         <input class="comment_box" placeholder="请输入您的评论" placeholder-style="color: #A7B0C2;" bindinput="input_change"
             value="{{reply_cont}}" />
-        <view class="comment_btn" bindtap="reply_up">提交</view>
+        <view class="comment_btn" >
+            <view bindtap="reply_up">提交</view>
+            <button wx:if="{{!is_getuser}}" class=" comment_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                提交
+            </button>
+        </view>
         <view style="content: '';display: block;clear: both"></view>
         <view class="comment_list">
             <view class="comment_item" wx:for="{{reply_msg}}" data-id="{{item.user_id}}">
@@ -93,7 +116,7 @@
     </view>
 
     <view class="sign_in_box" wx:if="{{tips_show}}">
-        <view class="sign_in_cont {{is_vip?'vip':''}} {{tips_animate?'active':'not'}}" >
+        <view class="sign_in_cont {{is_vip?'vip':''}} {{tips_animate?'active':'not'}}">
             <view class="sign_title">
                 {{tips.title}}
             </view>

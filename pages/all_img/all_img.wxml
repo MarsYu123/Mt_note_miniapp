@@ -4,6 +4,18 @@
         非会员仅显示20张,<text style="color:#F05D5C">充值会员</text>查看更多
     </view>
     <view class="box">
-        <image src="{{item}}" wx:for="{{img}}" class="img" mode="widthFix" data-url="{{item}}" />
+        <view wx:for="{{img}}">
+            <image src="{{item.image_url}}" class="img" data-url="{{item.image_url}}" mode="widthFix"/>
+            <view wx:if="{{item.keyword_array!=''}}" class="is_label" data-index="{{index}}" bindtap="nav_discern">
+                <view class="title">
+                    <text>已识别材料：</text>
+                </view>
+                <view class="label">{{item.keyword_array}}</view>
+            </view>
+            <view wx:else class="no_label">
+                <text>未识别</text>
+                <text class="discern" bindtap="up_img" data-imgid="{{item.article_img_id}}"></text>
+            </view>
+        </view>
     </view>
 </view>

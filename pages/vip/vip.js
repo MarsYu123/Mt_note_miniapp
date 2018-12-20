@@ -36,7 +36,7 @@ Page({
     });
     var is_ios
     console.log(app.system)
-    if(app.system == 'ios'){
+    if(app.system.platform == 'ios'){
       is_ios = true
     }else{
       is_ios = false

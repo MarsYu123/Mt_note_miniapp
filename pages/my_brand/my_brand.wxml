@@ -1,0 +1,20 @@
+<!--pages/my_brand/my_brand.wxml-->
+<view class="my_brand">
+
+    <view class="brand_list">
+        <view class="brand_item">
+            <image src="" />
+            <view class="info">
+                <view class="title">标题</view>
+                <view class="site">
+                    <text>上海市华龙路1777号世界商务园7号楼1777号</text>
+                </view>
+                <view class="bottom">
+                    <view class="call">0757-82009056</view>
+                    <view class="dist">距离您<text>45</text>公里</view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+</view>

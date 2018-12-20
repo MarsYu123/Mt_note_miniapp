@@ -1,0 +1,52 @@
+/* pages/img_clip/img_clip.wxss */
+.img_clip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #f7f7fa;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 28rpx;
+    color: #495E8B;
+    background: #ffffff;
+    height: 100rpx;
+    line-height: 100rpx;
+    margin-top: 40rpx;
+    text-align: center
+}
+
+image {
+    width: 100%;
+    display: none;
+    background: #eeeeee;
+}
+
+.tips {
+    font-size: 12px;
+    color: #A7B0C2;
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    margin-bottom: 45rpx;
+    background: #FFFFFF
+}
+
+.btn_box {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.btn {
+    width: 280rpx;
+    height: 100rpx;
+    text-align: center;
+    line-height: 100rpx;
+    background: #FFFFFF;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    border-radius: 4px;
+    font-size: 36rpx;
+    color: #39CCE1;
+}
