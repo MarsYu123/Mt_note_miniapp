@@ -35,21 +35,7 @@ Page({
   onLoad: function (options) {
     var url = options.url;
     var that = this;
-    wx.getImageInfo({
-      src: url,
-      success: (e) => {
-        console.log(e)
-        var scale = e.width / e.height
-        that.wecropper.pushOrign(e.path)
-        that.setData({
-          img_src: e.path,
-          img_w: app.system.screenWidth,
-          img_h: app.system.screenWidth / scale,
-          old_width: app.system.screenWidth,
-          old_height: app.system.screenWidth / scale,
-        })
-      },
-    });
+    
     const {
       cropperOpt
     } = this.data
@@ -73,6 +59,25 @@ Page({
         console.log(`current canvas context: ${ctx}`)
         wx.hideToast()
       })
+
+    wx.getImageInfo({
+      src: url,
+      success: (e) => {
+        console.log(e)
+        var scale = e.width / e.height
+        console.log(e.path)
+        that.wecropper.pushOrign(e.path)
+
+        that.setData({
+          img_src: e.path,
+          img_w: app.system.screenWidth,
+          img_h: app.system.screenWidth / scale,
+          old_width: app.system.screenWidth,
+          old_height: app.system.screenWidth / scale,
+        })
+      },
+    });
+
   },
 
 
@@ -111,7 +116,7 @@ Page({
       title: '识别中，请等待',
       mask: true,
     });
-  
+
     wx.uploadFile({
       url: app.url.saveScreenshot,
       filePath: src,
@@ -130,16 +135,16 @@ Page({
         var data = e.data.data;
         var tips = '';
         if (e.data.status == 200) {
-          if( (data.keyword_info.length > 0) || (JSON.stringify(obj) != '{}')){
+          if ((data.keyword_info.length > 0) || (JSON.stringify(obj) != '{}')) {
             app.duration = data;
             wx.navigateTo({
               url: '../discern_img/discern_img'
             });
             return false
-          }else{
+          } else {
             tips = '未匹配到结果'
           }
-        
+
         } else if (e.data.status == 403) {
           tips = '非法请求'
         } else if (e.data.status == 502) {
@@ -149,7 +154,7 @@ Page({
         } else if (e.data.status == 500) {
           tips = '网络异常，请稍后重试'
         }
-        
+
         wx.showToast({
           title: tips,
           icon: 'none',

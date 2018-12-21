@@ -51,6 +51,9 @@
     bottom: 0;
     left: 0;
 }
+.download_btn view{
+    background-image: none
+}
 
 .download_tips {
     width: 100%;

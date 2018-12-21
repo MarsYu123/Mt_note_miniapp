@@ -2,6 +2,7 @@
 .goods {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     overflow-y: auto;
     padding-right: 10rpx;
     -webkit-overflow-scrolling: touch;
@@ -222,6 +223,7 @@ button {
     padding: 20rpx;
     box-sizing: border-box;
     margin-top: 20rpx;
+    margin-bottom: 40rpx
 }
 
 
@@ -263,7 +265,6 @@ button {
 .comment_list {
     width: 100%;
     margin-top: 20rpx;
-    margin-bottom: 40rpx;
 }
 
 .comment_item {

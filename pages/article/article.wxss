@@ -358,6 +358,8 @@ button {
 
 .download_btn view {
     background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/download.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat
 }
 
 

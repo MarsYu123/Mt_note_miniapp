@@ -11,7 +11,7 @@ Page({
     user_info: {}, //用户详细信息
     load: false, //是否已加载
     nav_index: 0, //导航栏位置
-    nav: ['笔记', '材料', '图库'], //导航栏
+    nav: ['笔记', '相册', '材料', '商家', '图库'], //导航栏
     goods_index:0,
     label_nav: [{
       key: 'space',
@@ -38,6 +38,7 @@ Page({
     all_img: [], //所有图片组
     img_index: 0, //当前加载图片下标
     page: 0, //加载更多页码
+    material_page: 0, //材料加载更多页码
     img_host: '', //图片加速域名
     l_height: 0, //瀑布流左边高度
     r_height: 0, //瀑布流右边高度
@@ -77,7 +78,8 @@ Page({
     banner: [], //首页轮播banner
     banner_height: 150,
     banner_show: false, //广告是否关闭
-    materials:{}  //材料内容
+    materials:{},  //材料内容
+    materials_kind_id: 'all' //材料分类id
   },
 
   // 登陆后获取信息
@@ -108,21 +110,21 @@ Page({
       nav_index: id
     });
     var that = this;
-    if(id == 1){
+    if(id == 2){
       if(JSON.stringify(this.data.materials) == '{}'){
-        that.materials('all')
+        that.materials()
       }
     }
   },
 
   // 材料加载
-  materials:function (id) {
+  materials:function () {
     var that = this;
     wx.request({
       url: app.url.materialArea,
       method: 'POST',
       data: {
-        material_kind_id: id
+        material_kind_id: that.data.materials_kind_id
       },
       header: app.header,
       success: (e)=>{
@@ -140,9 +142,11 @@ Page({
     var index = e.currentTarget.dataset.index;
     var id = e.currentTarget.dataset.id;
     this.setData({
-      goods_index: index
+      goods_index: index,
+      materials_kind_id:id,
+      material_page:0
     })
-    this.materials(id)
+    this.materials()
   },
 
   // 跳转到商品详情页
@@ -603,7 +607,7 @@ Page({
 
   // 手指触摸
   touch_start: function (e) {
-    return false
+    // return false
     console.log(e.touches)
     if (e.touches.length > 1) {
       var x_dis = Math.abs(e.touches[1].clientX - e.touches[0].clientX);
@@ -617,7 +621,7 @@ Page({
 
   // 手指移动
   touch_move: function (e) {
-    return false
+    // return false
     var open_img = this.data.open_img
     var old_dis = open_img.dis
     if (e.touches.length > 1) {
@@ -625,7 +629,7 @@ Page({
       var y_dis = e.touches[1].clientY - e.touches[0].clientY;
       var dis = Math.sqrt(x_dis * x_dis + y_dis * y_dis);
       var dis_differ = dis - old_dis
-      var new_scale = open_img.scale + 0.001 * dis_differ;
+      var new_scale = open_img.scale + 0.005 * dis_differ;
 
       if (new_scale >= 2) {
         new_scale = 2
@@ -656,8 +660,7 @@ Page({
     wx.setNavigationBarTitle({
       title: '看点笔记',
     });
-    console.log('==========================================')
-    console.log(options.type)
+
     if (options.type != 'user' && options.article_id != undefined) {
       wx.navigateTo({
         url: '../article/article?article_id=' + options.article_id
@@ -1229,5 +1232,34 @@ Page({
     });
   },
 
+  // 材料加载更多
+  moer_goods_list:function () {
+    var that = this;
+    console.log(that.data.materials_kind_id)
+    if(that.data.async){
+      that.data.async = false;
+      that.data.material_page++;
+      wx.request({
+        url: app.url.moreMaterial,
+        method: 'POST',
+        data: {
+          material_kind_id: that.data.materials_kind_id,
+          page: that.data.material_page
+        },
+        header: app.header,
+        success: (e)=>{
+          console.log(e)
+          var info = 'materials.material_info';
+          var new_info = that.data.materials.material_info.concat(e.data.data.material_info)
+          that.setData({
+            [info]:new_info
+          })
+          that.data.async = true;
+        },
+        fail: ()=>{}
+      });
+    }
+  
+  },
 
 })

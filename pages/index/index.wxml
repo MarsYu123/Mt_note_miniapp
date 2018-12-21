@@ -116,7 +116,7 @@
     </movable-area>
   </block>
 
-  <block wx:elif="{{nav_index == 1}}">
+  <block wx:elif="{{nav_index == 2}}">
     <view class="goods_box">
       <view class="goods_nav">
         <view class="goods_nav_item {{goods_index == 0? 'active':''}}" bindtap='goods_nav_click'
@@ -129,7 +129,7 @@
         </view>
       </view>
 
-      <scroll-view class="goods_list" scroll-y>
+      <scroll-view class="goods_list" scroll-y lower-threshold="100" bindscrolltolower="moer_goods_list">
         <view class="goods_item" bindtap="nav_goods" wx:for="{{materials.material_info}}" data-id="{{item.material_id}}">
           <view class="item_left">
             <view class="goods_title">{{item.material_name}}<text wx:if="{{item.material_brand != ''}}" style="font-size: 20rpx;color:#495E8B;margin-left:20rpx">@{{item.material_brand}}</text></view>
@@ -151,7 +151,7 @@
     </view>
   </block>
 
-  <block wx:elif="{{nav_index == 2}}">
+  <block wx:elif="{{nav_index == 4}}">
     <view class="photo">
       <view class="history_img" style="display:none">
         <image wx:for="{{new_img}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" bindload="img_load" data-index="{{item.index}}"
@@ -281,11 +281,10 @@
   </view>
 
   <!-- 放大查看 -->
-  <view class="open_img" wx:if="{{is_open_img}}" bindtap="open_img_claer">
+  <view class="open_img" wx:if="{{is_open_img}}">
     <image src="{{open_img.url}}" mode="widthFix" bindload='open_img_load' bindtouchstart='touch_start' bindtouchmove='touch_move'
-      style="transform:translate(-50%,-50%) scale({{open_img.scale}});width:{{open_img.baseWidth}}px;height:{{open_img.baseHeight}}px"
-      bindtap="open_img_claer" />
-    <!-- <view class="open_img_clear" bindtap="open_img_claer"></view> -->
+      style="transform:translate(-50%,-50%) scale({{open_img.scale}});width:{{open_img.baseWidth}}px;height:{{open_img.baseHeight}}px"/>
+    <view class="open_img_clear" bindtap="open_img_claer"></view>
   </view>
 
 

@@ -90,6 +90,12 @@ App({
     materialArea: "Material/materialArea", //材料模块首次加载
     materialDetail: "Material/materialDetail", //材料详情页
     likeMaterial: "Material/likeMaterial",  //材料点赞
+    materialReply: "Material/materialReply",  // 材料评论
+    moreMaterial: "Material/moreMaterial",  //首页材料列表加载更多
+    supplierDetail: "Material/supplierDetail", //厂商详情
+    aboutMoreMaterial: "Material/aboutMoreMaterial", //查看更多材料
+    collectSupplier: "Material/collectSupplier",  //加入供应商
+    mySupplier: "Noteuser/mySupplier" //我的供应商
   },
 
   //post请求的header头

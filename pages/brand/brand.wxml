@@ -2,21 +2,19 @@
 <view class="brand_box">
     <view>
         <view class="brand">
-            <image class="logo" src='' />
+            <image class="logo" src='https://www.mati.hk/Public{{brand_info.supplier_profile}}' />
             <view class="brand_info">
-                <text class="title">安梅里特环保材料科技有限公司</text>
-                <text>地址：上海市华龙路1777号世界商务园7号楼</text>
-                <text>地址：上海市华龙路1777号世界商务园7号楼</text>
-                <text>地址：上海市华龙路1777号世界商务园7号楼</text>
+                <text class="title">{{brand_info.supplier_name}}</text>
+                <text>地址：{{brand_info.supplier_address}}</text>
+                <text>电话：{{brand_info.supplier_phone_number}}</text>
+                <text>官网：{{brand_info.supplier_web_sites}}</text>
             </view>
         </view>
 
         <view class="brand_msg">
             <view class="title">公司介绍</view>
             <view class="cont">
-                我们设计的阿那亚儿童餐厅便是这设计哲学最好的范例。惠州市福球实业有限公司是一家拥有较为丰富的客户资源和行销经验，公司于 2013 年成立，注册资金 100 万，公司在 2017
-                年4月做过一次名称变更原名叫惠州市福求商贸有限公司，公司坐落于全国文明城市惠州，公司下设有营销部、网络部、服务部、综合部、售后部、技术部等，现有员工45人，几年来，通过全体员工的共同努力，逐渐成为专业品牌代理，本着诚信为本、积极开拓、优质服务。
-                我们设计的阿那亚儿童餐厅便是这设计哲学最好的范例。惠州市福球实业有限公司是一家拥有较为丰富的客户资源和行销经验，公司坐落于全国文明城市惠州，公司下设有营销部、网络部、服务部、综合部、售后部、技术部等，现有员工45人，几年来，通过全体员工的共同努力，逐渐成为专业品牌…
+                {{brand_info.content}}
             </view>
             <view class="moer">查看更多</view>
         </view>
@@ -26,36 +24,31 @@
                 材料展示
             </view>
             <view class="goods_list">
-                <view class="goods_item">
-                    <image src="" />
-                    <view class="title">真空石特殊款</view>
-                    <view class="money">价格：201元~1232元</view>
+                <view class="goods_item" wx:for="{{brand_goods}}" data-id="{{item.material_id}}" bindtap="nav_goods">
+                    <image src="https://www.mati.hk/Public{{item.material_cover}}" />
+                    <view class="title">{{item.material_name}}</view>
+                    <view class="money">价格：{{item.material_price}}</view>
                     <view class="num">
-                        <view class="view">123</view>
-                        <view class="like">456</view>
-                    </view>
-                </view>
-                <view class="goods_item">
-                    <image src="" />
-                    <view class="title">真空石特殊款</view>
-                    <view class="money">价格：201元~1232元</view>
-                    <view class="num">
-                        <view class="view">123</view>
-                        <view class="like">456</view>
+                        <view class="view">{{item.like_count}}</view>
+                        <view class="like">{{item.view_count}}</view>
                     </view>
                 </view>
             </view>
-            <view class="moer">
+            <view class="moer" bindtap="moer" wx:if="{{moer_show}}">
                 点击查看更多材料
             </view>
         </view>
 
         <view class="fixed">
-            <view class="call">
+            <view class="call" data-phone="{{brand_info.supplier_phone_number}}" bindtap="call_brand">
                 联系供应商
             </view>
             <view class="join_brand">
-                加为我的供应商
+                <view data-id="{{brand_info.id}}" bindtap="join_brand">
+                    加为我的供应商
+                </view>
+                <button  wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                </button>
             </view>
         </view>
     </view>

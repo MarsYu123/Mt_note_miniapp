@@ -624,7 +624,7 @@ function methods () {
 
   self.pushOrign = function (src) {
     self.src = src;
-
+    console.log('bb'+ src)
     isFunction(self.onBeforeImageLoad) && self.onBeforeImageLoad(self.ctx, self);
 
     wx.getImageInfo({

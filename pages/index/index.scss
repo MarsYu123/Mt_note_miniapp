@@ -703,9 +703,12 @@ movable-view {
         box-sizing: border-box;
         background: #FFFFFF;
         box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.20);
+        -webkit-overflow-scrolling: touch;
 
         .goods_nav_item {
-            padding: 14rpx 28rpx;
+            padding: 0 28rpx;
+            height: 50rpx;
+            line-height: 50rpx;
             font-size: 24rpx;
             border-radius: 50rpx;
             color: #495E8B;
@@ -728,7 +731,7 @@ movable-view {
                     border-top: 10rpx;
                     border-color: #39CCE1 transparent transparent transparent;
                     border-style: solid;
-                    bottom: -28rpx;
+                    top: 55rpx;
                     left: 50%;
                     transform: translateX(-50%);
                 }

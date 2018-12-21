@@ -24,7 +24,7 @@
                 <text>尺寸：暂无</text>
             </view>
         </view>
-        <view class="brand">
+        <view class="brand" bindtap="nav_brand" data-brandid="{{material_info.material_supplier_id}}">
             <image class="logo" src='https://www.mati.hk/Public{{supplier_info.supplier_profile}}' />
             <view class="brand_info">
                 <text class="title">{{supplier_info.supplier_name}}</text>
@@ -34,7 +34,10 @@
             </view>
         </view>
         <view class="like_btn {{is_like? 'active':''}}">
-            <view bindtap="articleLike"></view>
+            <view bindtap="articleLike">
+                <button wx:if="{{!is_getuser}}" class=" like_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                </button>
+            </view>
         </view>
         <view class="view_num">
             <view class="num_title">
@@ -61,39 +64,60 @@
         </view>
 
         <!-- 评论 -->
-    <view class="comment">
-        <view class="title">
-            <text>评论</text>
-            <text>每日评论+5积分</text>
-        </view>
-        <input class="comment_box" placeholder="请输入您的评论" placeholder-style="color: #A7B0C2;" bindinput="input_change"
-            value="{{reply_cont}}" />
-        <view class="comment_btn" >
-            <view bindtap="reply_up">提交</view>
-            <button wx:if="{{!is_getuser}}" class=" comment_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-                提交
-            </button>
-        </view>
-        <view style="content: '';display: block;clear: both"></view>
-        <view class="comment_list">
-            <view class="comment_item" wx:for="{{reply_info}}" data-id="{{item.user_id}}">
-                <image wx:if="{{item.profile_is_http == 2}}" src="https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png"
-                    mode="aspectFill" data-id="{{item.user_id}}" />
-                <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="aspectFill" data-id="{{item.user_id}}" />
-                <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="aspectFill"
-                    data-id="{{item.user_id}}" />
+        <view class="comment">
+            <view class="title">
+                <text>评论</text>
+                <text>每日评论+5积分</text>
+            </view>
+            <input class="comment_box" placeholder="请输入您的评论" placeholder-style="color: #A7B0C2;" bindinput="input_change"
+                value="{{replay_val}}" />
+            <view class="comment_btn">
+                <view bindtap="reply_up">提交</view>
+                <button wx:if="{{!is_getuser}}" class=" comment_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                    提交
+                </button>
+            </view>
+            <view style="content: '';display: block;clear: both"></view>
+            <view class="comment_list">
+                <view class="comment_item" wx:for="{{reply_info}}" data-id="{{item.user_id}}">
+                    <image wx:if="{{item.profile_is_http == 2}}" src="https://www.mati.hk/Public/MiniProgram-note/user/wx_tx.png"
+                        mode="aspectFill" data-id="{{item.user_id}}" />
+                    <image wx:if="{{item.profile_is_http == 1}}" src="{{item.profile}}" mode="aspectFill" data-id="{{item.user_id}}" />
+                    <image wx:if="{{item.profile_is_http == 0}}" src="https://www.mati.hk/Public/{{item.profile}}" mode="aspectFill"
+                        data-id="{{item.user_id}}" />
 
-                <view class="item_right">
-                    <view class="right_title">
-                        {{item.username}}
-                    </view>
-                    <view class="right_bottom">
-                        <text>{{item.reply_content}}</text>
-                        <text>{{item.time}}</text>
+                    <view class="item_right">
+                        <view class="right_title">
+                            {{item.username}}
+                        </view>
+                        <view class="right_bottom">
+                            <text>{{item.reply_content}}</text>
+                            <text>{{item.add_time}}</text>
+                        </view>
                     </view>
                 </view>
             </view>
         </view>
     </view>
+
+
+
+</view>
+<!-- 积分提示框 -->
+<view class="sign_in_box" wx:if="{{tips_show}}">
+    <view class="sign_in_cont {{is_vip?'vip':''}} {{tips_animate?'active':'not'}}">
+        <view class="sign_title">
+            {{tips.title}}
+        </view>
+        <view class="sign_tips">
+            <text>+</text>
+            <text style="font-size:36rpx">{{tips.num}}</text>
+            <block wx:if="{{!is_vip}}">
+                <text style="color:#9B9B9B;">积分</text>
+            </block>
+            <block wx:else>
+                <text style="color:#9B9B9B;">会员双倍积分</text>
+            </block>
+        </view>
     </view>
 </view>
