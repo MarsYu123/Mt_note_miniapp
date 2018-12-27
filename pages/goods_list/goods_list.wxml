@@ -1,0 +1,42 @@
+<!--pages/goods_list/goods_list.wxml-->
+<view class="index">
+    <view class="goods_box">
+        <scroll-view class="goods_nav" scroll-x="true" scroll-into-view="label_{{item_id}}" scroll-with-animation>
+            <view class="goods_nav_item {{goods_index == 0? 'active':''}}" bindtap='goods_nav_click' data-id="all"
+                data-index="0">
+                全部
+            </view>
+            <view class="goods_nav_item {{goods_index == index+1? 'active':''}}" bindtap='goods_nav_click' wx:for="{{materials.material_kind_name}}"
+                data-id="{{item.material_kind_id}}" data-index="{{index+1}}" id="label_{{item.material_kind_id}}">
+                {{item.material_kind_name}}
+            </view>
+        </scroll-view>
+
+
+        <scroll-view class="goods_list" scroll-y lower-threshold="100" bindscrolltolower="moer_goods_list">
+            <block wx:if="{{materials.material_info.length>0}}">
+                <view class="goods_item" bindtap="nav_goods" wx:for="{{materials.material_info}}" data-id="{{item.material_id}}">
+                    <view class="item_left">
+                        <view class="goods_title">{{item.material_name}}<text wx:if="{{item.material_brand != ''}}"
+                                style="font-size: 20rpx;color:#495E8B;margin-left:20rpx">@{{item.material_brand}}</text></view>
+                        <view class="goods_msg">{{item.supplier_name}}</view>
+                        <view class="info">
+                            <view>
+                                <text class="view">{{item.view_count}}</text>
+                                <text class="like">{{item.like_count}}</text>
+                                <text class="money">{{item.material_price}}</text>
+                            </view>
+                        </view>
+                    </view>
+
+                    <view class="item_right">
+                        <image src="https://www.mati.hk/Public/{{item.material_cover}}" />
+                    </view>
+                </view>
+            </block>
+            <block wx:else>
+                
+            </block>
+        </scroll-view>
+    </view>
+</view>

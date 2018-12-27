@@ -1,18 +1,18 @@
-<!--pages/my_brand/my_brand.wxml-->
+<!--pages/brand_list/brand_list.wxml-->
 <view class="my_brand">
     <button open-type="openSetting" bindopensetting="openSetting" wx:if="{{setting_show}}">
         获取定位信息
     </button>
     <view class="brand_list">
-        <view class="brand_item" wx:for="{{msg}}" data-id="{{item.supplier_id}}">
-            <image src="https://www.mati.hk/Public{{item.supplier_profile}}" bindtap="nav_brand" data-id="{{item.supplier_id}}"/>
+        <view class="brand_item" wx:for="{{msg}}" data-id="{{item.supplier_id}}" bindtap="nav_brand">
+            <image src="https://www.mati.hk/Public{{item.supplier_profile}}" />
             <view class="info">
-                <view class="title" bindtap="nav_brand" data-id="{{item.supplier_id}}">{{item.supplier_name}}</view>
+                <view class="title">{{item.supplier_name}}</view>
                 <view class="site">
                     <text>{{item.supplier_address}}</text>
                 </view>
                 <view class="bottom">
-                    <view class="call" bindtap="call" data-phone="{{item.supplier_phone_number}}">{{item.supplier_phone_number}}</view>
+                    <view class="call" data-phone="{{item.supplier_phone_number}}">{{item.supplier_phone_number}}</view>
                     <view class="dist">距离您<text>{{item.site || 0}}</text>KM</view>
                 </view>
             </view>

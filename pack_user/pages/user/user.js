@@ -116,7 +116,7 @@ Page({
   },
 
   // 我的供应商
-  nav_store:function () {
+  nav_mybrand:function () {
     wx.navigateTo({
       url: '../my_brand/my_brand'
     });

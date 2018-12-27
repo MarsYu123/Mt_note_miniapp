@@ -1,0 +1,36 @@
+/* pages/photoAlbum/photoAlbum.wxss */
+@import '../index/index.wxss';
+
+.photo_nav {
+    margin: 20rpx auto;
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #39CCE1;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 352rpx;
+}
+
+.nav_item {
+    width: 50%;
+    height: 56rpx;
+    line-height: 56rpx;
+    text-align: center;
+    color: #39CCE1;
+    font-size: 28rpx;
+}
+
+.nav_item.active {
+    color: #FFFFFF;
+    background: #39CCE1
+}
+
+.tips {
+    font-size: 20rpx;
+    color: #A7B0C2;
+    text-align: center;
+}
+.photo_cont image{
+    border-radius: 0
+}

@@ -1,0 +1,131 @@
+<!--pages/photo/photo.wxml-->
+<view class="index">
+    <view class="photo">
+        <view class="history_img" style="display:none">
+            <image wx:for="{{new_img}}" src="{{img_host}}{{item.img_url}}" mode="widthFix" bindload="img_load"
+                data-index="{{item.index}}" id="{{item.picture_id || ''}}" />
+        </view>
+        <button class="set_save_img" open-type='openSetting' wx:if="{{opensetting}}" type="primary">授权保存</button>
+        <scroll-view class="photo_box" scroll-y="{{!is_open_img?true:false}}" lower-threshold="80" bindscrolltolower="load_photo"
+            enable-back-to-top="true">
+            <view class="photo_cont">
+
+                <view class="left">
+                    <view wx:for="{{img.left}}" class="img {{item.check?'active':''}}" bindtap="{{is_check}}"
+                        data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='left' data-url="{{item.img_url}}"
+                        data-labelid="{{item.label_id}}"
+                        data-type="left"
+                        data-originindex="{{item.index}}"
+                        >
+                        <image src="{{img_host}}{{item.img_url}}?x-oss-process=image/resize,w_200" mode="widthFix"
+                            lazy-load="{{true}}" />
+                    </view>
+                </view>
+
+                <view class="right">
+                    <view class="img {{item.check?'active':''}}" bindtap="{{is_check}}" wx:for="{{img.right}}"
+                        data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='right' data-url="{{item.img_url}}"
+                        data-labelid="{{item.label_id}}"
+                        data-type="right"
+                        data-originIndex="{{item.index}}"
+                        >
+                        <image src="{{img_host}}{{item.img_url}}?x-oss-process=image/resize,w_200" mode="widthFix"
+                            lazy-load="{{true}}" />
+                    </view>
+                </view>
+
+            </view>
+        </scroll-view>
+    </view>
+    <block wx:if="{{is_check == 'open_img'}}">
+        <view class="photo_bottom">
+            <view class="screen" bindtap="screen">
+                筛选
+            </view>
+            <view class="discern" bindtap="discern_check">
+                识别材料
+            </view>
+            <block wx:if="{{is_getuser}}">
+                <view class="download_check" bindtap="download_check">
+                    选择下载
+                </view>
+            </block>
+            <block wx:else>
+                <button class="download_check" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                    选择下载
+                </button>
+            </block>
+        </view>
+    </block>
+    <block wx:if="{{is_check == 'check_img'}}">
+        <view class="photo_bottom check">
+            <view class="screen" bindtap="esc_check">
+                取消
+            </view>
+            <view class="download_check" style="background:#39CCE1;color:#ffffff" bindtap="download_pic">
+                下载{{download_img.length}}
+            </view>
+        </view>
+    </block>
+
+    <block wx:if="{{is_check == 'discern'}}">
+        <view class="photo_bottom check">
+            <view class="screen" bindtap="esc_check">
+                取消
+            </view>
+            <view class="download_check" style="background:#39CCE1;color:#ffffff" bindtap="up_photo">
+                识别
+            </view>
+        </view>
+    </block>
+</view>
+<!-- 放大查看 -->
+<view class="open_img" wx:if="{{is_open_img}}">
+    <!-- <swiper interval="{{5000}}" duration="{{500}}"> -->
+        <!-- <swiper-item wx:for="{{open_arr}}"> -->
+            <movable-area class="ing_mova" wx:if="{{is_open_movable}}">
+                <movable-view class="{{mova_class}}" direction="all" 
+                scale-max='2' scale-min='1' 
+                inertia="true" animation="{{false}}" 
+                x='{{mova.x}}' y='{{mova.y}}' 
+                scale='true' style="width:100rpx;height:100rpx" 
+                out-of-bounds bindchange='move' bindtouchend="open_end" 
+                data-index="{{open_img.index}}" bindtouchcancel="open_cancel" bindtouchstart="touch" bindscale="open_scale">
+
+                    <image src="{{open_img.url}}" mode="widthFix" bindload='open_img_load' style="transform:translate(-50%,-50%);width:{{open_img.baseWidth}}px;height:{{open_img.baseHeight}}px"/>
+
+
+                </movable-view>
+            </movable-area>
+        <!-- </swiper-item> -->
+    <!-- </swiper> -->
+
+    <view class="open_img_clear" bindtap="open_img_claer"></view>
+</view>
+
+<!-- 筛选标签 -->
+<view class="label_box" wx:if="{{label_show}}" animation="{{animate}}">
+    <view class="box_cont">
+        <block wx:for="{{label_nav}}">
+            <view class="cont_item">
+                <view class="item_left">
+                    <image src="https://www.mati.hk/Public/MiniProgram-note/index/{{item.key}}.png" />
+                    <view>{{item.name}}</view>
+                </view>
+                <view class="item_right">
+                    <view class="label {{item.label_id == label_checked? 'active':''}}" wx:for="{{all_label[item.key]}}"
+                        data-id="{{item.label_id}}" bindtap="label_checked">{{item.label_name}}</view>
+                </view>
+            </view>
+        </block>
+    </view>
+    <view class="box_btn">
+        <view class="clear" bindtap="clear_label" data-type="clear">
+            取消
+        </view>
+        <view class="enter" bindtap="clear_label" data-type="enter">
+            确定
+        </view>
+    </view>
+
+</view>

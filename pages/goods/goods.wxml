@@ -8,7 +8,7 @@
             <view>
                 <image wx:for="{{material_info.material_img}}" src="https://www.mati.hk/Public{{item}}" mode="widthFix" />
             </view>
-            <view class="moer">点击查看更多图片</view>
+            <view class="moer" bindtap="moer_img" wx:if="{{moer.show}}">{{moer.text}}</view>
         </view>
         <view class="goods_msg">
             <view class="title">

@@ -1,0 +1,2 @@
+/* pages/brand_list/brand_list.wxss */
+@import '../../my_brand.wxss'

@@ -10,19 +10,34 @@
     background: #f7f7fa;
 }
 
-.brand_box>view {
+.brand_content {
     margin: 20rpx;
 }
 
 .brand {
     width: 100%;
-    background: #FFFFFF;
+    height: 407rpx;
+    overflow: hidden;
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/brand_bg.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat
+}
+.brand>view{
+    width: 670rpx;
+    margin: auto;
     box-shadow: 0 2px 7px 0 #D9DFED;
     box-sizing: border-box;
     padding: 40rpx 26rpx;
+    margin-top: 20rpx;
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/brand_box.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    box-shadow: 0 2px 7px 0 #ACC3E9;
+    border-radius: 12rpx;
+}
+.brand_view {
     display: flex;
     justify-content: space-between;
-    margin-top: 20rpx;
 }
 
 .brand .logo {
@@ -72,6 +87,47 @@
     padding: 0 30rpx;
     padding-bottom: 20rpx;
     box-sizing: border-box
+}
+
+.brand_btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30rpx;
+}
+
+.brand_btn view {
+    width: 260rpx;
+    height: 68rpx;
+    line-height: 68rpx;
+    background: #FFFFFF;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    border-radius: 12rpx;
+    color: #495E8B;
+    font-size: 28rpx;
+    text-align: center;
+}
+
+.brand_btn .call::before{
+    content: '';
+    display: inline-block;
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/call.png');
+    background-size: 100%;
+    width: 32rpx;
+    height: 32rpx;
+    margin-right: 10rpx;
+    vertical-align: middle
+}
+.brand_btn .map::before{
+    content: '';
+    display: inline-block;
+    background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/map.png');
+    background-size: 100%;
+    width: 38rpx;
+    height: 38rpx;
+    margin-right: 10rpx;
+    vertical-align: middle
 }
 
 .moer {
@@ -183,15 +239,16 @@
     left: 0;
     bottom: 0;
     background: #FFFFFF;
-    box-shadow: 0 -1px 1px 0 rgba(0,0,0,0.07);
+    box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.07);
     height: 100rpx;
 }
-.fixed>view{
+
+.fixed>view {
     position: relative;
     width: 50%;
 }
 
-.fixed .call::before{
+.fixed .call::before {
     content: '';
     display: inline-block;
     background-image: url('https://www.mati.hk/Public/MiniProgram-note/index/call_v.png');
@@ -201,7 +258,8 @@
     margin-right: 10rpx;
     vertical-align: middle
 }
-.fixed button{
+
+.fixed button {
     width: 100%;
     height: 100%;
     opacity: 0;

@@ -14,7 +14,7 @@
             </view>
             <view wx:else class="no_label">
                 <text>未识别</text>
-                <text class="discern" bindtap="up_img" data-imgid="{{item.article_img_id}}"></text>
+                <text class="discern" bindtap="up_img" data-imgid="{{item.article_img_id}}" data-index="{{index}}"></text>
             </view>
         </view>
     </view>

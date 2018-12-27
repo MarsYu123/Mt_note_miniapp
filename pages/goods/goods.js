@@ -27,6 +27,14 @@ Page({
       title: '留言成功',
       num: '5'
     }, //积分提示
+    all_img:[], //所有图片
+    moer:{
+      text:'点击查看更多图片',
+      falg: true,
+      show: true
+    },
+    min_img:[],
+    all_img:[]
   },
 
   // 登陆后获取信息
@@ -104,16 +112,56 @@ Page({
         wx.hideLoading();
         console.log(e)
         var data = e.data.data;
+        var all_img = data.material_info.material_img;
+        var min_img = [];
+        var inx = 0;
+        if(all_img.length >3){
+          for(var i in all_img){
+            if(inx >2){
+              break
+            }
+            inx++;
+            min_img.push(all_img[i])
+          }
+          data.material_info.material_img = min_img
+        }else{
+          that.setData({
+            ['moer.show']: false
+          })
+        }
+
         that.setData({
           material_info: data.material_info,
           reply_info: data.reply_info,
           supplier_info: data.supplier_info,
           view_count: data.view_count,
           view_info: data.view_info,
+          all_img: all_img,
+          min_img:min_img
         })
       },
       fail: () => {}
     });
+  },
+
+  // 查看更多
+  moer_img:function () {
+    var moer = this.data.moer;
+    var material_info = this.data.material_info;
+    if(moer.flag == true){
+      moer.text = '点击查看更多图片'
+      moer.flag = false
+      material_info.material_img = this.data.min_img
+    }else{
+      moer.text = '收起'
+      moer.flag = true
+      material_info.material_img = this.data.all_img
+    }
+    console.log( this.data.all_img)
+    this.setData({
+      moer: moer,
+      material_info : material_info
+    })
   },
 
   // 点赞

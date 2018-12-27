@@ -1,22 +1,35 @@
 <!--pages/brand/brand.wxml-->
 <view class="brand_box">
-    <view>
-        <view class="brand">
-            <image class="logo" src='https://www.mati.hk/Public{{brand_info.supplier_profile}}' />
-            <view class="brand_info">
-                <text class="title">{{brand_info.supplier_name}}</text>
-                <text>地址：{{brand_info.supplier_address}}</text>
-                <text>电话：{{brand_info.supplier_phone_number}}</text>
-                <text>官网：{{brand_info.supplier_web_sites}}</text>
+
+    <view class="brand">
+        <view>
+            <view class="brand_view">
+                <image class="logo" src='https://www.mati.hk/Public{{brand_info.supplier_profile}}' />
+                <view class="brand_info">
+                    <text class="title">{{brand_info.supplier_name}}</text>
+                    <text>地址：{{brand_info.supplier_address}}</text>
+                    <text>电话：{{brand_info.supplier_phone_number}}</text>
+                    <text>官网：{{brand_info.supplier_web_sites}}</text>
+                </view>
+            </view>
+            <view class="brand_btn">
+                <view class="call" bindtap="call_brand">
+                    立即拨打
+                </view>
+                <view class="map" bindtap="map">
+                    如何前往
+                </view>
             </view>
         </view>
+    </view>
 
+    <view class="brand_content">
         <view class="brand_msg">
             <view class="title">公司介绍</view>
             <view class="cont">
                 {{brand_info.content}}
             </view>
-            <view class="moer">查看更多</view>
+            <view class="moer" bindtap="moer" wx:if="{{moer.show}}">{{moer.text}}</view>
         </view>
 
         <view class="goods">
@@ -34,20 +47,20 @@
                     </view>
                 </view>
             </view>
-            <view class="moer" bindtap="moer" wx:if="{{moer_show}}">
+            <view class="moer" bindtap="moer_goods" wx:if="{{moer_show}}">
                 点击查看更多材料
             </view>
         </view>
 
         <view class="fixed">
-            <view class="call" data-phone="{{brand_info.supplier_phone_number}}" bindtap="call_brand">
+            <view class="call" bindtap="call_brand">
                 联系供应商
             </view>
             <view class="join_brand">
                 <view data-id="{{brand_info.id}}" bindtap="join_brand">
                     加为我的供应商
                 </view>
-                <button  wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                <button wx:if="{{!is_getuser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
                 </button>
             </view>
         </view>

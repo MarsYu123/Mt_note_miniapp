@@ -16,6 +16,7 @@ Page({
     img_h: '',
     img_src: '',
     is_canvas: false,
+    up_type: '',
 
     cropperOpt: {
       id: 'cropper',
@@ -84,6 +85,7 @@ Page({
 
   // 上传原图
   no_cilp: function () {
+    this.data.up_type = 'original'
     this.up_img(this.data.img_src)
   },
 
@@ -100,6 +102,7 @@ Page({
     var that = this;
     this.wecropper.getCropperImage((src) => {
       if (src) {
+        that.data.up_type = 'clip'
         that.up_img(src)
       } else {
         wx.showToast({
@@ -112,6 +115,7 @@ Page({
     })
   },
   up_img: function (src) {
+    var that = this;
     wx.showLoading({
       title: '识别中，请等待',
       mask: true,
@@ -123,7 +127,7 @@ Page({
       name: 'screenshot',
       success: (e) => {
         wx.hideLoading();
-
+        console.log(e)
         var jsonStr = e.data;
         jsonStr = jsonStr.replace(" ", "");
         if (typeof jsonStr != 'object') {
@@ -131,14 +135,14 @@ Page({
           var jj = JSON.parse(jsonStr);
           e.data = jj;
         }
-        console.log(e.data.data)
         var data = e.data.data;
+        console.log(data)
         var tips = '';
         if (e.data.status == 200) {
-          if ((data.keyword_info.length > 0) || (JSON.stringify(obj) != '{}')) {
+          if ((data.keyword_info.length > 0)) {
             app.duration = data;
             wx.navigateTo({
-              url: '../discern_img/discern_img'
+              url: '../discern_img/discern_img?type=' + that.data.up_type
             });
             return false
           } else {

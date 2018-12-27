@@ -59,8 +59,8 @@
 .photo,
 .goods_box {
     width: 100%;
-    height: calc(100% - 300rpx) !important;
-    padding-bottom: 30rpx !important;
+    height: 100%;
+    padding-bottom: 30rpx;
     box-sizing: border-box;
     margin-top: 30rpx;
 }
@@ -171,7 +171,6 @@
 .photo {
     width: 100%;
     height: 100%;
-    padding-bottom: 120rpx;
     box-sizing: border-box
 }
 
@@ -229,7 +228,7 @@
 
 .photo_bottom {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100rpx;
@@ -641,8 +640,36 @@ movable-view {
     }
 
     .open_img_clear {
-        width: 100%;
-        height: 100%;
+        width: 50rpx;
+        height: 50rpx;
+        background: #EBEBEB;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        &::after{
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 40rpx;
+            height: 4rpx;
+            transform: rotate(45deg) translate(-50%, -50%);
+            background: #000000;
+            transform-origin: 0% 0%
+        }
+        &::before{
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 40rpx;
+            height: 4rpx;
+            transform: rotate(-45deg) translate(-50%, -50%);
+            background: #000000;
+            transform-origin: 0% 0%
+        }
     }
 }
 
@@ -695,15 +722,14 @@ movable-view {
     .goods_nav {
         width: 100%;
         height: 92rpx;
-        display: flex;
+        // display: flex;
         padding: 0 20rpx;
-        overflow: hidden;
-        overflow-x: auto;
         align-items: center;
         box-sizing: border-box;
         background: #FFFFFF;
         box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.20);
-        -webkit-overflow-scrolling: touch;
+        overflow:hidden;
+        white-space:nowrap;
 
         .goods_nav_item {
             padding: 0 28rpx;
@@ -716,6 +742,7 @@ movable-view {
             white-space: nowrap;
             position: relative;
             text-align: center;
+            display: inline-block;
 
             &.active {
                 background: #39CCE1;
@@ -828,3 +855,9 @@ movable-view {
         }
     }
 }
+
+.ing_mova{
+    width: 100%;
+    height: 100%;
+}
+

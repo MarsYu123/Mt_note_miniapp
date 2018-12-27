@@ -9,15 +9,16 @@
                 识别结果
             </view>
             <view class="label">
-                <view class="item">
+                <view class="item img_{{item.material_kind_id}}" wx:for="{{label}}" bindtap="nav_goods" data-id="{{item.material_kind_id}}">
                     <view class="title">
-                        <text>布艺</text><text ></text>
-                    </view>
-                    <view class="msg">
-                        布艺品的分类方法有很多，通常把布艺品按照使用功能和空间分类
+                        <text>{{item.material_kind_name}}</text>
+                        <text>- {{item.about_count}}种 -</text>
                     </view>
                 </view>
             </view>
+        </view>
+        <view class="record" bindtap="record">
+            记录到相册
         </view>
     </view>
 </view>

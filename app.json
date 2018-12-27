@@ -2,26 +2,35 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/user/user",
-    "pages/web_open/web_open",
-    "pages/download/download",
-    "pages/user_edit/user_edit",
-    "pages/integral/integral",
-    "pages/store/store",
-    "pages/coupon/coupon",
-    "pages/vip/vip",
-    "pages/ticket/ticket",
     "pages/article/article",
-    "pages/login/login",
-    "pages/help/help",
+    "pages/download/download",
     "pages/poster/poster",
     "pages/all_img/all_img",
     "pages/goods/goods",
     "pages/img_clip/img_clip",
     "pages/brand/brand",
-    "pages/my_brand/my_brand",
-    "pages/discern_img/discern_img"
+    "pages/discern_img/discern_img",
+    "pages/photo/photo",
+    "pages/goods_list/goods_list",
+    "pages/brand_list/brand_list",
+    "pages/photoAlbum/photoAlbum"
   ],
+  "subpackages": [{
+    "root": "pack_user",
+    "pages": [
+      "pages/user/user",
+      "pages/web_open/web_open",
+      "pages/user_edit/user_edit",
+      "pages/integral/integral",
+      "pages/store/store",
+      "pages/coupon/coupon",
+      "pages/vip/vip",
+      "pages/ticket/ticket",
+      "pages/login/login",
+      "pages/help/help",
+      "pages/my_brand/my_brand"
+    ]
+  }],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -31,5 +40,46 @@
   "debug": true,
   "navigateToMiniProgramAppIdList": [
     "wx5b81d3177b12c31a"
-  ]
+  ],
+  "tabBar": {
+    "color": "#A7B0C2",
+    "selectedColor": "#39CCE1",
+    "backgroundColor": "#ffffff",
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "笔记",
+        "iconPath": "utils/icon/index.png",
+        "selectedIconPath": "utils/icon/index_active.png"
+      },
+      {
+        "pagePath": "pages/photoAlbum/photoAlbum",
+        "text": "相册",
+        "iconPath": "utils/icon/photoAlbum.png",
+        "selectedIconPath": "utils/icon/photoAlbum_active.png"
+      },
+      {
+        "pagePath": "pages/goods_list/goods_list",
+        "text": "材料",
+        "iconPath": "utils/icon/goods.png",
+        "selectedIconPath": "utils/icon/goods_active.png"
+      },
+      {
+        "pagePath": "pages/brand_list/brand_list",
+        "text": "商家",
+        "iconPath": "utils/icon/brand.png",
+        "selectedIconPath": "utils/icon/brand_active.png"
+      },
+      {
+        "pagePath": "pages/photo/photo",
+        "text": "图库",
+        "iconPath": "utils/icon/gallery.png",
+        "selectedIconPath": "utils/icon/gallery_active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于展示供应商与用户之间的距离"
+    }
+  }
 }

@@ -8,7 +8,7 @@
     <image src="{{img_src}}" mode="widthFix" />
 
     <view class="tips">
-        双指放大图片来选择裁剪区域
+        *双指放大图片来选择裁剪区域
     </view>
     <view class="btn_box">
         <viwe class="btn" bindtap="no_cilp">

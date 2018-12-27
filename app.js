@@ -95,7 +95,10 @@ App({
     supplierDetail: "Material/supplierDetail", //厂商详情
     aboutMoreMaterial: "Material/aboutMoreMaterial", //查看更多材料
     collectSupplier: "Material/collectSupplier",  //加入供应商
-    mySupplier: "Noteuser/mySupplier" //我的供应商
+    mySupplier: "Noteuser/mySupplier", //我的供应商
+    recordKeywordImg: "Material/recordKeywordImg", //记录图片到相册
+    myAlbum: "Material/myAlbum",  //相册
+    myAlbumMore: "Material/myAlbumMore" //相册加载更多
   },
 
   //post请求的header头
@@ -131,5 +134,8 @@ App({
   system:{},
 
   // 图片识别信息
-  discern:{}
+  discern:{},
+
+  // 图片识别页面跳转
+  goods_list_nav:0
 })

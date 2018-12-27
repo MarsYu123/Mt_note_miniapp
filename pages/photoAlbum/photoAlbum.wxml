@@ -1,0 +1,73 @@
+<!--pages/photo/photo.wxml-->
+<view class="index">
+    <block wx:if="{{is_getuser}}">
+        <view class="photo_nav">
+            <view class="nav_item {{class == index? 'active':''}}" wx:for="{{nav}}" data-index="{{index}}" bindtap="nav_click">
+                {{item}}
+            </view>
+        </view>
+        <view class="tips">
+            *通过首页识别按钮上传过的图片将被储存在这里
+        </view>
+       <view class="photo">
+        <view class="history_img" style="display:none">
+            <image wx:for="{{new_img}}" src="{{item.record_img}}" mode="widthFix" bindload="img_load"
+                data-index="{{item.index}}" id="{{item.picture_id || ''}}" />
+        </view>
+        <button class="set_save_img" open-type='openSetting' wx:if="{{opensetting}}" type="primary">授权保存</button>
+        <scroll-view class="photo_box" scroll-y="{{!is_open_img?true:false}}" lower-threshold="80" bindscrolltolower="load_photo"
+            enable-back-to-top="true">
+            <view class="photo_cont">
+
+                <view class="left">
+                    <view wx:for="{{img.left}}" class="img {{item.check?'active':''}}" bindtap="{{is_check}}"
+                        data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='left' data-url="{{item.record_img}}"
+                        data-labelid="{{item.label_id}}"
+                        data-type="left"
+                        data-originindex="{{item.index}}"
+                        >
+                        <image src="{{item.record_img}}" mode="widthFix"
+                            lazy-load="{{true}}" />
+                    </view>
+                </view>
+
+                <view class="right">
+                    <view class="img {{item.check?'active':''}}" bindtap="{{is_check}}" wx:for="{{img.right}}"
+                        data-index="{{index}}" data-id="{{item.picture_id}}" data-direction='right' data-url="{{item.record_img}}"
+                        data-labelid="{{item.label_id}}"
+                        data-type="right"
+                        data-originIndex="{{item.index}}"
+                        >
+                        <image src="{{item.record_img}}" mode="widthFix"
+                            lazy-load="{{true}}" />
+                    </view>
+                </view>
+
+            </view>
+        </scroll-view>
+    </view>
+    </block>
+
+
+    <block wx:else>
+        <view class="de_index">
+            <image src='https://www.mati.hk/Public/MiniProgram-note/default/df_index.png' />
+            <view>你还没有相册记录</view>
+            <button class="login down" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                登陆/注册
+            </button>
+        </view>
+    </block>
+
+</view>
+<!-- 放大查看 -->
+<view class="open_img" wx:if="{{is_open_img}}">
+    <movable-area class="ing_mova">
+        <movable-view direction="all" scale-max='{{mova.scale}}' inertia="true" x='{{mova.x}}' y='{{mova.y}}' scale='true' style="width:{{open_img.baseWidth}}px;height:{{open_img.baseHeight}}px">
+
+            <image src="{{open_img.url}}" mode="widthFix" bindload='open_img_load' style="transform:translate(-50%,-50%) scale({{open_img.scale}});width:{{open_img.baseWidth}}px;height:{{open_img.baseHeight}}px" />
+
+        </movable-view>
+    </movable-area>
+    <view class="open_img_clear" bindtap="open_img_claer"></view>
+</view>

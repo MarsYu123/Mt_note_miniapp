@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    img:[],
+    img: [],
     open_img: {
       baseWidth: '',
       baseHeight: '',
@@ -16,10 +16,10 @@ Page({
       url: '',
       scale: 1
     }, // 放大图片url
-    is_open_img:false,
-    is_vip:false,
-    load:false,
-    article_id:''
+    is_open_img: false,
+    is_vip: false,
+    load: false,
+    article_id: ''
   },
 
   /**
@@ -48,14 +48,14 @@ Page({
         uid: app.open_user.uid
       },
       header: app.header,
-      success: (e)=>{
+      success: (e) => {
         console.log(e)
         that.setData({
-          img:e.data.data,
+          img: e.data.data,
           is_vip: app.open_user.is_vip
         })
       },
-      fail: ()=>{}
+      fail: () => {}
     });
   },
 
@@ -66,7 +66,7 @@ Page({
     var open_img_url = 'open_img.url'
     this.setData({
       is_open_img: true,
-      [open_img_url]:url,
+      [open_img_url]: url,
     })
   },
 
@@ -145,8 +145,10 @@ Page({
   },
 
   // 识别图片
-  up_img:function (e) {
+  up_img: function (e) {
     var img_id = e.target.dataset.imgid;
+    var index = e.target.dataset.index;
+    var that = this;
     wx.showLoading({
       title: '识别中，请等待',
       mask: true,
@@ -159,22 +161,23 @@ Page({
         flag: 11
       },
       header: app.header,
-      success: (e)=>{
+      success: (e) => {
         console.log(e)
         wx.hideLoading();
         var data = e.data.data;
         var tips = '';
+
         if (e.data.status == 200) {
-          if( (data.keyword_info.length > 0) || (JSON.stringify(data.keyword_info) != '{}')){
+          if ((data.keyword_info.length > 0) || (JSON.stringify(data.keyword_info) != '{}')) {
             app.duration = data;
             wx.navigateTo({
-              url: '../discern_img/discern_img'
+              url: '../discern_img/discern_img?type=original'
             });
             return false
-          }else{
+          } else {
             tips = '未匹配到结果'
           }
-        
+
         } else if (e.data.status == 403) {
           tips = '非法请求'
         } else if (e.data.status == 502) {
@@ -184,7 +187,7 @@ Page({
         } else if (e.data.status == 500) {
           tips = '网络异常，请稍后重试'
         }
-        
+
         wx.showToast({
           title: tips,
           icon: 'none',
@@ -192,18 +195,20 @@ Page({
           mask: false,
         });
       },
-      fail: ()=>{}
+      fail: () => {}
     });
   },
 
   // 已识别图片跳转
-  nav_discern:function (e) {
-    var index = e.target.dataset.index;
-
+  nav_discern: function (e) {
+    var index = e.currentTarget.dataset.index;
     app.duration = this.data.img[index];
+    console.log(index)
+
     wx.navigateTo({
-      url: '../discern_img/discern_img'
+      url: '../discern_img/discern_img?type=original'
     });
+
   },
 
 
@@ -218,7 +223,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if(this.data.load){
+    if (this.data.load) {
       this.up_data()
     }
   },

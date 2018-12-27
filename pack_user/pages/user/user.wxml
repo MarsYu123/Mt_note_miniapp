@@ -72,8 +72,8 @@
             <text class="title">积分商城</text>
         </view>
         <!-- 供应商 -->
-        <view class="user_item" bindtap="nav_store">
-            <image src="https://www.mati.hk/Public/MiniProgram-note/user/jf.png" mode="widthFix" />
+        <view class="user_item" bindtap="nav_mybrand">
+            <image src="https://www.mati.hk/Public/MiniProgram-note/user/gys.png" mode="widthFix" />
             <text class="title">我的供应商</text>
         </view>
     </view>

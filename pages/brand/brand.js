@@ -14,7 +14,12 @@ Page({
     brand_goods: {}, //厂商产品
     page: 0,
     moer_show: true,
-    is_getuser: false
+    is_getuser: false,
+    moer:{
+      text:'查看更多',
+      falg: true,
+      show: true
+    },
   },
 
 
@@ -58,6 +63,7 @@ Page({
       })
     }
 
+
     that.down_msg()
   },
 
@@ -73,17 +79,52 @@ Page({
       success: (e) => {
         console.log(e)
         wx.hideLoading();
+        var data = e.data.data
+        var all_text = data.supplierData.content;
+        var min_text = ''
+        if(all_text.length > 100){
+          min_text = all_text.slice(0,100);
+          min_text += '...'
+          data.supplierData.content = min_text
+        }else{
+          that.setData({
+            ['moer.show']:false
+          })
+        }
+
         that.setData({
-          brand_info: e.data.data.supplierData,
-          brand_goods: e.data.data.aboutMaterial
+          brand_info: data.supplierData,
+          brand_goods: data.aboutMaterial,
+          min_text: min_text,
+          all_text: all_text
         })
       },
       fail: () => {}
     });
   },
 
-  // 查看更多
-  moer: function () {
+  // 查看更多资料
+  moer:function () {
+    var moer = this.data.moer;
+    var brand_info = this.data.brand_info;
+    if(moer.flag == true){
+      moer.text = '查看更多'
+      moer.flag = false
+      brand_info.content = this.data.min_text
+    }else{
+      moer.text = '收起'
+      moer.flag = true
+      brand_info.content = this.data.all_text
+    }
+
+    this.setData({
+      moer: moer,
+      brand_info : brand_info
+    })
+  },
+
+  // 查看更多材料
+  moer_goods: function () {
     var that = this;
     that.data.page++;
     wx.request({
@@ -146,10 +187,24 @@ Page({
 
   // 拨打供应商电话
   call_brand:function (e) {
-    var phone = e.target.dataset.phone;
+    var phone = this.data.brand_info.supplier_phone_number;
     wx.makePhoneCall({
       phoneNumber: phone,
       success: ()=>{}
+    });
+  },
+
+  // 地图
+  map:function () {
+    var data = this.data.brand_info
+    wx.openLocation({
+      latitude: parseFloat(data.address_latitude),
+      longitude: parseFloat(data.address_longitude),
+      scale: 15,
+      name: data.supplier_name,
+      success: (e)=>{
+        console.log('打开成功')
+      }
     });
   },
 
