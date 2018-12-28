@@ -86,14 +86,13 @@
             <movable-area class="ing_mova" wx:if="{{is_open_movable}}">
                 <movable-view class="{{mova_class}}" direction="all" 
                 scale-max='2' scale-min='1' 
-                inertia="true" animation="{{false}}" 
+                inertia="true" animation
                 x='{{mova.x}}' y='{{mova.y}}' 
                 scale='true' style="width:100rpx;height:100rpx" 
                 out-of-bounds bindchange='move' bindtouchend="open_end" 
                 data-index="{{open_img.index}}" bindtouchcancel="open_cancel" bindtouchstart="touch" bindscale="open_scale">
 
                     <image src="{{open_img.url}}" mode="widthFix" bindload='open_img_load' style="transform:translate(-50%,-50%);width:{{open_img.baseWidth}}px;height:{{open_img.baseHeight}}px"/>
-
 
                 </movable-view>
             </movable-area>

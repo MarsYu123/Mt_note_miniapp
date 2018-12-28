@@ -18,8 +18,9 @@ Page({
   onLoad: function (options) {
     var that = this;
 
-
-
+    wx.setNavigationBarTitle({
+      title: '我的供应商',
+    });
     wx.request({
       url: app.url.mySupplier,
       method: 'POST',
