@@ -218,7 +218,6 @@ Page({
       ['mova.y']: y
     })
   },
-
   // 关闭缩放
   open_img_claer: function () {
     var that = this;
